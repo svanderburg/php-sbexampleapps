@@ -1,0 +1,31 @@
+#menu a.create-album
+{
+	background-color: #8b5e26;
+}
+
+#menu a:hover.create-album
+{
+	background-color: #c8904b;
+}
+
+#submenu a.create-album
+{
+	background-color: #8b5e26;
+}
+
+#submenu a:hover.create-album
+{
+	background-color: #c8904b;
+}
+
+#submenu .album-buttons
+{
+	padding-top: 0.2em;
+}
+
+#submenu .album-buttons a
+{
+	display: inline;
+	background-color: #983251;
+	border-style: none;
+}

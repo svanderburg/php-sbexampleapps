@@ -1,0 +1,71 @@
+#menu
+{
+	padding-left: 13em; /* Width of submenu + margin/padding + 1 */
+}
+
+#submenu
+{
+	background-color: #983251;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #aaaaaa;
+	padding: 1em;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	float: left;
+	width: 10em;
+	min-height: 15em;
+}
+
+#submenu a
+{
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #aaaaaa;
+	background-color: #7c223e;
+	color: #ffffff;
+	padding: 0.5em;
+	margin-top: 0.5em;
+	width: 9em;
+	display: block;
+}
+
+#submenu a:hover
+{
+	background-color: #b34365;
+}
+
+#submenu a.active
+{
+	background-color: #34637f;
+}
+
+#contents
+{
+	margin-left: 13em; /* Width of submenu + margin/padding + 1 */
+}
+
+#submenu a.create-page, #submenu a.create-album
+{
+	background-color: #8b5e26;
+}
+
+#submenu a:hover.create-page, #submenu a:hover.create-album
+{
+	background-color: #c8904b;
+}
+
+#submenu .album-buttons
+{
+	padding-top: 0.2em;
+}
+
+#submenu .album-buttons a
+{
+	display: inline;
+	background-color: #983251;
+	border-style: none;
+}

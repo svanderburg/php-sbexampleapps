@@ -1,0 +1,19 @@
+#menu a.create-page
+{
+	background-color: #8b5e26;
+}
+
+#menu a:hover.create-page
+{
+	background-color: #c8904b;
+}
+
+#submenu a.create-page
+{
+	background-color: #8b5e26;
+}
+
+#submenu a:hover.create-page
+{
+	background-color: #c8904b;
+}
