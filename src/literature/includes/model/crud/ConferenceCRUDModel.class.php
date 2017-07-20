@@ -103,10 +103,17 @@ class ConferenceCRUDModel extends CRUDModel
 				return $_SERVER["SCRIPT_NAME"]."/authors/".$field->value;
 			}
 
+			function deleteConferenceAuthorLink(Form $form)
+			{
+				return $_SERVER['PHP_SELF']."?__operation=delete_conference_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value;
+			}
+
 			$this->editorsTable = new DBTable(array(
 				"AUTHOR_ID" => new KeyLinkField("Id", "composeAuthorLink", true),
 				"LastName" => new TextField("Last name", true, 20, 255),
 				"FirstName" => new TextField("First name", true, 20, 255)
+			), array(
+				"Delete" => "deleteConferenceAuthorLink"
 			));
 
 			$this->editorsTable->stmt = ConferenceEntity::queryEditors($this->dbh, $this->keyFields['conferenceId']->value);
@@ -117,12 +124,19 @@ class ConferenceCRUDModel extends CRUDModel
 				return $_SERVER["PHP_SELF"]."/papers/".$field->value;
 			}
 
+			function deletePaperLink(Form $form)
+			{
+				return $_SERVER['PHP_SELF']."/papers/".$form->fields["PAPER_ID"]->value."?__operation=delete_paper";
+			}
+
 			$this->papersTable = new DBTable(array(
 				"PAPER_ID" => new KeyLinkField("Id", "composePaperLink", true),
 				"Title" => new TextField("Title", true, 20, 255),
 				"Date" => new DateField("Date", true),
 				"URL" => new URLField("URL", false),
 				"Comment" => new TextField("Comment", false, 20, 255)
+			), array(
+				"Delete" => "deletePaperLink"
 			));
 
 			$this->papersTable->stmt = PaperEntity::queryAll($this->dbh, $this->keyFields['conferenceId']->value);

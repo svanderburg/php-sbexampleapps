@@ -24,9 +24,16 @@ class TestsCRUDModel extends CRUDModel
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
+		function deleteTestLink(Form $form)
+		{
+			return $_SERVER["SCRIPT_NAME"]."/tests/".$form->fields["TEST_ID"]->value."?__operation=delete_test";
+		}
+
 		$this->table = new DBTable(array(
 			"TEST_ID" => new KeyLinkField("Id", "composeTestLink", true),
 			"Title" => new TextField("Title", true, 20, 255),
+		), array(
+			"Delete" => "deleteTestLink"
 		));
 
 		/* Compose a statement that queries the persons */

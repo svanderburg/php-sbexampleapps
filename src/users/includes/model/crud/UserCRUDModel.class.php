@@ -94,9 +94,16 @@ class UserCRUDModel extends CRUDModel
 				return $_SERVER["SCRIPT_NAME"]."/systems/".$field->value;
 			}
 
+			function deleteUserSystemLink(Form $form)
+			{
+				return $_SERVER['PHP_SELF']."?__operation=delete_user_system&amp;SYSTEM_ID=".$form->fields["SYSTEM_ID"]->value;
+			}
+
 			$this->table = new DBTable(array(
 				"SYSTEM_ID" => new KeyLinkField("Id", "composeSystemLink", true),
 				"Description" => new TextField("Description", true)
+			), array(
+				"Delete" => "deleteUserSystemLink"
 			));
 
 			$this->table->stmt = UserEntity::queryAllAuthorizedSystems($this->dbh, $this->keyFields['Username']->value);

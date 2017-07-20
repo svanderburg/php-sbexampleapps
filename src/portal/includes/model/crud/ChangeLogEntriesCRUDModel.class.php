@@ -26,11 +26,18 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 
 	private function constructChangeLogEntriesTable()
 	{
+		function deleteChangeLogLink(Form $form)
+		{
+			return "?__operation=remove_changelogentry&amp;LOG_ID=".$form->fields["LOG_ID"]->value."&amp;__id=".$form->fields["__id"]->value;
+		}
+	
 		$this->table = new DBTable(array(
 			"LOG_ID" => new TextField("Version", true, 10, 255),
 			"Date" => new DateField("Date", true, true),
 			"Summary" => new TextField("Summary", true, 30, 255),
 			"old_LOG_ID" => new HiddenField(true)
+		), array(
+			"Delete" => "deleteChangeLogLink"
 		));
 	}
 

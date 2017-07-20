@@ -9,11 +9,6 @@ $usersURL = $_SERVER["SCRIPT_NAME"]."/users";
 	<a href="<?php print($usersURL); ?>?__operation=create_user">Add user</a>
 </p>
 <?php
-function deleteUserSystemLink(Form $form)
-{
-	return $_SERVER['PHP_SELF']."?__operation=delete_user_system&amp;SYSTEM_ID=".$form->fields["SYSTEM_ID"]->value;
-}
-
 global $crudModel;
 
 displayEditableForm($crudModel->form,
@@ -37,5 +32,5 @@ if($crudModel->addSystemForm !== null)
 }
 
 if($crudModel->table !== null)
-	displayTable($crudModel->table, "deleteUserSystemLink");
+	displaySemiEditableTable($crudModel->table);
 ?>

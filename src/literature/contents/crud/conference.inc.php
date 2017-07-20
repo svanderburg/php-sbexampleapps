@@ -49,14 +49,7 @@ if($authorizationManager->authenticated && $crudModel->addEditorForm !== null)
 if($crudModel->editorsTable !== null)
 {
 	if($authorizationManager->authenticated)
-	{
-		function deleteConferenceAuthorLink(Form $form)
-		{
-			return $_SERVER['PHP_SELF']."?__operation=delete_conference_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value;
-		}
-
-		displayTable($crudModel->editorsTable, "deleteConferenceAuthorLink");
-	}
+		displaySemiEditableTable($crudModel->editorsTable);
 	else
 		displayTable($crudModel->editorsTable);
 }
@@ -68,14 +61,7 @@ if($crudModel->papersTable !== null)
 	<h2>Papers</h2>
 	<?php
 	if($authorizationManager->authenticated)
-	{
-		function deletePaperLink(Form $form)
-		{
-			return $_SERVER['PHP_SELF']."/papers/".$form->fields["PAPER_ID"]->value."?__operation=delete_paper";
-		}
-
-		displayTable($crudModel->papersTable, "deletePaperLink");
-	}
+		displaySemiEditableTable($crudModel->papersTable);
 	else
 		displayTable($crudModel->papersTable);
 }

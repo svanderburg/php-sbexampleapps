@@ -15,14 +15,7 @@ global $crudModel, $authorizationManager;
 </p>
 <?php
 if($authorizationManager->authenticated)
-{
-	function deleteAuthorLink(Form $form)
-	{
-		return $_SERVER["SCRIPT_NAME"]."/authors/".$form->fields["AUTHOR_ID"]->value."?__operation=delete_author";
-	}
-
-	displayTable($crudModel->table, "deleteAuthorLink");
-}
+	displaySemiEditableTable($crudModel->table);
 else
 	displayTable($crudModel->table);
 ?>

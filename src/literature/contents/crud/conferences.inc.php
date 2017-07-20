@@ -15,14 +15,7 @@ global $crudModel, $authorizationManager;
 </p>
 <?php
 if($authorizationManager->authenticated)
-{
-	function deleteConferenceLink(Form $form)
-	{
-		return $_SERVER["SCRIPT_NAME"]."/conferences/".$form->fields["CONFERENCE_ID"]->value."?__operation=delete_conference";
-	}
-
-	displayTable($crudModel->table, "deleteConferenceLink");
-}
+	displaySemiEditableTable($crudModel->table);
 else
 	displayTable($crudModel->table);
 ?>

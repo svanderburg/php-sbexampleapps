@@ -11,12 +11,7 @@ if($authorizationManager->authenticated)
 		?>
 		<p><a href="<?php print($_SERVER["PHP_SELF"]); ?>?__operation=create_changelogentry">Add entry</a></p>
 		<?php
-		function deleteChangeLogLink(Form $form)
-		{
-			return "?__operation=remove_changelogentry&amp;LOG_ID=".$form->fields["LOG_ID"]->value."&amp;__id=".$form->fields["__id"]->value;
-		}
-
-		displayEditableTable($crudModel->table, $crudModel->submittedForm, "deleteChangeLogLink");
+		displayEditableTable($crudModel->table, $crudModel->submittedForm);
 	}
 	else
 	{

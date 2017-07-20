@@ -25,11 +25,18 @@ class AuthorsCRUDModel extends CRUDModel
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
+		function deleteAuthorLink(Form $form)
+		{
+			return $_SERVER["SCRIPT_NAME"]."/authors/".$form->fields["AUTHOR_ID"]->value."?__operation=delete_author";
+		}
+
 		$this->table = new DBTable(array(
 			"AUTHOR_ID" => new KeyLinkField("Id", "composeAuthorLink", true),
 			"FirstName" => new TextField("First name", true, 20, 255),
 			"LastName" => new TextField("Last name", true, 20, 255),
 			"Homepage" => new URLField("Homepage", false),
+		), array(
+			"Delete" => "deleteAuthorLink"
 		));
 
 		/* Compose a statement that queries the authors */

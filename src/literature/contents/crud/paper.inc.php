@@ -73,14 +73,7 @@ if($authorizationManager->authenticated && $crudModel->addAuthorForm !== null)
 if($crudModel->authorsTable !== null)
 {
 	if($authorizationManager->authenticated)
-	{
-		function deletePaperAuthorLink(Form $form)
-		{
-			return $_SERVER['PHP_SELF']."?__operation=delete_paper_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value;
-		}
-
-		displayTable($crudModel->authorsTable, "deletePaperAuthorLink");
-	}
+		displaySemiEditableTable($crudModel->authorsTable);
 	else
 		displayTable($crudModel->authorsTable);
 }

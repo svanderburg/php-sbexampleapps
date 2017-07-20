@@ -17,11 +17,6 @@ $testsURL = $_SERVER["SCRIPT_NAME"]."/tests";
 	?>
 </p>
 <?php
-function deleteQuestionLink(Form $form)
-{
-	return $_SERVER['PHP_SELF']."/questions/".$form->fields['QUESTION_ID']->value."?__operation=delete_question";
-}
-
 global $crudModel;
 
 displayEditableForm($crudModel->form,
@@ -34,6 +29,6 @@ if($crudModel->table !== null)
 	?>
 	<h2>Questions</h2>
 	<?php
-	displayTable($crudModel->table, "deleteQuestionLink");
+	displaySemiEditableTable($crudModel->table);
 }
 ?>

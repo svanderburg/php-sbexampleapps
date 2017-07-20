@@ -24,9 +24,16 @@ class UsersCRUDModel extends CRUDModel
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
+		function deleteUserLink(Form $form)
+		{
+			return $_SERVER["SCRIPT_NAME"]."/users/".$form->fields["Username"]->value."?__operation=delete_user";
+		}
+
 		$this->table = new DBTable(array(
 			"Username" => new KeyLinkField("Username", "composeUserLink", true),
 			"FullName" => new TextField("Full name", true, 20, 255)
+		), array(
+			"Delete" => "deleteUserLink"
 		));
 
 		/* Compose a statement that queries the persons */

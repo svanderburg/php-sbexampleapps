@@ -90,11 +90,18 @@ class PaperCRUDModel extends CRUDModel
 				return $_SERVER["SCRIPT_NAME"]."/authors/".$field->value;
 			}
 
+			function deletePaperAuthorLink(Form $form)
+			{
+				return $_SERVER['PHP_SELF']."?__operation=delete_paper_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value;
+			}
+
 			/* Construct a table containing the authors for this form */
 			$this->authorsTable = new DBTable(array(
 				"AUTHOR_ID" => new KeyLinkField("Id", "composeAuthorLink", true),
 				"LastName" => new TextField("Last name", true),
 				"FirstName" => new TextField("First name", true)
+			), array(
+				"Delete" => "deletePaperAuthorLink"
 			));
 
 			$this->authorsTable->stmt = PaperEntity::queryAuthors($this->dbh, $this->keyFields['paperId']->value, $this->keyFields['conferenceId']->value);

@@ -24,9 +24,16 @@ class PublishersCRUDModel extends CRUDModel
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
+		function deletePublisherLink(Form $form)
+		{
+			return $_SERVER["SCRIPT_NAME"]."/publishers/".$form->fields["PUBLISHER_ID"]->value."?__operation=delete_publisher";
+		}
+
 		$this->table = new DBTable(array(
 			"PUBLISHER_ID" => new KeyLinkField("Id", "composePublisherLink", true),
 			"Name" => new TextField("Name", true, 20, 255)
+		), array(
+			"Delete" => "deletePublisherLink"
 		));
 
 		/* Compose a statement that queries the publishers */

@@ -79,11 +79,18 @@ class TestCRUDModel extends CRUDModel
 				return $_SERVER["PHP_SELF"]."/questions/".$field->value;
 			}
 
+			function deleteQuestionLink(Form $form)
+			{
+				return $_SERVER['PHP_SELF']."/questions/".$form->fields['QUESTION_ID']->value."?__operation=delete_question";
+			}
+
 			$this->table = new DBTable(array(
 				"QUESTION_ID" => new KeyLinkField("Id", "composeQuestionLink", true),
 				"Question" => new TextField("Question", true),
 				"Answer" => new TextField("Answer", true),
 				"Exact" => new CheckBoxField("Exact")
+			), array(
+				"Delete" => "deleteQuestionLink"
 			));
 
 			$this->table->stmt = TestEntity::queryAllQuestions($this->dbh, $this->keyFields['testId']->value);
