@@ -1,0 +1,50 @@
+{
+  "name": "sbexampleapps/literature",
+  "description": "Literature",
+  "type": "project",
+  "license": "GPL-3.0",
+  "authors": [
+      {
+          "name": "Sander van der Burg",
+          "email": "svanderburg@gmail.com",
+          "homepage": "http://sandervanderburg.nl"
+      }
+  ],
+  "autoload": {
+      "psr-4": { "SBExampleApps\\Literature\\": "includes" }
+  },
+  "repositories": [
+      {
+          "type": "path",
+          "url": "../../../php-sbcrud"
+      },
+      {
+          "type": "path",
+          "url": "../../../php-sblayout"
+      },
+      {
+          "type": "path",
+          "url": "../../../php-sbdata"
+      },
+      {
+          "type": "path",
+          "url": "../../../php-sbbiblio"
+      },
+      {
+          "type": "path",
+          "url": "../auth"
+      },
+      {
+          "type": "path",
+          "url": "../layout"
+      }
+  ],
+  "require": {
+      "svanderburg/php-sblayout": "@dev",
+      "svanderburg/php-sbdata": "@dev",
+      "svanderburg/php-sbcrud": "@dev",
+      "svanderburg/php-sbbiblio": "@dev",
+      "sbexampleapps/auth": "@dev",
+      "sbexampleapps/layout": "@dev"
+  }
+}

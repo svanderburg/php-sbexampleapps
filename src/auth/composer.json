@@ -1,0 +1,33 @@
+{
+  "name": "sbexampleapps/auth",
+  "description": "Authorization framework for the example applications",
+  "type": "library",
+  "license": "GPL-3.0",
+  "authors": [
+      {
+          "name": "Sander van der Burg",
+          "email": "svanderburg@gmail.com",
+          "homepage": "http://sandervanderburg.nl"
+      }
+  ],
+  "autoload": {
+      "psr-4": { "SBExampleApps\\Auth\\": "src/Auth" },
+      "files": [
+          "src/Auth/View/HTML/displayloginstatus.php"
+      ]
+  },
+  "repositories": [
+      {
+          "type": "path",
+          "url": "../../../php-sblayout"
+      },
+      {
+          "type": "path",
+          "url": "../../../php-sbdata"
+      }
+  ],
+  "require": {
+      "svanderburg/php-sblayout": "@dev",
+      "svanderburg/php-sbdata": "@dev"
+  }
+}

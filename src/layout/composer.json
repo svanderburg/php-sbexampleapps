@@ -1,0 +1,13 @@
+{
+  "name": "sbexampleapps/layout",
+  "description": "Layout framework for the example applications",
+  "type": "library",
+  "license": "GPL-3.0",
+  "authors": [
+      {
+          "name": "Sander van der Burg",
+          "email": "svanderburg@gmail.com",
+          "homepage": "http://sandervanderburg.nl"
+      }
+  ]
+}

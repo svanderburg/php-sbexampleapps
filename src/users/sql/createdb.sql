@@ -22,7 +22,13 @@ create table user_system
 insert into system values ('homework', 'Homework assistant');
 insert into system values ('users', 'User management');
 insert into system values ('literature', 'Literature');
+insert into system values ('portal', 'Portal');
+insert into system values ('cms', 'CMS');
+insert into system values ('cmsgallery', 'CMS gallery');
 insert into user values ('admin', '$2y$10$fV4gLxkB9kgcz3MU5wBwd.Pqybdl.x17M0HM9MxgOp3w5BpH1dZpW' , 'Administrator'); -- password is: secret
 insert into user_system values ('admin', 'homework');
 insert into user_system values ('admin', 'users');
 insert into user_system values ('admin', 'literature');
+insert into user_system values ('admin', 'portal');
+insert into user_system values ('admin', 'cms');
+insert into user_system values ('admin', 'cmsgallery');

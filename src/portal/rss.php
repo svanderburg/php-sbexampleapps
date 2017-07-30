@@ -1,10 +1,12 @@
 <?php
-set_include_path("./lib/sblayout:./includes");
+require_once("vendor/autoload.php");
 
-require_once("layout/model/page/Page.class.php");
-require_once("includes/model/entities/NewsMessageEntity.class.php");
+use SBLayout\Model\Page\Page;
+use SBExampleApps\Portal\Model\Entity\NewsMessageEntity;
 
-$dbh = new PDO("mysql:host=localhost;dbname=portal", "root", "admin", array(
+require_once("includes/config.php");
+
+$dbh = new PDO($config["dbDsn"], $config["dbUsername"], $config["dbPassword"], array(
 	PDO::ATTR_PERSISTENT => true
 ));
 
@@ -15,8 +17,8 @@ try
 
 	header("Content-Type: application/rss+xml");
 	$baseURL = (array_key_exists("HTTPS", $_SERVER) != "" ? "https://" : "http://").$_SERVER["SERVER_NAME"].Page::computeBaseURL();
+	print('<?xml version="1.0" encoding="UTF-8" ?>');
 	?>
-<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 	<channel>
 		<title>News messages</title>
