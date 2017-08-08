@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7651a5f5bab4dc158ece3bb76d17b566",
+    "content-hash": "19406f45d4a20313ee397012f883c637",
     "packages": [
         {
             "name": "sbexampleapps/auth",
@@ -12,12 +12,12 @@
             "dist": {
                 "type": "path",
                 "url": "../auth",
-                "reference": "7a5ed4f3e5b028dc7cbde043ce9f4bc38e14764a",
+                "reference": "8f45c2896d17719600295d273eb48e34975bc1c7",
                 "shasum": null
             },
             "require": {
-                "svanderburg/php-sbdata": "@dev",
-                "svanderburg/php-sblayout": "@dev"
+                "svanderburg/php-sbdata": "dev-master",
+                "svanderburg/php-sblayout": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -64,12 +64,11 @@
         },
         {
             "name": "svanderburg/php-sbcrud",
-            "version": "dev-composer",
-            "dist": {
-                "type": "path",
-                "url": "../../../php-sbcrud",
-                "reference": "7ef73a3bb5c55e91b21d7099f7aae07e42e9ada2",
-                "shasum": null
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/svanderburg/php-sbcrud.git",
+                "reference": "14420a7d0a46edca00ba292acb9ab47d254fc4ff"
             },
             "require": {
                 "svanderburg/php-sbdata": "@dev",
@@ -96,16 +95,20 @@
                     "homepage": "http://sandervanderburg.nl"
                 }
             ],
-            "description": "Abstractions to construct web-based information systems"
+            "description": "Abstractions to construct web-based information systems",
+            "time": "2017-07-30 20:53:50"
         },
         {
             "name": "svanderburg/php-sbdata",
-            "version": "dev-composer",
-            "dist": {
-                "type": "path",
-                "url": "../../../php-sbdata",
-                "reference": "59af3815762a9193e7bd570eeb72656f834aa51d",
-                "shasum": null
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/svanderburg/php-sbdata.git",
+                "reference": "78f4c2d4aabf7373fdf4edc7db1a76cf365ae905"
+            },
+            "require-dev": {
+                "abeautifulsite/simple-php-captcha": "1.0.x",
+                "phpunit/phpunit": "4.x"
             },
             "type": "library",
             "autoload": {
@@ -134,8 +137,12 @@
             },
             "autoload-dev": {
                 "psr-4": {
-                    "Examples\\Books\\": "examples/books/includes"
-                }
+                    "Examples\\Books\\": "examples/books/includes",
+                    "Examples\\CAPTCHA\\": "examples/captcha/includes"
+                },
+                "files": [
+                    "examples/captcha/includes/View/HTML/Field/captchafield.php"
+                ]
             },
             "license": [
                 "Apache-2.0"
@@ -147,16 +154,16 @@
                     "homepage": "http://sandervanderburg.nl"
                 }
             ],
-            "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications"
+            "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
+            "time": "2017-08-03 21:55:29"
         },
         {
             "name": "svanderburg/php-sbeditor",
-            "version": "dev-composer",
-            "dist": {
-                "type": "path",
-                "url": "../../../php-sbeditor",
-                "reference": "d7d5346cf42412e3e944145bcd75b742135654f4",
-                "shasum": null
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/svanderburg/php-sbeditor.git",
+                "reference": "45bca6e2b2b54c520e4ad43a1152f0c7d1c95cef"
             },
             "require-dev": {
                 "svanderburg/php-sbdata": "@dev"
@@ -181,16 +188,16 @@
                     "homepage": "http://sandervanderburg.nl"
                 }
             ],
-            "description": "Simple embeddable HTML editor"
+            "description": "Simple embeddable HTML editor",
+            "time": "2017-07-30 20:54:51"
         },
         {
             "name": "svanderburg/php-sbgallery",
             "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "../../../php-sbgallery",
-                "reference": "d9c5292025e355d436f795af675f8f3fe97bd087",
-                "shasum": null
+            "source": {
+                "type": "git",
+                "url": "https://github.com/svanderburg/php-sbgallery.git",
+                "reference": "19a4768e895608b6bd51c9ba67df41f5b5b40d50"
             },
             "require": {
                 "svanderburg/php-sbcrud": "@dev",
@@ -232,16 +239,19 @@
                     "homepage": "http://sandervanderburg.nl"
                 }
             ],
-            "description": "Simple embeddable picture gallery"
+            "description": "Simple embeddable picture gallery",
+            "time": "2017-07-30 22:50:21"
         },
         {
             "name": "svanderburg/php-sblayout",
-            "version": "dev-composer",
-            "dist": {
-                "type": "path",
-                "url": "../../../php-sblayout",
-                "reference": "5bd0a8dfaa00510258f43e67dd3fc4b26bf1fe80",
-                "shasum": null
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/svanderburg/php-sblayout.git",
+                "reference": "a570db3102fbdb31e6ed207545b8fe9147efe4f7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.x"
             },
             "type": "library",
             "autoload": {
@@ -276,7 +286,8 @@
                     "homepage": "http://sandervanderburg.nl"
                 }
             ],
-            "description": "My custom website layout organiser framework for PHP"
+            "description": "My custom website layout organiser framework for PHP",
+            "time": "2017-08-03 21:53:42"
         }
     ],
     "packages-dev": [],

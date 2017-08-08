@@ -15,16 +15,16 @@
   },
   "repositories": [
       {
-          "type": "path",
-          "url": "../../../php-sbcrud"
+          "type": "git",
+          "url": "https://github.com/svanderburg/php-sbdata.git"
       },
       {
-          "type": "path",
-          "url": "../../../php-sblayout"
+          "type": "git",
+          "url": "https://github.com/svanderburg/php-sblayout.git"
       },
       {
-          "type": "path",
-          "url": "../../../php-sbdata"
+          "type": "git",
+          "url": "https://github.com/svanderburg/php-sbcrud.git"
       },
       {
           "type": "path",

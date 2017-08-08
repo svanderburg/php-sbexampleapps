@@ -18,16 +18,16 @@
   },
   "repositories": [
       {
-          "type": "path",
-          "url": "../../../php-sblayout"
+          "type": "git",
+          "url": "https://github.com/svanderburg/php-sblayout.git"
       },
       {
-          "type": "path",
-          "url": "../../../php-sbdata"
+          "type": "git",
+          "url": "https://github.com/svanderburg/php-sbdata.git"
       }
   ],
   "require": {
-      "svanderburg/php-sblayout": "@dev",
-      "svanderburg/php-sbdata": "@dev"
+      "svanderburg/php-sblayout": "dev-master",
+      "svanderburg/php-sbdata": "dev-master"
   }
 }
