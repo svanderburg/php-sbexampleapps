@@ -8,7 +8,7 @@
     "packages": [
         {
             "name": "sbexampleapps/auth",
-            "version": "dev-composer",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "../auth",
@@ -42,7 +42,7 @@
         },
         {
             "name": "sbexampleapps/layout",
-            "version": "dev-composer",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "../layout",
@@ -99,11 +99,11 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbcrud.git",
-                "reference": "14420a7d0a46edca00ba292acb9ab47d254fc4ff"
+                "reference": "f2f6f5bac0cb3796667fa1e57ddc71321238806b"
             },
             "require": {
-                "svanderburg/php-sbdata": "@dev",
-                "svanderburg/php-sblayout": "@dev"
+                "svanderburg/php-sbdata": "dev-master",
+                "svanderburg/php-sblayout": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -127,7 +127,7 @@
                 }
             ],
             "description": "Abstractions to construct web-based information systems",
-            "time": "2017-07-30 20:53:50"
+            "time": "2017-08-18 20:43:16"
         },
         {
             "name": "svanderburg/php-sbdata",
@@ -135,7 +135,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "78f4c2d4aabf7373fdf4edc7db1a76cf365ae905"
+                "reference": "16222c117fe142d0fb2d4904ec28a86caa5ec756"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
@@ -186,7 +186,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2017-08-03 21:55:29"
+            "time": "2017-08-18 20:27:38"
         },
         {
             "name": "svanderburg/php-sblayout",

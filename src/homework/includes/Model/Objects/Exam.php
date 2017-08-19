@@ -23,6 +23,8 @@ class Exam
 
 	public $lastAnswerStatus;
 
+	public $lastProvidedAnswer;
+
 	public $done;
 
 	public function __construct($testId)
@@ -32,6 +34,7 @@ class Exam
 		$this->score = 0;
 		$this->currentAnswer = null;
 		$this->lastAnsweredQuestionId = 0;
+		$this->lastProvidedAnswer = null;
 		$this->done = false;
 	}
 
@@ -72,6 +75,8 @@ class Exam
 		}
 		else
 			$this->lastAnswerStatus = null;
+
+		$this->lastProvidedAnswer = $answer;
 	}
 
 	public function computeRatio()

@@ -6,6 +6,7 @@ use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Literature\Model\Entity\AuthorEntity;
@@ -31,7 +32,7 @@ class AuthorsCRUDModel extends CRUDModel
 
 		function deleteAuthorLink(Form $form)
 		{
-			return $_SERVER["SCRIPT_NAME"]."/authors/".$form->fields["AUTHOR_ID"]->value."?__operation=delete_author";
+			return $_SERVER["SCRIPT_NAME"]."/authors/".$form->fields["AUTHOR_ID"]->value."?__operation=delete_author".AnchorRow::composePreviousRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

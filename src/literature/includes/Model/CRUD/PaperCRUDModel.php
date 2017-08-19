@@ -12,11 +12,13 @@ use SBData\Model\Field\TextField;
 use SBData\Model\Field\TextAreaField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Literature\Model\Entity\AuthorEntity;
 use SBExampleApps\Literature\Model\Entity\PaperEntity;
+use SBExampleApps\Literature\Model\FileSet\PaperFileSet;
 
 class PaperCRUDModel extends CRUDModel
 {
@@ -97,7 +99,7 @@ class PaperCRUDModel extends CRUDModel
 
 			function deletePaperAuthorLink(Form $form)
 			{
-				return $_SERVER['PHP_SELF']."?__operation=delete_paper_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value;
+				return $_SERVER['PHP_SELF']."?__operation=delete_paper_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value.AnchorRow::composePreviousRowParameter($form);
 			}
 
 			/* Construct a table containing the authors for this form */
@@ -133,7 +135,9 @@ class PaperCRUDModel extends CRUDModel
 			$paper = $this->form->exportValues();
 			$paper['hasPDF'] = PaperFileSet::pdfProvided() ? 1 : 0;
 			$paperId = PaperEntity::insert($this->dbh, $paper, $this->keyFields['conferenceId']->value);
-			PaperFileSet::insertOrUpdatePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $paperId, $this->keyFields['conferenceId']->value);
+
+			if(PaperFileSet::pdfProvided())
+				PaperFileSet::insertOrUpdatePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $paperId, $this->keyFields['conferenceId']->value);
 
 			header("Location: ".$_SERVER["SCRIPT_NAME"]."/conferences/".$this->keyFields['conferenceId']->value."/papers/".$paperId);
 			exit();
@@ -165,7 +169,7 @@ class PaperCRUDModel extends CRUDModel
 	{
 		PaperEntity::remove($this->dbh, $this->keyFields['paperId']->value, $this->keyFields['conferenceId']->value);
 		PaperFileSet::removePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $this->keyFields['paperId']->value, $this->keyFields['conferenceId']->value);
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment("paper-row"));
 		exit();
 	}
 
@@ -178,7 +182,7 @@ class PaperCRUDModel extends CRUDModel
 		if($this->addAuthorForm->checkValid())
 		{
 			PaperEntity::insertAuthor($this->dbh, $this->keyFields['paperId']->value, $this->keyFields['conferenceId']->value, $this->addAuthorForm->fields["AUTHOR_ID"]->value);
-			header("Location: ".$_SERVER['HTTP_REFERER']);
+			header("Location: ".$_SERVER['HTTP_REFERER']."#authors");
 			exit();
 		}
 		else
@@ -193,7 +197,7 @@ class PaperCRUDModel extends CRUDModel
 		if($authorIdField->checkField("AUTHOR_ID"))
 		{
 			PaperEntity::removeAuthor($this->dbh, $this->keyFields['paperId']->value, $this->keyFields['conferenceId']->value, $authorIdField->value);
-			header("Location: ".$_SERVER['HTTP_REFERER']);
+			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment("author-row"));
 			exit();
 		}
 		else

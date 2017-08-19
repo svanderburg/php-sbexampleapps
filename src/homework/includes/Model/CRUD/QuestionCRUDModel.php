@@ -6,6 +6,7 @@ use SBData\Model\Field\CheckBoxField;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\ReadOnlyNumericIntTextField;
 use SBData\Model\Field\TextField;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Homework\Model\Entity\QuestionEntity;
@@ -99,7 +100,8 @@ class QuestionCRUDModel extends CRUDModel
 	private function deleteQuestion()
 	{
 		QuestionEntity::remove($this->dbh, $this->keyFields['testId']->value, $this->keyFields['questionId']->value);
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 	

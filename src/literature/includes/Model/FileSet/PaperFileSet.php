@@ -39,7 +39,8 @@ class PaperFileSet
 		if(file_exists($pdfTarget))
 			unlink($pdfTarget);
 
-		rmdir($papersDir);
+		if(file_exists($papersDir))
+			rmdir($papersDir);
 	}
 }
 ?>

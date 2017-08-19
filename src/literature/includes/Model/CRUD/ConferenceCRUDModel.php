@@ -10,6 +10,7 @@ use SBData\Model\Field\ReadOnlyNumericIntTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -111,7 +112,7 @@ class ConferenceCRUDModel extends CRUDModel
 
 			function deleteConferenceAuthorLink(Form $form)
 			{
-				return $_SERVER['PHP_SELF']."?__operation=delete_conference_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value;
+				return $_SERVER['PHP_SELF']."?__operation=delete_conference_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value.AnchorRow::composePreviousRowParameter($form);
 			}
 
 			$this->editorsTable = new DBTable(array(
@@ -132,7 +133,7 @@ class ConferenceCRUDModel extends CRUDModel
 
 			function deletePaperLink(Form $form)
 			{
-				return $_SERVER['PHP_SELF']."/papers/".$form->fields["PAPER_ID"]->value."?__operation=delete_paper";
+				return $_SERVER['PHP_SELF']."/papers/".$form->fields["PAPER_ID"]->value."?__operation=delete_paper".AnchorRow::composePreviousRowParameter($form);
 			}
 
 			$this->papersTable = new DBTable(array(
@@ -174,7 +175,7 @@ class ConferenceCRUDModel extends CRUDModel
 	private function deleteConference()
 	{
 		ConferenceEntity::remove($this->dbh, $this->keyFields['conferenceId']->value);
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 
@@ -187,7 +188,7 @@ class ConferenceCRUDModel extends CRUDModel
 		if($this->addEditorForm->checkValid())
 		{
 			ConferenceEntity::insertEditor($this->dbh, $this->keyFields['conferenceId']->value, $this->addEditorForm->fields["AUTHOR_ID"]->value);
-			header("Location: ".$_SERVER['HTTP_REFERER']);
+			header("Location: ".$_SERVER['HTTP_REFERER']."#editors");
 			exit();
 		}
 		else
@@ -202,7 +203,7 @@ class ConferenceCRUDModel extends CRUDModel
 		if($authorIdField->checkField("AUTHOR_ID"))
 		{
 			ConferenceEntity::removeEditor($this->dbh, $this->keyFields['conferenceId']->value, $authorIdField->value);
-			header("Location: ".$_SERVER['HTTP_REFERER']);
+			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment("editor-row"));
 			exit();
 		}
 		else

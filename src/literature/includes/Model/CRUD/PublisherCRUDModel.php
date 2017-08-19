@@ -4,6 +4,7 @@ use PDO;
 use SBData\Model\Form;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\TextField;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -95,7 +96,7 @@ class PublisherCRUDModel extends CRUDModel
 	private function deletePublisher()
 	{
 		PublisherEntity::remove($this->dbh, $this->keyFields['publisherId']->value);
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 

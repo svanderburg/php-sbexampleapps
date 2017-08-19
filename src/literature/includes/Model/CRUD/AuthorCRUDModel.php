@@ -6,6 +6,7 @@ use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\ReadOnlyNumericIntTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -99,7 +100,7 @@ class AuthorCRUDModel extends CRUDModel
 	private function deleteAuthor()
 	{
 		AuthorEntity::remove($this->dbh, $this->keyFields['authorId']->value);
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 

@@ -20,13 +20,13 @@ $application = new Application(
 
     /* Sections */
     array(
-        "header" => new StaticSection("header.inc.php"),
+        "header" => new StaticSection("header.php"),
         "menu" => new MenuSection(0),
         "contents" => new ContentsSection(true)
     ),
 
     /* Pages */
-    new StaticContentPage("Home", new Contents("home.inc.php"))
+    new StaticContentPage("Home", new Contents("home.php"))
 );
 </pre>
 

@@ -7,6 +7,7 @@ use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Homework\Model\Entity\TestEntity;
@@ -84,7 +85,7 @@ class TestCRUDModel extends CRUDModel
 
 			function deleteQuestionLink(Form $form)
 			{
-				return $_SERVER['PHP_SELF']."/questions/".$form->fields['QUESTION_ID']->value."?__operation=delete_question";
+				return $_SERVER['PHP_SELF']."/questions/".$form->fields['QUESTION_ID']->value."?__operation=delete_question".AnchorRow::composePreviousRowParameter($form);
 			}
 
 			$this->table = new DBTable(array(
@@ -118,7 +119,7 @@ class TestCRUDModel extends CRUDModel
 	private function deleteTest()
 	{
 		TestEntity::remove($this->dbh, $this->keyFields['testId']->value);
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 

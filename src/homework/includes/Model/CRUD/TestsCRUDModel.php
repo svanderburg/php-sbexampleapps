@@ -5,6 +5,7 @@ use SBData\Model\Form;
 use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Homework\Model\Entity\TestEntity;
@@ -30,7 +31,7 @@ class TestsCRUDModel extends CRUDModel
 
 		function deleteTestLink(Form $form)
 		{
-			return $_SERVER["SCRIPT_NAME"]."/tests/".$form->fields["TEST_ID"]->value."?__operation=delete_test";
+			return $_SERVER["SCRIPT_NAME"]."/tests/".$form->fields["TEST_ID"]->value."?__operation=delete_test".AnchorRow::composePreviousRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

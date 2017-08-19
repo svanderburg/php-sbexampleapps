@@ -7,6 +7,7 @@ use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\NumericIntTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -35,9 +36,9 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 	{
 		function deleteChangeLogLink(Form $form)
 		{
-			return "?__operation=remove_changelogentry&amp;LOG_ID=".$form->fields["LOG_ID"]->value."&amp;__id=".$form->fields["__id"]->value;
+			return "?__operation=remove_changelogentry&amp;LOG_ID=".$form->fields["LOG_ID"]->value.AnchorRow::composePreviousRowParameter($form);
 		}
-	
+
 		$this->table = new DBTable(array(
 			"LOG_ID" => new TextField("Version", true, 10, 255),
 			"Date" => new DateField("Date", true, true),
@@ -116,7 +117,7 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 		if($logIdField->checkField("Id") && $idField->checkField("Id"))
 		{
 			ChangeLogEntriesEntity::remove($this->dbh, $_REQUEST["LOG_ID"]);
-			header("Location: ".$_SERVER["PHP_SELF"]."#table-row-".$_REQUEST["__id"]);
+			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composeRowFragment());
 			exit();
 		}
 		else

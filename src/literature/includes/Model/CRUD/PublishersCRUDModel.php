@@ -5,6 +5,7 @@ use SBdata\Model\Form;
 use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Literature\Model\Entity\PublisherEntity;
@@ -30,7 +31,7 @@ class PublishersCRUDModel extends CRUDModel
 
 		function deletePublisherLink(Form $form)
 		{
-			return $_SERVER["SCRIPT_NAME"]."/publishers/".$form->fields["PUBLISHER_ID"]->value."?__operation=delete_publisher";
+			return $_SERVER["SCRIPT_NAME"]."/publishers/".$form->fields["PUBLISHER_ID"]->value."?__operation=delete_publisher".AnchorRow::composePreviousRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

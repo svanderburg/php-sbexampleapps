@@ -6,6 +6,7 @@ use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -32,7 +33,7 @@ class ConferencesCRUDModel extends CRUDModel
 
 		function deleteConferenceLink(Form $form)
 		{
-			return $_SERVER["SCRIPT_NAME"]."/conferences/".$form->fields["CONFERENCE_ID"]->value."?__operation=delete_conference";
+			return $_SERVER["SCRIPT_NAME"]."/conferences/".$form->fields["CONFERENCE_ID"]->value."?__operation=delete_conference".AnchorRow::composePreviousRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

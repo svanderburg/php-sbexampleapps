@@ -6,6 +6,13 @@ if($_SESSION["exam"]->lastAnswer !== null)
 	?>
 	<p>The previous answer was: <?php print($_SESSION["exam"]->lastAnswer); ?></p>
 	<?php
+	if($_SESSION["exam"]->lastProvidedAnswer !== null)
+	{
+		?>
+		<p>You provided: <?php print($_SESSION["exam"]->lastProvidedAnswer); ?></p>
+		<?php
+	}
+
 	if($_SESSION["exam"]->lastAnswerStatus !== null)
 	{
 		if($_SESSION["exam"]->lastAnswerStatus)

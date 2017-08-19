@@ -55,6 +55,7 @@ if($crudModel->hasPDF)
 if($crudModel->addAuthorForm !== null || $crudModel->authorsTable !== null)
 {
 	?>
+	<a name="authors"></a>
 	<h2>Authors</h2>
 	<?php
 }
@@ -70,8 +71,8 @@ if($authorizationManager->authenticated && $crudModel->addAuthorForm !== null)
 if($crudModel->authorsTable !== null)
 {
 	if($authorizationManager->authenticated)
-		\SBData\View\HTML\displaySemiEditableTable($crudModel->authorsTable);
+		\SBData\View\HTML\displaySemiEditableTable($crudModel->authorsTable, true, "No authors", "author-row");
 	else
-		\SBData\View\HTML\displayTable($crudModel->authorsTable);
+		\SBData\View\HTML\displayTable($crudModel->authorsTable, false, "No authors");
 }
 ?>
