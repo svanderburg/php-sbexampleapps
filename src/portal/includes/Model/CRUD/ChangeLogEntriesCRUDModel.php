@@ -1,5 +1,6 @@
 <?php
 namespace SBExampleApps\Portal\Model\CRUD;
+use Exception;
 use PDO;
 use SBData\Model\Form;
 use SBData\Model\Field\DateField;

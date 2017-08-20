@@ -197,7 +197,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbgallery.git",
-                "reference": "653b5d8b806012e433ef385420354241ee399146"
+                "reference": "e0d0f23d557802db6765e8d63345b6246245d4c3"
             },
             "require": {
                 "svanderburg/php-sbcrud": "dev-master",
@@ -240,7 +240,7 @@
                 }
             ],
             "description": "Simple embeddable picture gallery",
-            "time": "2017-08-19 10:35:44"
+            "time": "2017-08-20 15:29:48"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -295,7 +295,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbpagemanager.git",
-                "reference": "177fa0e7f30427ea8c9ca9cf420a538f0a8b434e"
+                "reference": "2dbc60c714ca776997c97c1d68926f2c6c8580dc"
             },
             "require": {
                 "svanderburg/php-sbcrud": "dev-master",
@@ -329,7 +329,7 @@
                 }
             ],
             "description": "Manages layout and content dynamically",
-            "time": "2017-08-19 10:47:07"
+            "time": "2017-08-20 15:31:22"
         }
     ],
     "packages-dev": [],

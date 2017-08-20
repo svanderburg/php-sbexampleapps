@@ -1,5 +1,6 @@
 <?php
 namespace SBExampleApps\Portal\Model\CRUD;
+use Exception;
 use PDO;
 use SBLayout\Model\Page\Page;
 use SBData\Model\Form;
