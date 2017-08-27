@@ -197,7 +197,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbgallery.git",
-                "reference": "e0d0f23d557802db6765e8d63345b6246245d4c3"
+                "reference": "cceffc840b66b522aafd6645e5c684a9f27f2b25"
             },
             "require": {
                 "svanderburg/php-sbcrud": "dev-master",
@@ -240,7 +240,7 @@
                 }
             ],
             "description": "Simple embeddable picture gallery",
-            "time": "2017-08-20 15:29:48"
+            "time": "2017-08-20 22:06:07"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -248,7 +248,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sblayout.git",
-                "reference": "a570db3102fbdb31e6ed207545b8fe9147efe4f7"
+                "reference": "32894d6b1f8280a97a0878d0615454dfbf77efc9"
             },
             "require-dev": {
                 "phpunit/phpunit": "5.x"
@@ -287,7 +287,7 @@
                 }
             ],
             "description": "My custom website layout organiser framework for PHP",
-            "time": "2017-08-03 21:53:42"
+            "time": "2017-08-27 19:20:42"
         },
         {
             "name": "svanderburg/php-sbpagemanager",

@@ -11,6 +11,13 @@ li
 	margin: 0.2em 0;
 }
 
+img
+{
+	width: auto;
+	max-width: 100%;
+	height: auto;
+}
+
 table
 {
 	border-style: solid;
@@ -76,6 +83,7 @@ pre
 	border-width: 1px;
 	border-color: #aaaaaa;
 	padding: 1em;
+	overflow-x: auto;
 }
 
 form
@@ -163,6 +171,7 @@ button, input[type=submit]
 	background-color: #7c223e;
 	color: #ffffff;
 	padding: 0.5em;
+	margin-top: 0.5em;
 	width: 9em;
 	display: inline-block;
 }
@@ -175,6 +184,14 @@ button, input[type=submit]
 #menu a.active
 {
 	background-color: #34637f;
+}
+
+@media only print
+{
+	#header, #menu
+	{
+		display: none;
+	}
 }
 
 #contents

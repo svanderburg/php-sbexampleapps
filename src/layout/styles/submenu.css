@@ -1,6 +1,9 @@
-#menu
+@media only screen and (min-width: 60em)
 {
-	padding-left: 13em; /* Width of submenu + margin/padding + 1 */
+	#menu
+	{
+		padding-left: 13em; /* Width of submenu + margin/padding + 1 */
+	}
 }
 
 #submenu
@@ -12,9 +15,16 @@
 	padding: 1em;
 	margin-top: 2px;
 	margin-bottom: 2px;
-	float: left;
-	width: 10em;
-	min-height: 15em;
+}
+
+@media only screen and (min-width: 60em)
+{
+	#submenu
+	{
+		float: left;
+		width: 10em;
+		min-height: 15em;
+	}
 }
 
 #submenu a
@@ -30,7 +40,15 @@
 	padding: 0.5em;
 	margin-top: 0.5em;
 	width: 9em;
-	display: block;
+	display: inline-block;
+}
+
+@media only screen and (min-width: 60em)
+{
+	#submenu a
+	{
+		display: block;
+	}
 }
 
 #submenu a:hover
@@ -43,9 +61,25 @@
 	background-color: #34637f;
 }
 
-#contents
+@media only print
 {
-	margin-left: 13em; /* Width of submenu + margin/padding + 1 */
+	#submenu
+	{
+		display: none;
+	}
+
+	h1
+	{
+		color: #000000;
+	}
+}
+
+@media only screen and (min-width: 60em)
+{
+	#contents
+	{
+		margin-left: 13em; /* Width of submenu + margin/padding + 1 */
+	}
 }
 
 #submenu a.create-page, #submenu a.create-album
