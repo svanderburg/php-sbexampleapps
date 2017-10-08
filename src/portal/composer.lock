@@ -104,7 +104,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "16222c117fe142d0fb2d4904ec28a86caa5ec756"
+                "reference": "0f6422e13778bbb58fc95b75d3dc3f1ae972613d"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
@@ -155,7 +155,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2017-08-18 20:27:38"
+            "time": "2017-09-16 17:49:35"
         },
         {
             "name": "svanderburg/php-sbeditor",
