@@ -31,7 +31,7 @@ while(($row = $crudModel->stmt->fetch()) !== false)
 
 	if(($row = $stmt->fetch()) !== false)
 	{
-		if(($crudModel->page + 1) * 10 <= intval($row[0]))
+		if(($crudModel->page + 1) * 10 < intval($row[0]))
 		{
 			?>
 			<a style="float: right;" href="<?php print($_SERVER["PHP_SELF"]."?page=".($crudModel->page + 1)); ?>">Next &raquo;</a>

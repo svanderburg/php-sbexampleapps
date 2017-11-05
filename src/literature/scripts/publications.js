@@ -1,0 +1,1 @@
+../vendor/svanderburg/php-sbbiblio/scripts/publications.js

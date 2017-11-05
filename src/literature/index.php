@@ -62,7 +62,7 @@ $application = new Application(
 		"publishers" => new PublishersCRUDPage($dbh, $authorizationManager, new PublisherCRUDPage($dbh, $authorizationManager)),
 		"conferences" => new ConferencesCRUDPage($dbh, $authorizationManager, new ConferenceCRUDPage($dbh, $authorizationManager, array(
 			"papers" => new DynamicContentPage("Papers", "paperId", new Contents("conferences/papers.php"), new PaperCRUDPage($dbh, $authorizationManager, array(
-				"reference" => new HiddenStaticContentPage("Reference", new Contents("conferences/papers/reference.php", null, null))
+				"reference" => new HiddenStaticContentPage("Reference", new Contents("conferences/papers/reference.php", null, array("publications.js")))
 			)))
 		))),
 		"search" => new SearchCRUDPage($dbh),
