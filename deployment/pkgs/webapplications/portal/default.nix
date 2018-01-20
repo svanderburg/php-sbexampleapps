@@ -20,6 +20,7 @@ stdenv.mkDerivation {
   buildCommand = ''
     mkdir -p $out/webapps/portal
     lndir ${portalPkg} $out/webapps/portal
+
     # Remove bundled configuration file
     rm $out/webapps/portal/includes/config.php
     # Generate a new configuration file from inter-dependencies
@@ -52,5 +53,15 @@ stdenv.mkDerivation {
     );
     ?>
     EOF
+
+    # Create fileset deployment descriptor
+    ( for i in $out/webapps/portal/*
+      do
+          echo "symlink $i"
+          echo "target portal"
+      done
+    ) > $out/.dysnomia-fileset
+
+    echo "mkdir portal/gallery" >> $out/.dysnomia-fileset
   '';
 }
