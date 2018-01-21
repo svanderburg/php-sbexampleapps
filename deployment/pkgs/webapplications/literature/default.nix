@@ -2,8 +2,10 @@
 {literaturedb, usersdb}:
 
 let
-  literaturePkg = import ../../../../src/literature {
+  literaturePkg = (import ../../../../src/literature {
     inherit pkgs system;
+  }).override {
+    removeComposerArtifacts = true;
   };
 in
 stdenv.mkDerivation {

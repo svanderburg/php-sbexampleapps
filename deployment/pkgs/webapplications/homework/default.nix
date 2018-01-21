@@ -2,8 +2,10 @@
 {homeworkdb, usersdb}:
 
 let
-  homeworkPkg = import ../../../../src/homework {
+  homeworkPkg = (import ../../../../src/homework {
     inherit pkgs system;
+  }).override {
+    removeComposerArtifacts = true;
   };
 in
 stdenv.mkDerivation {

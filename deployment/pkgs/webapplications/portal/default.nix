@@ -2,8 +2,10 @@
 {portaldb, usersdb, ...}@interDeps:
 
 let
-  portalPkg = import ../../../../src/portal {
+  portalPkg = (import ../../../../src/portal {
     inherit pkgs system;
+  }).override {
+    removeComposerArtifacts = true;
   };
 
   # Filter all web applications out of the inter dependencies

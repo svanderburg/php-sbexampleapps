@@ -2,8 +2,10 @@
 {cmsgallerydb, usersdb}:
 
 let
-  cmsgalleryPkg = import ../../../../src/cmsgallery {
+  cmsgalleryPkg = (import ../../../../src/cmsgallery {
     inherit pkgs system;
+  }).override {
+    removeComposerArtifacts = true;
   };
 in
 stdenv.mkDerivation {

@@ -2,8 +2,10 @@
 {cmsdb, usersdb}:
 
 let
-  cmsPkg = import ../../../../src/cms {
+  cmsPkg = (import ../../../../src/cms {
     inherit pkgs system;
+  }).override {
+    removeComposerArtifacts = true;
   };
 in
 stdenv.mkDerivation {

@@ -2,8 +2,10 @@
 {usersdb}:
 
 let
-  usersPkg = import ../../../../src/users {
+  usersPkg = (import ../../../../src/users {
     inherit pkgs system;
+  }).override {
+    removeComposerArtifacts = true;
   };
 in
 stdenv.mkDerivation {
