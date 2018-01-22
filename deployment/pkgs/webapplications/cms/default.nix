@@ -32,5 +32,15 @@ stdenv.mkDerivation {
     );
     ?>
     EOF
+
+    # Create fileset deployment descriptor
+    ( for i in $out/webapps/cms/*
+      do
+          echo "symlink $i"
+          echo "target cms"
+      done
+    ) > $out/.dysnomia-fileset
+
+    echo "mkdir cms/gallery" >> $out/.dysnomia-fileset
   '';
 }

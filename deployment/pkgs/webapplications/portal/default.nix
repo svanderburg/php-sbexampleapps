@@ -60,10 +60,10 @@ stdenv.mkDerivation {
     ( for i in $out/webapps/portal/*
       do
           echo "symlink $i"
-          echo "target portal"
+          echo "target ."
       done
     ) > $out/.dysnomia-fileset
 
-    echo "mkdir portal/gallery" >> $out/.dysnomia-fileset
+    echo "mkdir gallery" >> $out/.dysnomia-fileset
   '';
 }
