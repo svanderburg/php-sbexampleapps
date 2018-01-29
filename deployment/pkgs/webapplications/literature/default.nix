@@ -32,5 +32,15 @@ stdenv.mkDerivation {
     );
     ?>
     EOF
+
+    # Create fileset deployment descriptor
+    ( for i in $out/webapps/literature/*
+      do
+          echo "symlink $i"
+          echo "target literature"
+      done
+    ) > $out/.dysnomia-fileset
+
+    echo "mkdir literature/pdf" >> $out/.dysnomia-fileset
   '';
 }
