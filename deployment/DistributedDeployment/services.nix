@@ -101,6 +101,8 @@ rec {
     pkg = customPkgs.portal;
     dependsOn = {
       inherit usersdb portaldb;
+    };
+    connectsTo = {
       inherit cms cmsgallery homework literature users;
     };
     type = "apache-webapplication";
