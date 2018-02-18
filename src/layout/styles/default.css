@@ -99,6 +99,7 @@ form div
 form div label, form div input
 {
 	padding: 0.2em;
+	margin: 0.2em;
 	display: table-cell;
 }
 
