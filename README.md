@@ -47,6 +47,14 @@ The example applications require the following packages as dependencies:
 * [php-sbpagemanager](https://github.com/svanderburg/php-sbpagemanager)
 * [php-sbbiblio](https://github.com/svanderburg/php-sbbiblio)
 
+Disnix deployment example
+=========================
+The `deployment/` folder contains deployment configuration files making it
+possible to deploy the examples as integrated system in a network of virtual
+machines by using a combination of the
+[NixOps](http://github.com/nixos/nixops) and
+[Disnix](http://github.com/svanderburg/disnix) tools.
+
 License
 =======
 Copyright (C) 2017  Sander van der Burg
