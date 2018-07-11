@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "01717ac5e65a6fd6398eef3303d65adf",
@@ -12,10 +12,11 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "16222c117fe142d0fb2d4904ec28a86caa5ec756"
+                "reference": "6452dfc654e8a58c867ffe59cd06d734b6ea9286"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
+                "phpdocumentor/phpdocumentor": "2.9.x",
                 "phpunit/phpunit": "4.x"
             },
             "type": "library",
@@ -63,7 +64,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2017-08-18 20:27:38"
+            "time": "2018-06-30T13:56:42+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -71,9 +72,10 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sblayout.git",
-                "reference": "32894d6b1f8280a97a0878d0615454dfbf77efc9"
+                "reference": "44493847ebf631b52cf81607e2eb227c65390acb"
             },
             "require-dev": {
+                "phpdocumentor/phpdocumentor": "2.9.x",
                 "phpunit/phpunit": "5.x"
             },
             "type": "library",
@@ -110,7 +112,7 @@
                 }
             ],
             "description": "My custom website layout organiser framework for PHP",
-            "time": "2017-08-27 19:20:42"
+            "time": "2018-06-30T13:56:25+00:00"
         }
     ],
     "packages-dev": [],

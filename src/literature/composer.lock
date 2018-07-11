@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "f07ce477309b677ceab18277de186bab",
@@ -68,7 +68,10 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbbiblio.git",
-                "reference": "ff15521ebaae89e7c388b16c3a2f3a2f61b8ffc6"
+                "reference": "b0e97a59d7d3b3fa72ea2227869e491e0203f7fd"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "2.9.x"
             },
             "type": "library",
             "autoload": {
@@ -91,7 +94,7 @@
                 }
             ],
             "description": "Custom PHP library to display a bibliography",
-            "time": "2017-08-04 21:10:40"
+            "time": "2018-06-30T13:57:55+00:00"
         },
         {
             "name": "svanderburg/php-sbcrud",
@@ -99,11 +102,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbcrud.git",
-                "reference": "f2f6f5bac0cb3796667fa1e57ddc71321238806b"
+                "reference": "a455c8db84b8304e06ba9092e7fb63fd0f05f083"
             },
             "require": {
                 "svanderburg/php-sbdata": "dev-master",
                 "svanderburg/php-sblayout": "dev-master"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "2.9.x"
             },
             "type": "library",
             "autoload": {
@@ -127,7 +133,7 @@
                 }
             ],
             "description": "Abstractions to construct web-based information systems",
-            "time": "2017-08-18 20:43:16"
+            "time": "2018-06-30T13:57:10+00:00"
         },
         {
             "name": "svanderburg/php-sbdata",
@@ -135,10 +141,11 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "0f6422e13778bbb58fc95b75d3dc3f1ae972613d"
+                "reference": "6452dfc654e8a58c867ffe59cd06d734b6ea9286"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
+                "phpdocumentor/phpdocumentor": "2.9.x",
                 "phpunit/phpunit": "4.x"
             },
             "type": "library",
@@ -186,7 +193,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2017-09-16 17:49:35"
+            "time": "2018-06-30T13:56:42+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -194,9 +201,10 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sblayout.git",
-                "reference": "32894d6b1f8280a97a0878d0615454dfbf77efc9"
+                "reference": "44493847ebf631b52cf81607e2eb227c65390acb"
             },
             "require-dev": {
+                "phpdocumentor/phpdocumentor": "2.9.x",
                 "phpunit/phpunit": "5.x"
             },
             "type": "library",
@@ -233,7 +241,7 @@
                 }
             ],
             "description": "My custom website layout organiser framework for PHP",
-            "time": "2017-08-27 19:20:42"
+            "time": "2018-06-30T13:56:25+00:00"
         }
     ],
     "packages-dev": [],
