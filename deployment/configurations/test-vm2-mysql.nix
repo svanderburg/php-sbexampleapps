@@ -5,18 +5,18 @@
     disnix = {
       enable = true;
     };
-    
+
     openssh = {
       enable = true;
     };
 
     mysql = {
       enable = true;
-      rootPassword = ./mysqlpw;
-      initialScript = ./mysqlscript;
       package = pkgs.mysql;
     };
   };
+
+  dysnomia.enableAuthentication = true;
 
   networking.firewall.allowedTCPPorts = [ 80 3306 ];
 
@@ -26,5 +26,5 @@
       pkgs.subversion
       pkgs.lynx
     ];
-  };  
+  };
 }

@@ -33,13 +33,13 @@ stdenv.mkDerivation {
     \$config = array(
         /* Connection settings for the user database */
         "usersDbDsn" => "mysql:host=${usersdb.target.properties.hostname};dbname=${usersdb.name}",
-        "usersDbUsername" => "${usersdb.target.container.mysqlUsername}",
-        "usersDbPassword" => "${usersdb.target.container.mysqlPassword}",
+        "usersDbUsername" => "${usersdb.mysqlUsername}",
+        "usersDbPassword" => "${usersdb.mysqlPassword}",
 
         /* Connection settings for the application database */
         "dbDsn" => "mysql:host=${portaldb.target.properties.hostname};dbname=${portaldb.name}",
-        "dbUsername" => "${portaldb.target.container.mysqlUsername}",
-        "dbPassword" => "${portaldb.target.container.mysqlPassword}",
+        "dbUsername" => "${portaldb.mysqlUsername}",
+        "dbPassword" => "${portaldb.mysqlPassword}",
 
         /* External application configuration */
         "externalApps" => array(

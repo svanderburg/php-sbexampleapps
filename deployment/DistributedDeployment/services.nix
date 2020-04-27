@@ -17,49 +17,73 @@ in
 rec {
   ### Databases
 
-  cmsdb = {
+  cmsdb = rec {
     name = "cmsdb";
-    pkg = customPkgs.cmsdb;
+    mysqlUsername = "cmsdb";
+    mysqlPassword = "cmsdb";
+    pkg = customPkgs.cmsdb {
+      inherit mysqlUsername mysqlPassword;
+    };
     type = "mysql-database";
     group = groups.cms;
     description = "Database backend of CMS";
   };
 
-  cmsgallerydb = {
+  cmsgallerydb = rec {
     name = "cmsgallerydb";
-    pkg = customPkgs.cmsgallerydb;
+    mysqlUsername = "cmsgallerydb";
+    mysqlPassword = "cmsgallerydb";
+    pkg = customPkgs.cmsgallerydb {
+      inherit mysqlUsername mysqlPassword;
+    };
     type = "mysql-database";
     group = groups.cmsgallery;
     description = "Database backend of CMS gallery";
   };
 
-  homeworkdb = {
+  homeworkdb = rec {
     name = "homeworkdb";
-    pkg = customPkgs.homeworkdb;
+    mysqlUsername = "homeworkdb";
+    mysqlPassword = "homeworkdb";
+    pkg = customPkgs.homeworkdb {
+      inherit mysqlUsername mysqlPassword;
+    };
     type = "mysql-database";
     group = groups.homework;
     description = "Database backend of homework";
   };
 
-  literaturedb = {
+  literaturedb = rec {
     name = "literaturedb";
-    pkg = customPkgs.literaturedb;
+    mysqlUsername = "literaturedb";
+    mysqlPassword = "literaturedb";
+    pkg = customPkgs.literaturedb {
+      inherit mysqlUsername mysqlPassword;
+    };
     type = "mysql-database";
     group = groups.literature;
     description = "Database backend of literature";
   };
 
-  usersdb = {
+  usersdb = rec {
     name = "usersdb";
-    pkg = customPkgs.usersdb;
+    mysqlUsername = "usersdb";
+    mysqlPassword = "usersdb";
+    pkg = customPkgs.usersdb {
+      inherit mysqlUsername mysqlPassword;
+    };
     type = "mysql-database";
     group = groups.users;
     description = "Database backend of users";
   };
 
-  portaldb = {
+  portaldb = rec {
     name = "portaldb";
-    pkg = customPkgs.portaldb;
+    mysqlUsername = "portaldb";
+    mysqlPassword = "portaldb";
+    pkg = customPkgs.portaldb {
+      inherit mysqlUsername mysqlPassword;
+    };
     type = "mysql-database";
     deployState = true;
     group = groups.portal;

@@ -22,13 +22,13 @@ stdenv.mkDerivation {
     \$config = array(
         /* Connection settings for the user database */
         "usersDbDsn" => "mysql:host=${usersdb.target.properties.hostname};dbname=${usersdb.name}",
-        "usersDbUsername" => "${usersdb.target.container.mysqlUsername}",
-        "usersDbPassword" => "${usersdb.target.container.mysqlPassword}",
+        "usersDbUsername" => "${usersdb.mysqlUsername}",
+        "usersDbPassword" => "${usersdb.mysqlPassword}",
 
         /* Connection settings for the application database */
         "dbDsn" => "mysql:host=${literaturedb.target.properties.hostname};dbname=${literaturedb.name}",
-        "dbUsername" => "${literaturedb.target.container.mysqlUsername}",
-        "dbPassword" => "${literaturedb.target.container.mysqlPassword}",
+        "dbUsername" => "${literaturedb.mysqlUsername}",
+        "dbPassword" => "${literaturedb.mysqlPassword}",
     );
     ?>
     EOF

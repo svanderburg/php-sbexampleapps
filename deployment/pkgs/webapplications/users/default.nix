@@ -21,8 +21,8 @@ stdenv.mkDerivation {
     <?php
     \$config = array(
         "dbDsn" => "mysql:host=${usersdb.target.properties.hostname};dbname=${usersdb.name}",
-        "dbUsername" => "${usersdb.target.container.mysqlUsername}",
-        "dbPassword" => "${usersdb.target.container.mysqlPassword}",
+        "dbUsername" => "${usersdb.mysqlUsername}",
+        "dbPassword" => "${usersdb.mysqlPassword}",
     );
     ?>
     EOF
