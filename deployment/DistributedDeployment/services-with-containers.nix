@@ -5,7 +5,7 @@
 , cacheDir ? "${stateDir}/cache"
 , tmpDir ? (if stateDir == "/var" then "/tmp" else "${stateDir}/tmp")
 , forceDisableUserChange ? false
-, processManager ? "systemd"
+, processManager ? "sysvinit"
 }:
 
 let
@@ -17,23 +17,17 @@ let
     inherit pkgs system distribution invDistribution;
   };
 
-  processType =
-    if processManager == null then "managed-process"
-    else if processManager == "sysvinit" then "sysvinit-script"
-    else if processManager == "systemd" then "systemd-unit"
-    else if processManager == "supervisord" then "supervisord-program"
-    else if processManager == "bsdrc" then "bsdrc-script"
-    else if processManager == "cygrunsrv" then "cygrunsrv-service"
-    else if processManager == "launchd" then "launchd-daemon"
-    else throw "Unknown process manager: ${processManager}";
+  processType = import ../../../nix-processmgmt/nixproc/derive-dysnomia-process-type.nix {
+    inherit processManager;
+  };
 in
 rec {
-  simpleWebappApache = constructors.simpleWebappApache {
-    port = 80;
+  apache = constructors.simpleWebappApache {
+    port = 8080;
     serverAdmin = "root@localhost";
     enablePHP = true;
-    filesetOwner = "httpd:httpd";
-    documentRoot = "/var/www";
+    filesetOwner = "apache:apache";
+    documentRoot = "${stateDir}/www";
     type = processType;
   };
 

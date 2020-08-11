@@ -2,7 +2,7 @@
 
 {
   mysql = [ infrastructure.test1 infrastructure.test2 ];
-  simpleWebappApache = [ infrastructure.test1 infrastructure.test2 ];
+  apache = [ infrastructure.test1 infrastructure.test2 ];
 
   usersdb = [ infrastructure.test1 ];
   cmsdb = [ infrastructure.test2 ];
