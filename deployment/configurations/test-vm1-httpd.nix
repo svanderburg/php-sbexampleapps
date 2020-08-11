@@ -26,6 +26,10 @@
     };
   };
 
+  dysnomia.extraContainerProperties = {
+    apache-webapplication.filesetOwner = "wwwrun:wwwrun";
+  };
+
   time.timeZone = "UTC";
 
   networking.firewall.allowedTCPPorts = [ 80 ];

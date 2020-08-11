@@ -31,7 +31,12 @@
     };
   };
 
-  dysnomia.enableAuthentication = true;
+  dysnomia = {
+    enableAuthentication = true;
+    extraContainerProperties = {
+      apache-webapplication.filesetOwner = "wwwrun:wwwrun";
+    };
+  };
 
   time.timeZone = "UTC";
 
