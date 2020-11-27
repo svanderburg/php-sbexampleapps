@@ -1,6 +1,8 @@
 {pkgs, ...}:
 
 {
+  dysnomia.enableLegacyModules = false;
+
   services = {
     openssh = {
       enable = true;

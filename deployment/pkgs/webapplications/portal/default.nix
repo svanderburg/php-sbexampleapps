@@ -48,7 +48,7 @@ stdenv.mkDerivation {
                 service = builtins.getAttr serviceName interDeps;
               in
               ''
-                "${service.name}" => new ExternalPage("${service.appName}", "http://${service.target.properties.hostname}/${service.name}"),
+                "${service.name}" => new ExternalPage("${service.appName}", "http://${service.target.properties.hostname}${stdenv.lib.optionalString (service.target.container.port != 80) (":" + toString (service.target.container.port))}/${service.name}"),
               ''
             ) webappInterDeps}
         )
