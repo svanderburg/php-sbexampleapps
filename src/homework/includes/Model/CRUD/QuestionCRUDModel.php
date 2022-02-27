@@ -14,9 +14,9 @@ use SBExampleApps\Homework\Model\Entity\QuestionEntity;
 
 class QuestionCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -24,7 +24,7 @@ class QuestionCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	private function constructQuestionForm()
+	private function constructQuestionForm(): void
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -36,7 +36,7 @@ class QuestionCRUDModel extends CRUDModel
 		));
 	}
 
-	private function createQuestion()
+	private function createQuestion(): void
 	{
 		$this->constructQuestionForm();
 
@@ -47,7 +47,7 @@ class QuestionCRUDModel extends CRUDModel
 		$this->form->importValues($row);
 	}
 
-	private function viewQuestion()
+	private function viewQuestion(): void
 	{
 		$this->constructQuestionForm();
 
@@ -66,7 +66,7 @@ class QuestionCRUDModel extends CRUDModel
 		}
 	}
 
-	private function insertQuestion()
+	private function insertQuestion(): void
 	{
 		$this->constructQuestionForm();
 		$this->form->importValues($_REQUEST);
@@ -82,7 +82,7 @@ class QuestionCRUDModel extends CRUDModel
 		}
 	}
 
-	private function updateQuestion()
+	private function updateQuestion(): void
 	{
 		$this->constructQuestionForm();
 		$this->form->importValues($_REQUEST);
@@ -98,7 +98,7 @@ class QuestionCRUDModel extends CRUDModel
 		}
 	}
 
-	private function deleteQuestion()
+	private function deleteQuestion(): void
 	{
 		QuestionEntity::remove($this->dbh, $this->keyFields['testId']->value, $this->keyFields['questionId']->value);
 
@@ -106,7 +106,7 @@ class QuestionCRUDModel extends CRUDModel
 		exit();
 	}
 	
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

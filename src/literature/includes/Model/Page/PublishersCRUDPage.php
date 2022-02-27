@@ -1,7 +1,9 @@
 <?php
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
+use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
+use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\DynamicContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Literature\Model\CRUD\PublishersCRUDModel;
@@ -9,11 +11,11 @@ use SBExampleApps\Literature\Model\CRUD\PublisherCRUDModel;
 
 class PublishersCRUDPage extends DynamicContentCRUDPage
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, $dynamicSubPage = null)
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, Page $dynamicSubPage = null)
 	{
 		parent::__construct("Publishers",
 			/* Parameter name */
@@ -35,7 +37,7 @@ class PublishersCRUDPage extends DynamicContentCRUDPage
 		$this->authorizationManager = $authorizationManager;
 	}
 	
-	public function constructCRUDModel()
+	public function constructCRUDModel(): CRUDModel
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

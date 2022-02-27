@@ -12,7 +12,7 @@ class MyPagePermissionChecker implements PagePermissionChecker
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	public function checkWritePermissions()
+	public function checkWritePermissions(): bool
 	{
 		return $this->authorizationManager->authenticated;
 	}

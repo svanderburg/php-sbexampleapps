@@ -16,11 +16,11 @@ use SBExampleApps\Portal\Model\Entity\NewsMessageEntity;
 
 class NewsMessageCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh, AuthorizationManager $authorizationManager)
 	{
@@ -29,7 +29,7 @@ class NewsMessageCRUDModel extends CRUDModel
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	private function constructNewsMessageForm()
+	private function constructNewsMessageForm(): void
 	{
 		$baseURL = Page::computeBaseURL();
 
@@ -42,7 +42,7 @@ class NewsMessageCRUDModel extends CRUDModel
 		));
 	}
 
-	private function createNewsMessage()
+	private function createNewsMessage(): void
 	{
 		$this->constructNewsMessageForm();
 
@@ -52,7 +52,7 @@ class NewsMessageCRUDModel extends CRUDModel
 		$this->form->importValues($row);
 	}
 
-	private function insertNewsMessage()
+	private function insertNewsMessage(): void
 	{
 		$this->constructNewsMessageForm();
 		$this->form->importValues($_REQUEST);
@@ -67,7 +67,7 @@ class NewsMessageCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewNewsMessage()
+	private function viewNewsMessage(): void
 	{
 		/* Query the properties of the requested news message and construct a form from it */
 		$this->constructNewsMessageForm();
@@ -86,7 +86,7 @@ class NewsMessageCRUDModel extends CRUDModel
 		}
 	}
 
-	private function updateNewsMessage()
+	private function updateNewsMessage(): void
 	{
 		$this->constructNewsMessageForm();
 		$this->form->importValues($_REQUEST);
@@ -101,14 +101,14 @@ class NewsMessageCRUDModel extends CRUDModel
 		}
 	}
 
-	private function removeNewsMessage()
+	private function removeNewsMessage(): void
 	{
 		NewsMessageEntity::remove($this->dbh, $this->keyFields['messageId']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER']);
 		exit();
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

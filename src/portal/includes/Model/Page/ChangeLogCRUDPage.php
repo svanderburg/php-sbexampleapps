@@ -3,17 +3,18 @@ namespace SBExampleApps\Portal\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
+use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Portal\Model\CRUD\ChangeLogEntriesCRUDModel;
 
 class ChangeLogCRUDPage extends StaticContentCRUDPage
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = null)
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
 	{
 		$baseURL = Page::computeBaseURL();
 
@@ -33,7 +34,7 @@ class ChangeLogCRUDPage extends StaticContentCRUDPage
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	public function constructCRUDModel()
+	public function constructCRUDModel(): CRUDModel
 	{
 		return new ChangeLogEntriesCRUDModel($this, $this->dbh, $this->authorizationManager);
 	}

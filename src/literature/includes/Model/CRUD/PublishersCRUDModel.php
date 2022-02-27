@@ -12,9 +12,9 @@ use SBExampleApps\Literature\Model\Entity\PublisherEntity;
 
 class PublishersCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -22,14 +22,14 @@ class PublishersCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
-		function composePublisherLink(KeyLinkField $field, Form $form)
+		function composePublisherLink(KeyLinkField $field, Form $form): string
 		{
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
-		function deletePublisherLink(Form $form)
+		function deletePublisherLink(Form $form): string
 		{
 			return $_SERVER["SCRIPT_NAME"]."/publishers/".$form->fields["PUBLISHER_ID"]->value."?__operation=delete_publisher".AnchorRow::composePreviousRowParameter($form);
 		}

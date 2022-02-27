@@ -13,9 +13,9 @@ use SBExampleApps\Literature\Model\Entity\AuthorEntity;
 
 class AuthorsCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -23,14 +23,14 @@ class AuthorsCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
-		function composeAuthorLink(KeyLinkField $field, Form $form)
+		function composeAuthorLink(KeyLinkField $field, Form $form): string
 		{
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
-		function deleteAuthorLink(Form $form)
+		function deleteAuthorLink(Form $form): string
 		{
 			return $_SERVER["SCRIPT_NAME"]."/authors/".$form->fields["AUTHOR_ID"]->value."?__operation=delete_author".AnchorRow::composePreviousRowParameter($form);
 		}

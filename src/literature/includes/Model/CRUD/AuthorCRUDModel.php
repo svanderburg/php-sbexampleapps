@@ -15,11 +15,11 @@ use SBExampleApps\Literature\Model\Entity\AuthorEntity;
 
 class AuthorCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh, AuthorizationManager $authorizationManager)
 	{
@@ -28,7 +28,7 @@ class AuthorCRUDModel extends CRUDModel
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	private function constructAuthorForm()
+	private function constructAuthorForm(): void
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -39,7 +39,7 @@ class AuthorCRUDModel extends CRUDModel
 		));
 	}
 
-	private function createAuthor()
+	private function createAuthor(): void
 	{
 		$this->constructAuthorForm();
 
@@ -49,7 +49,7 @@ class AuthorCRUDModel extends CRUDModel
 		$this->form->importValues($row);
 	}
 
-	private function insertAuthor()
+	private function insertAuthor(): void
 	{
 		$this->constructAuthorForm();
 		$this->form->importValues($_REQUEST);
@@ -64,7 +64,7 @@ class AuthorCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewAuthor()
+	private function viewAuthor(): void
 	{
 		/* Query the properties of the requested author and construct a form from it */
 		$this->constructAuthorForm();
@@ -83,7 +83,7 @@ class AuthorCRUDModel extends CRUDModel
 		}
 	}
 
-	private function updateAuthor()
+	private function updateAuthor(): void
 	{
 		$this->constructAuthorForm();
 		$this->form->importValues($_REQUEST);
@@ -98,14 +98,14 @@ class AuthorCRUDModel extends CRUDModel
 		}
 	}
 
-	private function deleteAuthor()
+	private function deleteAuthor(): void
 	{
 		AuthorEntity::remove($this->dbh, $this->keyFields['authorId']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

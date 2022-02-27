@@ -16,13 +16,13 @@ use SBExampleApps\Users\Model\Entity\UserEntity;
 
 class UserCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
-	public $addSystemForm = null;
+	public ?Form $addSystemForm = null;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -30,7 +30,7 @@ class UserCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	private function constructUserForm($passwordMandatory)
+	private function constructUserForm(bool $passwordMandatory): void
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -40,7 +40,7 @@ class UserCRUDModel extends CRUDModel
 		));
 	}
 
-	private function constructAddSystemForm()
+	private function constructAddSystemForm(): void
 	{
 		$stmt = SystemEntity::queryAll($this->dbh);
 
@@ -52,7 +52,7 @@ class UserCRUDModel extends CRUDModel
 		$this->addSystemForm->fields["__operation"]->value = "insert_user_system";
 	}
 
-	private function createUser()
+	private function createUser(): void
 	{
 		$this->constructUserForm(true);
 
@@ -62,7 +62,7 @@ class UserCRUDModel extends CRUDModel
 		$this->form->importValues($row);
 	}
 
-	private function insertUser()
+	private function insertUser(): void
 	{
 		$this->constructUserForm(true);
 		$this->form->importValues($_REQUEST);
@@ -77,7 +77,7 @@ class UserCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewUserProperties()
+	private function viewUserProperties(): void
 	{
 		/* Query the properties of the requested user and construct a form from it */
 		$this->constructUserForm(false);
@@ -95,12 +95,12 @@ class UserCRUDModel extends CRUDModel
 			$this->form->importValues($row);
 
 			/* Construct a table containing the systems for this form */
-			function composeSystemLink(KeyLinkField $field, Form $form)
+			function composeSystemLink(KeyLinkField $field, Form $form): string
 			{
 				return $_SERVER["SCRIPT_NAME"]."/systems/".$field->value;
 			}
 
-			function deleteUserSystemLink(Form $form)
+			function deleteUserSystemLink(Form $form): string
 			{
 				return $_SERVER['PHP_SELF']."?__operation=delete_user_system&amp;SYSTEM_ID=".$form->fields["SYSTEM_ID"]->value;
 			}
@@ -116,14 +116,14 @@ class UserCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewUser()
+	private function viewUser(): void
 	{
 		$this->viewUserProperties();
 		/* Construct a form that can be used to add systems */
 		$this->constructAddSystemForm();
 	}
 
-	private function updateUser()
+	private function updateUser(): void
 	{
 		$this->constructUserForm(false);
 		$this->form->importValues($_REQUEST);
@@ -138,14 +138,14 @@ class UserCRUDModel extends CRUDModel
 		}
 	}
 
-	private function deleteUser()
+	private function deleteUser(): void
 	{
 		UserEntity::remove($this->dbh, $this->keyFields['Username']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER']);
 		exit();
 	}
 
-	private function insertAuthorizedSystem()
+	private function insertAuthorizedSystem(): void
 	{
 		$this->constructAddSystemForm();
 		$this->addSystemForm->importValues($_REQUEST);
@@ -161,7 +161,7 @@ class UserCRUDModel extends CRUDModel
 			$this->viewUserProperties();
 	}
 
-	private function deleteAuthorizedSystem()
+	private function deleteAuthorizedSystem(): void
 	{
 		$systemIdField = new TextField("Id", true);
 		$systemIdField->value = $_REQUEST["SYSTEM_ID"];
@@ -176,7 +176,7 @@ class UserCRUDModel extends CRUDModel
 			throw new Exception("Invalid system id!");
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

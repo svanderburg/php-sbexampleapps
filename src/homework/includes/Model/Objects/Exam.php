@@ -5,29 +5,29 @@ use SBExampleApps\Homework\Model\Entity\QuestionEntity;
 
 class Exam
 {
-	public $testId;
+	public string $testId;
 
-	public $lastAnsweredQuestionId;
+	public int $lastAnsweredQuestionId;
 
-	public $questionCount;
+	public int $questionCount;
 
-	public $score;
+	public int $score;
 
-	public $lastAnswer;
+	public ?string $lastAnswer;
 
-	public $currentQuestion;
+	public string $currentQuestion;
 
-	public $currentAnswer;
+	public ?string $currentAnswer;
 
-	public $exact;
+	public bool $exact;
 
-	public $lastAnswerStatus;
+	public ?bool $lastAnswerStatus;
 
-	public $lastProvidedAnswer;
+	public ?string $lastProvidedAnswer;
 
-	public $done;
+	public bool $done;
 
-	public function __construct($testId)
+	public function __construct(string $testId)
 	{
 		$this->testId = $testId;
 		$this->questionCount = 0;
@@ -38,7 +38,7 @@ class Exam
 		$this->done = false;
 	}
 
-	public function openSuccessiveQuestion(PDO $dbh)
+	public function openSuccessiveQuestion(PDO $dbh): bool|array
 	{
 		$this->lastAnswer = $this->currentAnswer;
 
@@ -59,7 +59,7 @@ class Exam
 		}
 	}
 
-	public function checkProvidedAnswer($answer)
+	public function checkProvidedAnswer(string $answer): void
 	{
 		if($this->exact)
 		{
@@ -79,7 +79,7 @@ class Exam
 		$this->lastProvidedAnswer = $answer;
 	}
 
-	public function computeRatio()
+	public function computeRatio(): float
 	{
 		return 100 * $this->score / $this->questionCount;
 	}

@@ -2,10 +2,11 @@
 namespace SBExampleApps\Portal\Model\Entity;
 use Exception;
 use PDO;
+use PDOStatement;
 
 class ChangeLogEntriesEntity
 {
-	public static function queryAll(PDO $dbh)
+	public static function queryAll(PDO $dbh): PDOStatement
 	{
 		$stmt = $dbh->prepare("select LOG_ID, Date, Summary, LOG_ID as old_LOG_ID from changelogentries order by LOG_ID desc");
 
@@ -15,7 +16,7 @@ class ChangeLogEntriesEntity
 		return $stmt;
 	}
 
-	public static function insert(PDO $dbh, array $entry)
+	public static function insert(PDO $dbh, array $entry): PDOStatement
 	{
 		$stmt = $dbh->prepare("insert into changelogentries values (?, ?, ?)");
 	
@@ -25,7 +26,7 @@ class ChangeLogEntriesEntity
 		return $stmt;
 	}
 
-	public static function update(PDO $dbh, array $entry, $id)
+	public static function update(PDO $dbh, array $entry, string $id): PDOStatement
 	{
 		$stmt = $dbh->prepare("update changelogentries set ".
 			"LOG_ID = ?, ".
@@ -39,7 +40,7 @@ class ChangeLogEntriesEntity
 		return $stmt;
 	}
 
-	public static function remove(PDO $dbh, $id)
+	public static function remove(PDO $dbh, string $id): PDOStatement
 	{
 		$stmt = $dbh->prepare("delete from changelogentries where LOG_ID = ?");
 

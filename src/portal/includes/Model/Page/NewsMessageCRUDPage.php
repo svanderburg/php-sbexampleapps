@@ -4,17 +4,18 @@ use PDO;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
 use SBData\Model\Field\NumericIntTextField;
+use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Portal\Model\CRUD\NewsMessageCRUDModel;
 
 class NewsMessageCRUDPage extends StaticContentCRUDPage
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = null)
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
 	{
 		$baseURL = Page::computeBaseURL();
 		$htmlEditorJsPath = $baseURL."/scripts/htmleditor.js";
@@ -37,7 +38,7 @@ class NewsMessageCRUDPage extends StaticContentCRUDPage
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	public function constructCRUDModel()
+	public function constructCRUDModel(): CRUDModel
 	{
 		return new NewsMessageCRUDModel($this, $this->dbh, $this->authorizationManager);
 	}

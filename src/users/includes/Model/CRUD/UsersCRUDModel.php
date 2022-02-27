@@ -11,9 +11,9 @@ use SBExampleApps\Users\Model\Entity\UserEntity;
 
 class UsersCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -21,14 +21,14 @@ class UsersCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
-		function composeUserLink(KeyLinkField $field, Form $form)
+		function composeUserLink(KeyLinkField $field, Form $form): string
 		{
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
-		function deleteUserLink(Form $form)
+		function deleteUserLink(Form $form): string
 		{
 			return $_SERVER["SCRIPT_NAME"]."/users/".$form->fields["Username"]->value."?__operation=delete_user";
 		}

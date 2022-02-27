@@ -2,6 +2,7 @@
 namespace SBExampleApps\Portal\Model\CRUD;
 use Exception;
 use PDO;
+use PDOStatement;
 use SBData\Model\Field\NumericIntTextField;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
@@ -9,9 +10,9 @@ use SBExampleApps\Portal\Model\Entity\NewsMessageEntity;
 
 class NewsCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $stmt;
+	public PDOStatement $stmt;
 
 	public $page;
 
@@ -21,7 +22,7 @@ class NewsCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		$pageField = new NumericIntTextField("Page", true);
 

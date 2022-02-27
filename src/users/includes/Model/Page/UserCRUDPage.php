@@ -3,17 +3,18 @@ namespace SBExampleApps\Users\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Content\Contents;
 use SBData\Model\Field\TextField;
+use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Users\Model\CRUD\UserCRUDModel;
 
 class UserCRUDPage extends StaticContentCRUDPage
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = null)
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
 	{
 		parent::__construct("User",
 			/* Key fields */
@@ -33,12 +34,12 @@ class UserCRUDPage extends StaticContentCRUDPage
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	public function constructCRUDModel()
+	public function constructCRUDModel(): CRUDModel
 	{
 		return new UserCRUDModel($this, $this->dbh);
 	}
 
-	public function checkAccessibility()
+	public function checkAccessibility(): bool
 	{
 		return $this->authorizationManager->authenticated;
 	}

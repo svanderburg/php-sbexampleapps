@@ -7,8 +7,9 @@ let
   buildZipPackage = { name, src }:
     stdenv.mkDerivation {
       inherit name src;
-      buildInputs = [ unzip ];
+      nativeBuildInputs = [ unzip ];
       buildCommand = ''
+        shopt -s dotglob
         unzip $src
         baseDir=$(find . -type d -mindepth 1 -maxdepth 1)
         cd $baseDir

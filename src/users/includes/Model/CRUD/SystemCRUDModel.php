@@ -11,9 +11,9 @@ use SBExampleApps\Users\Model\Entity\SystemEntity;
 
 class SystemCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -21,7 +21,7 @@ class SystemCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	private function constructSystemForm()
+	private function constructSystemForm(): void
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -30,7 +30,7 @@ class SystemCRUDModel extends CRUDModel
 		));
 	}
 
-	private function createSystem()
+	private function createSystem(): void
 	{
 		$this->constructSystemForm();
 
@@ -40,7 +40,7 @@ class SystemCRUDModel extends CRUDModel
 		$this->form->importValues($row);
 	}
 
-	private function insertSystem()
+	private function insertSystem(): void
 	{
 		$this->constructSystemForm();
 		$this->form->importValues($_REQUEST);
@@ -74,7 +74,7 @@ class SystemCRUDModel extends CRUDModel
 		}
 	}
 
-	private function updateSystem()
+	private function updateSystem(): void
 	{
 		$this->constructSystemForm();
 		$this->form->importValues($_REQUEST);
@@ -89,14 +89,14 @@ class SystemCRUDModel extends CRUDModel
 		}
 	}
 
-	private function deleteSystem()
+	private function deleteSystem(): void
 	{
 		SystemEntity::remove($this->dbh, $this->keyFields['systemId']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER']);
 		exit();
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

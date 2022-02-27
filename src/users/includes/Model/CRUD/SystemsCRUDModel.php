@@ -11,9 +11,9 @@ use SBExampleApps\Users\Model\Entity\SystemEntity;
 
 class SystemsCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -21,14 +21,14 @@ class SystemsCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
-		function composeSystemLink(KeyLinkField $field, Form $form)
+		function composeSystemLink(KeyLinkField $field, Form $form): string
 		{
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
-		function deleteSystemLink(Form $form)
+		function deleteSystemLink(Form $form): string
 		{
 			return $_SERVER["SCRIPT_NAME"]."/systems/".$form->fields["SYSTEM_ID"]->value."?__operation=delete_system";
 		}

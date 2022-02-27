@@ -22,17 +22,17 @@ use SBExampleApps\Literature\Model\Entity\PublisherEntity;
 
 class ConferenceCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
-	public $addEditorForm = null;
+	public ?Form $addEditorForm = null;
 
-	public $editorsTable = null;
+	public ?DBTable $editorsTable = null;
 
-	public $papersTable = null;
+	public ?DBTable $papersTable = null;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh, AuthorizationManager $authorizationManager)
 	{
@@ -41,7 +41,7 @@ class ConferenceCRUDModel extends CRUDModel
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	private function constructConferenceForm()
+	private function constructConferenceForm(): void
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -53,7 +53,7 @@ class ConferenceCRUDModel extends CRUDModel
 		));
 	}
 
-	private function constructAddEditorForm()
+	private function constructAddEditorForm(): void
 	{
 		$this->addEditorForm = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -63,7 +63,7 @@ class ConferenceCRUDModel extends CRUDModel
 		$this->addEditorForm->fields["__operation"]->value = "insert_conference_author";
 	}
 
-	private function createConference()
+	private function createConference(): void
 	{
 		$this->constructConferenceForm();
 
@@ -73,7 +73,7 @@ class ConferenceCRUDModel extends CRUDModel
 		$this->form->importValues($row);
 	}
 
-	private function insertConference()
+	private function insertConference(): void
 	{
 		$this->constructConferenceForm();
 		$this->form->importValues($_REQUEST);
@@ -88,7 +88,7 @@ class ConferenceCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewConferenceProperties()
+	private function viewConferenceProperties(): void
 	{
 		/* Query the properties of the requested conference and construct a form from it */
 		$this->constructConferenceForm();
@@ -106,12 +106,12 @@ class ConferenceCRUDModel extends CRUDModel
 			$this->form->importValues($row);
 
 			/* Construct a table containing the editors for this form */
-			function composeAuthorLink(KeyLinkField $field, Form $form)
+			function composeAuthorLink(KeyLinkField $field, Form $form): string
 			{
 				return $_SERVER["SCRIPT_NAME"]."/authors/".$field->value;
 			}
 
-			function deleteConferenceAuthorLink(Form $form)
+			function deleteConferenceAuthorLink(Form $form): string
 			{
 				return $_SERVER['PHP_SELF']."?__operation=delete_conference_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value.AnchorRow::composePreviousRowParameter($form);
 			}
@@ -127,12 +127,12 @@ class ConferenceCRUDModel extends CRUDModel
 			$this->editorsTable->stmt = ConferenceEntity::queryEditors($this->dbh, $this->keyFields['conferenceId']->value);
 
 			/* Construct a table containing the papers for this conference */
-			function composePaperLink(KeyLinkField $field, Form $form)
+			function composePaperLink(KeyLinkField $field, Form $form): string
 			{
 				return $_SERVER["PHP_SELF"]."/papers/".$field->value;
 			}
 
-			function deletePaperLink(Form $form)
+			function deletePaperLink(Form $form): string
 			{
 				return $_SERVER['PHP_SELF']."/papers/".$form->fields["PAPER_ID"]->value."?__operation=delete_paper".AnchorRow::composePreviousRowParameter($form);
 			}
@@ -151,14 +151,14 @@ class ConferenceCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewConference()
+	private function viewConference(): void
 	{
 		$this->viewConferenceProperties();
 		/* Construct a form that can be used to add editors */
 		$this->constructAddEditorForm();
 	}
 
-	private function updateConference()
+	private function updateConference(): void
 	{
 		$this->constructConferenceForm();
 		$this->form->importValues($_REQUEST);
@@ -173,14 +173,14 @@ class ConferenceCRUDModel extends CRUDModel
 		}
 	}
 
-	private function deleteConference()
+	private function deleteConference(): void
 	{
 		ConferenceEntity::remove($this->dbh, $this->keyFields['conferenceId']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 
-	private function insertConferenceAuthor()
+	private function insertConferenceAuthor(): void
 	{
 		$this->constructAddEditorForm();
 		$this->addEditorForm->importValues($_REQUEST);
@@ -196,7 +196,7 @@ class ConferenceCRUDModel extends CRUDModel
 			$this->viewConferenceProperties();
 	}
 
-	private function deleteConferenceAuthor()
+	private function deleteConferenceAuthor(): void
 	{
 		$authorIdField = new TextField("Id", true);
 		$authorIdField->value = $_REQUEST["AUTHOR_ID"];
@@ -211,7 +211,7 @@ class ConferenceCRUDModel extends CRUDModel
 			throw new Exception("Invalid author id!");
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

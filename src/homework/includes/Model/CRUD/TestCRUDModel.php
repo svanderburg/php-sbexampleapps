@@ -15,11 +15,11 @@ use SBExampleApps\Homework\Model\Entity\TestEntity;
 
 class TestCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -27,7 +27,7 @@ class TestCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	private function constructTestForm()
+	private function constructTestForm(): void
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -36,7 +36,7 @@ class TestCRUDModel extends CRUDModel
 		));
 	}
 
-	private function createTest()
+	private function createTest(): void
 	{
 		$this->constructTestForm();
 
@@ -46,7 +46,7 @@ class TestCRUDModel extends CRUDModel
 		$this->form->importValues($row);
 	}
 
-	private function insertTest()
+	private function insertTest(): void
 	{
 		$this->constructTestForm();
 		$this->form->importValues($_REQUEST);
@@ -61,7 +61,7 @@ class TestCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewTest()
+	private function viewTest(): void
 	{
 		/* Query the properties of the requested test and construct a form and table from it */
 		$this->constructTestForm();
@@ -79,12 +79,12 @@ class TestCRUDModel extends CRUDModel
 			$this->form->importValues($row);
 
 			/* Construct a table containing the questions for this form */
-			function composeQuestionLink(KeyLinkField $field, Form $form)
+			function composeQuestionLink(KeyLinkField $field, Form $form): string
 			{
 				return $_SERVER["PHP_SELF"]."/questions/".$field->value;
 			}
 
-			function deleteQuestionLink(Form $form)
+			function deleteQuestionLink(Form $form): string
 			{
 				return $_SERVER['PHP_SELF']."/questions/".$form->fields['QUESTION_ID']->value."?__operation=delete_question".AnchorRow::composePreviousRowParameter($form);
 			}
@@ -102,7 +102,7 @@ class TestCRUDModel extends CRUDModel
 		}
 	}
 
-	private function updateTest()
+	private function updateTest(): void
 	{
 		$this->constructTestForm();
 		$this->form->importValues($_REQUEST);
@@ -117,14 +117,14 @@ class TestCRUDModel extends CRUDModel
 		}
 	}
 
-	private function deleteTest()
+	private function deleteTest(): void
 	{
 		TestEntity::remove($this->dbh, $this->keyFields['testId']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

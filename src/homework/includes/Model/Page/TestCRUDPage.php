@@ -3,6 +3,7 @@ namespace SBExampleApps\Homework\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Content\Contents;
 use SBData\Model\Field\TextField;
+use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Homework\Model\CRUD\QuestionCRUDModel;
@@ -10,11 +11,11 @@ use SBExampleApps\Homework\Model\CRUD\TestCRUDModel;
 
 class TestCRUDPage extends StaticContentCRUDPage
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = null)
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
 	{
 		parent::__construct("Test",
 			/* Key fields */
@@ -37,7 +38,7 @@ class TestCRUDPage extends StaticContentCRUDPage
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	public function constructCRUDModel()
+	public function constructCRUDModel(): CRUDModel
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{
@@ -54,7 +55,7 @@ class TestCRUDPage extends StaticContentCRUDPage
 			return new TestCRUDModel($this, $this->dbh);
 	}
 
-	public function checkAccessibility()
+	public function checkAccessibility(): bool
 	{
 		return $this->authorizationManager->authenticated;
 	}

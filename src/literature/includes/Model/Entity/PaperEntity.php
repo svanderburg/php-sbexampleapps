@@ -2,10 +2,11 @@
 namespace SBExampleApps\Literature\Model\Entity;
 use Exception;
 use PDO;
+use PDOStatement;
 
 class PaperEntity
 {
-	public static function queryAll(PDO $dbh, $conferenceId)
+	public static function queryAll(PDO $dbh, int $conferenceId): PDOStatement
 	{
 		$stmt = $dbh->prepare("select PAPER_ID, Title, Date, URL, Comment from paper where CONFERENCE_ID = ? order by PAPER_ID");
 		if(!$stmt->execute(array($conferenceId)))
@@ -14,7 +15,7 @@ class PaperEntity
 		return $stmt;
 	}
 
-	public static function queryOne(PDO $dbh, $paperId, $conferenceId)
+	public static function queryOne(PDO $dbh, int $paperId, int $conferenceId): PDOStatement
 	{
 		$stmt = $dbh->prepare("select * from paper where PAPER_ID = ? and CONFERENCE_ID = ?");
 		if(!$stmt->execute(array($paperId, $conferenceId)))
@@ -23,7 +24,7 @@ class PaperEntity
 		return $stmt;
 	}
 
-	public static function searchByKeyword(PDO $dbh, $keyword)
+	public static function searchByKeyword(PDO $dbh, string $keyword): PDOStatement
 	{
 		$stmt = $dbh->prepare("select distinct paper.PAPER_ID, paper.Title, paper.Date, paper.URL, paper.Comment, conferences.CONFERENCE_ID, conferences.Name as ConferenceName, publisher.PUBLISHER_ID, publisher.Name as PublisherName ".
 			"from paper ".
@@ -50,7 +51,7 @@ class PaperEntity
 		return $stmt;
 	}
 
-	public static function queryOneForReference(PDO $dbh, $paperId, $conferenceId)
+	public static function queryOneForReference(PDO $dbh, int $paperId, int $conferenceId): PDOStatement
 	{
 		$stmt = $dbh->prepare("select paper.PAPER_ID, paper.Title as PaperTitle, paper.Date as PaperDate, paper.Abstract as PaperAbstract, paper.URL as PaperURL, paper.Comment as PaperComment, conferences.Name as ConferenceName, conferences.Homepage as ConferenceHomepage, conferences.Location as ConferenceLocation, publisher.Name as PublisherName ".
 			"from paper ".
@@ -63,7 +64,7 @@ class PaperEntity
 		return $stmt;
 	}
 
-	public static function queryAuthors(PDO $dbh, $paperId, $conferenceId)
+	public static function queryAuthors(PDO $dbh, int $paperId, int $conferenceId): PDOStatement
 	{
 		$stmt = $dbh->prepare("select author.AUTHOR_ID, author.LastName, author.FirstName ".
 			"from author ".
@@ -76,7 +77,7 @@ class PaperEntity
 		return $stmt;
 	}
 
-	public static function queryAuthorsSummary(PDO $dbh, $paperId, $conferenceId)
+	public static function queryAuthorsSummary(PDO $dbh, int $paperId, int $conferenceId): PDOStatement
 	{
 		$stmt = $dbh->prepare('select concat(author.FirstName, " ", author.LastName) as AuthorName, author.Homepage '.
 			"from paper ".
@@ -91,7 +92,7 @@ class PaperEntity
 		return $stmt;
 	}
 
-	public static function nextPaperId(PDO $dbh, $conferenceId)
+	public static function nextPaperId(PDO $dbh, int $conferenceId): int
 	{
 		$stmt = $dbh->prepare("select MAX(PAPER_ID) from paper where CONFERENCE_ID = ?");
 		if(!$stmt->execute(array($conferenceId)))
@@ -103,10 +104,10 @@ class PaperEntity
 		if(($row = $stmt->fetch()) === false)
 			return 1;
 		else
-			return $row[0] + 1;
+			return (int)($row[0] + 1);
 	}
 
-	public static function insert(PDO $dbh, array $paper, $conferenceId)
+	public static function insert(PDO $dbh, array $paper, int $conferenceId): int
 	{
 		$dbh->beginTransaction();
 
@@ -124,7 +125,7 @@ class PaperEntity
 		return $paperId;
 	}
 	
-	public static function update(PDO $dbh, array $paper, $paperId, $conferenceId)
+	public static function update(PDO $dbh, array $paper, int $paperId, int $conferenceId): void
 	{
 		$stmt = $dbh->prepare("update paper set ".
 			"Title = ?, ".
@@ -138,14 +139,14 @@ class PaperEntity
 			throw new Exception($stmt->errorInfo()[2]);
 	}
 	
-	public static function remove(PDO $dbh, $paperId, $conferenceId)
+	public static function remove(PDO $dbh, int $paperId, int $conferenceId): void
 	{
 		$stmt = $dbh->prepare("delete from paper where PAPER_ID = ? and CONFERENCE_ID = ?");
 		if(!$stmt->execute(array($paperId, $conferenceId)))
 			throw new Exception($stmt->errorInfo()[2]);
 	}
 
-	public static function removePDF(PDO $dbh, $paperId, $conferenceId)
+	public static function removePDF(PDO $dbh, int $paperId, int $conferenceId): void
 	{
 		$stmt = $dbh->prepare("update paper set ".
 			"hasPDF = 0 ".
@@ -154,7 +155,7 @@ class PaperEntity
 			throw new Exception($stmt->errorInfo()[2]);
 	}
 
-	public static function insertAuthor(PDO $dbh, $paperId, $conferenceId, $authorId)
+	public static function insertAuthor(PDO $dbh, int $paperId, int $conferenceId, int $authorId): void
 	{
 		$stmt = $dbh->prepare("insert into paper_author values (?, ?, ?)");
 
@@ -162,7 +163,7 @@ class PaperEntity
 			throw new Exception($stmt->errorInfo()[2]);
 	}
 
-	public static function removeAuthor(PDO $dbh, $paperId, $conferenceId, $authorId)
+	public static function removeAuthor(PDO $dbh, int $paperId, int $conferenceId, int $authorId): void
 	{
 		$stmt = $dbh->prepare("delete from paper_author where PAPER_ID = ? and CONFERENCE_ID = ? and AUTHOR_ID = ?");
 

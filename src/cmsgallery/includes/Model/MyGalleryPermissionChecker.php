@@ -5,14 +5,14 @@ use SBExampleApps\Auth\Model\AuthorizationManager;
 
 class MyGalleryPermissionChecker implements GalleryPermissionChecker
 {
-	private $authorizationManager;
+	private AuthorizationManager $authorizationManager;
 
 	public function __construct(AuthorizationManager $authorizationManager)
 	{
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	public function checkWritePermissions()
+	public function checkWritePermissions(): bool
 	{
 		return $this->authorizationManager->authenticated;
 	}

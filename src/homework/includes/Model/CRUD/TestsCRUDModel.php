@@ -12,9 +12,9 @@ use SBExampleApps\Homework\Model\Entity\TestEntity;
 
 class TestsCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -22,14 +22,14 @@ class TestsCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
-		function composeTestLink(KeyLinkField $field, Form $form)
+		function composeTestLink(KeyLinkField $field, Form $form): string
 		{
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
-		function deleteTestLink(Form $form)
+		function deleteTestLink(Form $form): string
 		{
 			return $_SERVER["SCRIPT_NAME"]."/tests/".$form->fields["TEST_ID"]->value."?__operation=delete_test".AnchorRow::composePreviousRowParameter($form);
 		}

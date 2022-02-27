@@ -6,13 +6,13 @@ use SBExampleApps\Auth\Model\AuthorizationManager;
 
 class AuthorizationPage extends HiddenStaticContentPage
 {
-	private $authorizationManager;
+	private AuthorizationManager $authorizationManager;
 
-	private $loginTitle;
+	private string $loginTitle;
 
-	private $logoutTitle;
+	private string $logoutTitle;
 
-	public function __construct(AuthorizationManager $authorizationManager, $loginTitle, $logoutTitle, array $subPages = null)
+	public function __construct(AuthorizationManager $authorizationManager, string $loginTitle, string $logoutTitle, array $subPages = array())
 	{
 		parent::__construct("Authorization", new Contents(dirname(__FILE__)."/../../View/HTML/auth.php",  dirname(__FILE__)."/../../Controller/auth.php"), $subPages);
 		unset($this->title); // Allows the __get function to dynamically provide a title

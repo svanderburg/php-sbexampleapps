@@ -12,13 +12,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "6452dfc654e8a58c867ffe59cd06d734b6ea9286"
+                "reference": "e316850043401eb9f6edb64df4b1fb63db690691"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
-                "phpdocumentor/phpdocumentor": "2.9.x",
-                "phpunit/phpunit": "4.x"
+                "phpunit/phpunit": "9.x"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -64,7 +64,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2018-06-30T13:56:42+00:00"
+            "time": "2022-02-26T16:59:04+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -72,12 +72,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sblayout.git",
-                "reference": "44493847ebf631b52cf81607e2eb227c65390acb"
+                "reference": "7b56951ac05dc73e57499c68680dd140d944e711"
             },
             "require-dev": {
-                "phpdocumentor/phpdocumentor": "2.9.x",
-                "phpunit/phpunit": "5.x"
+                "phpunit/phpunit": "9.x"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -112,7 +112,7 @@
                 }
             ],
             "description": "My custom website layout organiser framework for PHP",
-            "time": "2018-06-30T13:56:25+00:00"
+            "time": "2022-02-23T21:24:14+00:00"
         }
     ],
     "packages-dev": [],
@@ -125,5 +125,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
 }

@@ -2,10 +2,11 @@
 namespace SBExampleApps\Users\Model\Entity;
 use Exception;
 use PDO;
+use PDOStatement;
 
 class UserEntity
 {
-	public static function queryAll(PDO $dbh)
+	public static function queryAll(PDO $dbh): PDOStatement
 	{
 		$stmt = $dbh->prepare("select Username, FullName from user order by Username");
 		if(!$stmt->execute())
@@ -14,7 +15,7 @@ class UserEntity
 		return $stmt;
 	}
 
-	public static function queryOne(PDO $dbh, $userName)
+	public static function queryOne(PDO $dbh, string $userName): PDOStatement
 	{
 		$stmt = $dbh->prepare("select Username, FullName from user where Username = ?");
 		if(!$stmt->execute(array($userName)))
@@ -23,14 +24,14 @@ class UserEntity
 		return $stmt;
 	}
 
-	public static function insert(PDO $dbh, array $user)
+	public static function insert(PDO $dbh, array $user): void
 	{
 		$stmt = $dbh->prepare("insert into user values (?, ?, ?)");
 		if(!$stmt->execute(array($user['Username'], password_hash($user['Password'], PASSWORD_DEFAULT), $user['FullName'])))
 			throw new Exception($stmt->errorInfo()[2]);
 	}
 	
-	public static function update(PDO $dbh, array $user, $userName)
+	public static function update(PDO $dbh, array $user, string $userName): void
 	{
 		if(array_key_exists("Password", $user) && $user["Password"] !== "")
 		{
@@ -53,14 +54,14 @@ class UserEntity
 		}
 	}
 	
-	public static function remove(PDO $dbh, $userName)
+	public static function remove(PDO $dbh, string $userName): void
 	{
 		$stmt = $dbh->prepare("delete from user where Username = ?");
 		if(!$stmt->execute(array($userName)))
 			throw new Exception($stmt->errorInfo()[2]);
 	}
 
-	public static function queryAllAuthorizedSystems(PDO $dbh, $userName)
+	public static function queryAllAuthorizedSystems(PDO $dbh, string $userName): PDOStatement
 	{
 		$stmt = $dbh->prepare("select system.SYSTEM_ID, system.Description ".
 			"from user_system ".
@@ -73,7 +74,7 @@ class UserEntity
 		return $stmt;
 	}
 
-	public static function insertAuthorizedSystem(PDO $dbh, $userName, $systemId)
+	public static function insertAuthorizedSystem(PDO $dbh, string $userName, string $systemId): void
 	{
 		$stmt = $dbh->prepare("insert into user_system values (?, ?)");
 
@@ -81,7 +82,7 @@ class UserEntity
 			throw new Exception($stmt->errorInfo()[2]);
 	}
 
-	public static function removeAuthorizedSystem(PDO $dbh, $userName, $systemId)
+	public static function removeAuthorizedSystem(PDO $dbh, string $userName, string $systemId): void
 	{
 		$stmt = $dbh->prepare("delete from user_system where Username = ? and SYSTEM_ID = ?");
 

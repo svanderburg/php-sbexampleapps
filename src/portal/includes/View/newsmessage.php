@@ -2,7 +2,7 @@
 namespace SBExampleApps\Portal\View;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 
-function displayNewsMessage(array $newsMessage, AuthorizationManager $authorizationManager)
+function displayNewsMessage(array $newsMessage, AuthorizationManager $authorizationManager): void
 {
 	?>
 	<table style="width: 100%;">

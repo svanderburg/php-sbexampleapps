@@ -2,10 +2,11 @@
 namespace SBExampleApps\Literature\Model\Entity;
 use Exception;
 use PDO;
+use PDOStatement;
 
 class AuthorEntity
 {
-	public static function queryAll(PDO $dbh)
+	public static function queryAll(PDO $dbh): PDOStatement
 	{
 		$stmt = $dbh->prepare("select * from author order by AUTHOR_ID");
 		if(!$stmt->execute())
@@ -14,7 +15,7 @@ class AuthorEntity
 		return $stmt;
 	}
 
-	public static function queryOne(PDO $dbh, $id)
+	public static function queryOne(PDO $dbh, int $id): PDOStatement
 	{
 		$stmt = $dbh->prepare("select * from author where AUTHOR_ID = ?");
 		if(!$stmt->execute(array($id)))
@@ -23,7 +24,7 @@ class AuthorEntity
 		return $stmt;
 	}
 
-	public static function querySummary(PDO $dbh)
+	public static function querySummary(PDO $dbh): PDOStatement
 	{
 		$stmt = $dbh->prepare("select AUTHOR_ID, LastName from author order by LastName");
 		if(!$stmt->execute())
@@ -32,7 +33,7 @@ class AuthorEntity
 		return $stmt;
 	}
 
-	public static function nextAuthorId(PDO $dbh)
+	public static function nextAuthorId(PDO $dbh): int
 	{
 		$stmt = $dbh->prepare("select MAX(AUTHOR_ID) from author");
 		if(!$stmt->execute())
@@ -44,10 +45,10 @@ class AuthorEntity
 		if(($row = $stmt->fetch()) === false)
 			return 1;
 		else
-			return $row[0] + 1;
+			return (int)($row[0] + 1);
 	}
 
-	public static function insert(PDO $dbh, array $author)
+	public static function insert(PDO $dbh, array $author): int
 	{
 		$dbh->beginTransaction();
 
@@ -65,7 +66,7 @@ class AuthorEntity
 		return $authorId;
 	}
 	
-	public static function update(PDO $dbh, array $author, $id)
+	public static function update(PDO $dbh, array $author, int $id): void
 	{
 		$stmt = $dbh->prepare("update author set ".
 			"FirstName = ?, ".
@@ -76,7 +77,7 @@ class AuthorEntity
 			throw new Exception($stmt->errorInfo()[2]);
 	}
 	
-	public static function remove(PDO $dbh, $id)
+	public static function remove(PDO $dbh, int $id): void
 	{
 		$stmt = $dbh->prepare("delete from author where AUTHOR_ID = ?");
 		if(!$stmt->execute(array($id)))

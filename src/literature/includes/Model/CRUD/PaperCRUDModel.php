@@ -23,17 +23,17 @@ use SBExampleApps\Literature\Model\FileSet\PaperFileSet;
 
 class PaperCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
-	public $addAuthorForm = null;
+	public ?Form $addAuthorForm = null;
 
-	public $authorsTable = null;
+	public ?DBTable $authorsTable = null;
 
-	public $hasPDF = false;
+	public bool $hasPDF = false;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh, AuthorizationManager $authorizationManager)
 	{
@@ -42,7 +42,7 @@ class PaperCRUDModel extends CRUDModel
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	private function constructPaperForm()
+	private function constructPaperForm(): void
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -56,7 +56,7 @@ class PaperCRUDModel extends CRUDModel
 		));
 	}
 
-	private function constructAddAuthorForm()
+	private function constructAddAuthorForm(): void
 	{
 		$this->addAuthorForm = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -66,7 +66,7 @@ class PaperCRUDModel extends CRUDModel
 		$this->addAuthorForm->fields["__operation"]->value = "insert_paper_author";
 	}
 
-	private function createPaper()
+	private function createPaper(): void
 	{
 		$this->constructPaperForm();
 
@@ -76,7 +76,7 @@ class PaperCRUDModel extends CRUDModel
 		$this->form->importValues($row);
 	}
 
-	private function viewPaperProperties()
+	private function viewPaperProperties(): void
 	{
 		$this->constructPaperForm();
 
@@ -93,12 +93,12 @@ class PaperCRUDModel extends CRUDModel
 			$row['__operation'] = "update_paper";
 			$this->form->importValues($row);
 
-			function composeAuthorLink(KeyLinkField $field, Form $form)
+			function composeAuthorLink(KeyLinkField $field, Form $form): string
 			{
 				return $_SERVER["SCRIPT_NAME"]."/authors/".$field->value;
 			}
 
-			function deletePaperAuthorLink(Form $form)
+			function deletePaperAuthorLink(Form $form): string
 			{
 				return $_SERVER['PHP_SELF']."?__operation=delete_paper_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value.AnchorRow::composePreviousRowParameter($form);
 			}
@@ -118,14 +118,14 @@ class PaperCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewPaper()
+	private function viewPaper(): void
 	{
 		$this->viewPaperProperties();
 		/* Construct a form that can be used to add authors */
 		$this->constructAddAuthorForm();
 	}
 
-	private function insertPaper()
+	private function insertPaper(): void
 	{
 		$this->constructPaperForm();
 		$this->form->importValues($_REQUEST);
@@ -145,7 +145,7 @@ class PaperCRUDModel extends CRUDModel
 		}
 	}
 
-	private function updatePaper()
+	private function updatePaper(): void
 	{
 		$this->constructPaperForm();
 		$this->form->importValues($_REQUEST);
@@ -166,7 +166,7 @@ class PaperCRUDModel extends CRUDModel
 		}
 	}
 
-	private function deletePaper()
+	private function deletePaper(): void
 	{
 		PaperEntity::remove($this->dbh, $this->keyFields['paperId']->value, $this->keyFields['conferenceId']->value);
 		PaperFileSet::removePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $this->keyFields['paperId']->value, $this->keyFields['conferenceId']->value);
@@ -174,7 +174,7 @@ class PaperCRUDModel extends CRUDModel
 		exit();
 	}
 
-	private function insertPaperAuthor()
+	private function insertPaperAuthor(): void
 	{
 		$this->constructAddAuthorForm();
 		$this->addAuthorForm->importValues($_REQUEST);
@@ -190,7 +190,7 @@ class PaperCRUDModel extends CRUDModel
 			$this->viewPaperProperties();
 	}
 
-	private function deletePaperAuthor()
+	private function deletePaperAuthor(): void
 	{
 		$authorIdField = new TextField("Id", true);
 		$authorIdField->value = $_REQUEST["AUTHOR_ID"];
@@ -205,7 +205,7 @@ class PaperCRUDModel extends CRUDModel
 			throw new Exception("Invalid author id!");
 	}
 
-	private function deletePaperPDF()
+	private function deletePaperPDF(): void
 	{
 		PaperEntity::removePDF($this->dbh, $this->keyFields['paperId']->value, $this->keyFields['conferenceId']->value);
 		PaperFileSet::removePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $this->keyFields['paperId']->value, $this->keyFields['conferenceId']->value);
@@ -213,7 +213,7 @@ class PaperCRUDModel extends CRUDModel
 		exit();
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

@@ -13,11 +13,11 @@ use SBExampleApps\Literature\Model\Entity\PublisherEntity;
 
 class PublisherCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh, AuthorizationManager $authorizationManager)
 	{
@@ -26,7 +26,7 @@ class PublisherCRUDModel extends CRUDModel
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	private function constructPublisherForm()
+	private function constructPublisherForm(): void
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -35,7 +35,7 @@ class PublisherCRUDModel extends CRUDModel
 		));
 	}
 
-	private function createPublisher()
+	private function createPublisher(): void
 	{
 		$this->constructPublisherForm();
 
@@ -45,7 +45,7 @@ class PublisherCRUDModel extends CRUDModel
 		$this->form->importValues($row);
 	}
 
-	private function insertPublisher()
+	private function insertPublisher(): void
 	{
 		$this->constructPublisherForm();
 		$this->form->importValues($_REQUEST);
@@ -60,7 +60,7 @@ class PublisherCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewPublisher()
+	private function viewPublisher(): void
 	{
 		/* Query the properties of the requested publisher and construct a form from it */
 		$this->constructPublisherForm();
@@ -79,7 +79,7 @@ class PublisherCRUDModel extends CRUDModel
 		}
 	}
 
-	private function updatePublisher()
+	private function updatePublisher(): void
 	{
 		$this->constructPublisherForm();
 		$this->form->importValues($_REQUEST);
@@ -94,14 +94,14 @@ class PublisherCRUDModel extends CRUDModel
 		}
 	}
 
-	private function deletePublisher()
+	private function deletePublisher(): void
 	{
 		PublisherEntity::remove($this->dbh, $this->keyFields['publisherId']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

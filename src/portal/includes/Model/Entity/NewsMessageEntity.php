@@ -2,10 +2,11 @@
 namespace SBExampleApps\Portal\Model\Entity;
 use Exception;
 use PDO;
+use PDOStatement;
 
 class NewsMessageEntity
 {
-	public static function queryAll(PDO $dbh, $page)
+	public static function queryAll(PDO $dbh, int $page): PDOStatement
 	{
 		$offset = intval($page * 10);
 
@@ -18,7 +19,7 @@ class NewsMessageEntity
 		return $stmt;
 	}
 
-	public static function queryOne(PDO $dbh, $id)
+	public static function queryOne(PDO $dbh, int $id): PDOStatement
 	{
 		$stmt = $dbh->prepare("select * from newsmessages where MESSAGE_ID = ?");
 		if(!$stmt->execute(array($id)))
@@ -27,7 +28,7 @@ class NewsMessageEntity
 		return $stmt;
 	}
 
-	public static function queryNumOfNewsMessages(PDO $dbh)
+	public static function queryNumOfNewsMessages(PDO $dbh): PDOStatement
 	{
 		$stmt = $dbh->prepare("select count(*) from newsmessages");
 		if(!$stmt->execute())
@@ -36,7 +37,7 @@ class NewsMessageEntity
 		return $stmt;
 	}
 
-	public static function queryLatestDate(PDO $dbh)
+	public static function queryLatestDate(PDO $dbh): PDOStatement
 	{
 		$stmt = $dbh->prepare("select MAX(Date) from newsmessages");
 		if(!$stmt->execute())
@@ -45,7 +46,7 @@ class NewsMessageEntity
 		return $stmt;
 	}
 
-	public static function nextMessageId(PDO $dbh)
+	public static function nextMessageId(PDO $dbh): int
 	{
 		$stmt = $dbh->prepare("select MAX(MESSAGE_ID) from newsmessages");
 		if(!$stmt->execute())
@@ -57,10 +58,10 @@ class NewsMessageEntity
 		if(($row = $stmt->fetch()) === false)
 			return 1;
 		else
-			return $row[0] + 1;
+			return (int)($row[0] + 1);
 	}
 
-	public static function insert(PDO $dbh, array $newsMessage)
+	public static function insert(PDO $dbh, array $newsMessage): int
 	{
 		$dbh->beginTransaction();
 
@@ -78,7 +79,7 @@ class NewsMessageEntity
 		return $messageId;
 	}
 	
-	public static function update(PDO $dbh, array $newsMessage, $id)
+	public static function update(PDO $dbh, array $newsMessage, string $id): void
 	{
 		$stmt = $dbh->prepare("update newsmessages set ".
 			"Title = ?, ".
@@ -89,7 +90,7 @@ class NewsMessageEntity
 			throw new Exception($stmt->errorInfo()[2]);
 	}
 	
-	public static function remove(PDO $dbh, $id)
+	public static function remove(PDO $dbh, string $id): void
 	{
 		$stmt = $dbh->prepare("delete from newsmessages where MESSAGE_ID = ?");
 		if(!$stmt->execute(array($id)))

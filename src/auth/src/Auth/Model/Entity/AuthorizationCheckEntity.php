@@ -5,7 +5,7 @@ use PDO;
 
 class AuthorizationCheckEntity
 {
-	public static function checkAuthorization(PDO $dbh, $userName, $password, $systemId)
+	public static function checkAuthorization(PDO $dbh, string $userName, string $password, string $systemId)
 	{
 		$stmt = $dbh->prepare("select user.Password ".
 			"from user ".

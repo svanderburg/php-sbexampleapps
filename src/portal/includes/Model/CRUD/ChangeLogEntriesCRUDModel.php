@@ -16,15 +16,15 @@ use SBExampleApps\Portal\Model\Entity\ChangeLogEntriesEntity;
 
 class ChangeLogEntriesCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $addEntryForm = null;
+	public ?Form $addEntryForm = null;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
-	public $submittedForm = null;
+	public ?Form $submittedForm = null;
 
-	public $authorizationManager;
+	public AuthorizationManager $authorizationManager;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh, AuthorizationManager $authorizationManager)
 	{
@@ -33,9 +33,9 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 		$this->authorizationManager = $authorizationManager;
 	}
 
-	private function constructChangeLogEntriesTable()
+	private function constructChangeLogEntriesTable(): void
 	{
-		function deleteChangeLogLink(Form $form)
+		function deleteChangeLogLink(Form $form): string
 		{
 			return "?__operation=remove_changelogentry&amp;LOG_ID=".$form->fields["LOG_ID"]->value.AnchorRow::composePreviousRowParameter($form);
 		}
@@ -50,7 +50,7 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 		));
 	}
 
-	private function constructAddEntryForm()
+	private function constructAddEntryForm(): void
 	{
 		$this->addEntryForm = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -60,20 +60,20 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 		));
 	}
 
-	private function viewChangeLogEntries()
+	private function viewChangeLogEntries(): void
 	{
 		$this->constructChangeLogEntriesTable();
 		$this->table->stmt = ChangeLogEntriesEntity::queryAll($this->dbh);
 	}
 
-	private function createChangeLogEntry()
+	private function createChangeLogEntry(): void
 	{
 		$this->constructAddEntryForm();
 		$row = array("__operation" => "insert_changelogentry");
 		$this->addEntryForm->importValues($row);
 	}
 
-	private function insertChangeLogEntry()
+	private function insertChangeLogEntry(): void
 	{
 		$this->constructAddEntryForm();
 		$this->addEntryForm->importValues($_REQUEST);
@@ -88,7 +88,7 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 		}
 	}
 
-	private function updateChangeLogEntry()
+	private function updateChangeLogEntry(): void
 	{
 		$this->constructChangeLogEntriesTable();
 
@@ -107,7 +107,7 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 		$this->table->stmt = ChangeLogEntriesEntity::queryAll($this->dbh);
 	}
 
-	private function removeChangeLogEntry()
+	private function removeChangeLogEntry(): void
 	{
 		$logIdField = new TextField("Id", true);
 		$logIdField->value = $_REQUEST["LOG_ID"];
@@ -125,7 +125,7 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 			throw new Exceptions("The keys are not valid!");
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if($this->authorizationManager->authenticated) // Write operations are only allowed when authenticated
 		{

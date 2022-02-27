@@ -15,11 +15,11 @@ use SBExampleApps\Literature\Model\Entity\PaperEntity;
 
 class SearchCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -27,19 +27,19 @@ class SearchCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	private function constructSearchForm()
+	private function constructSearchForm(): void
 	{
 		$this->form = new Form(array(
 			"keyword" => new TextField("Keyword", true, 20, 255),
 		));
 	}
 
-	private function viewSearchForm()
+	private function viewSearchForm(): void
 	{
 		$this->constructSearchForm();
 	}
 
-	private function viewSearchResults()
+	private function viewSearchResults(): void
 	{
 		$this->constructSearchForm();
 		$this->form->importValues($_REQUEST);
@@ -47,17 +47,17 @@ class SearchCRUDModel extends CRUDModel
 
 		if($this->form->checkValid())
 		{
-			function composePaperLink(KeyLinkField $field, Form $form)
+			function composePaperLink(KeyLinkField $field, Form $form): string
 			{
 				return $_SERVER["SCRIPT_NAME"]."/conferences/".$form->fields["CONFERENCE_ID"]->value."/papers/".$field->value;
 			}
 
-			function composeConferenceLink(KeyLinkField $field, Form $form)
+			function composeConferenceLink(KeyLinkField $field, Form $form): string
 			{
 				return $_SERVER["SCRIPT_NAME"]."/conferences/".$form->fields["CONFERENCE_ID"]->value;
 			}
 
-			function composePublisherLink(KeyLinkField $field, Form $form)
+			function composePublisherLink(KeyLinkField $field, Form $form): string
 			{
 				return $_SERVER["SCRIPT_NAME"]."/publishers/".$form->fields["PUBLISHER_ID"]->value;
 			}
@@ -78,7 +78,7 @@ class SearchCRUDModel extends CRUDModel
 		}
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("keyword", $_REQUEST))
 			$this->viewSearchResults();

@@ -10,9 +10,9 @@ use SBExampleApps\Homework\Model\Objects\Exam;
 
 class ExamCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -20,7 +20,7 @@ class ExamCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	private function constructTestForm()
+	private function constructTestForm(): void
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -29,7 +29,7 @@ class ExamCRUDModel extends CRUDModel
 		));
 	}
 
-	private function displaySuccessiveQuestion()
+	private function displaySuccessiveQuestion(): void
 	{
 		if(($row = $_SESSION["exam"]->openSuccessiveQuestion($this->dbh)) !== false)
 		{
@@ -39,14 +39,14 @@ class ExamCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewExam()
+	private function viewExam(): void
 	{
 		$this->constructTestForm();
 		$_SESSION["exam"] = new Exam($this->keyFields["testId"]->value);
 		$this->displaySuccessiveQuestion();
 	}
 
-	private function submitAnswer()
+	private function submitAnswer(): void
 	{
 		$this->constructTestForm();
 		$this->form->importValues($_REQUEST);
@@ -61,7 +61,7 @@ class ExamCRUDModel extends CRUDModel
 		}
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(session_status() == PHP_SESSION_NONE)
 			session_start();

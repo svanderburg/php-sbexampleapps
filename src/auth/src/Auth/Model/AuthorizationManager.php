@@ -5,11 +5,11 @@ use SBExampleApps\Auth\Model\Entity\AuthorizationCheckEntity;
 
 class AuthorizationManager
 {
-	private $dbh;
+	private PDO $dbh;
 
-	private $systemId;
+	private string $systemId;
 
-	public $authenticated;
+	public bool $authenticated;
 
 	public function __construct(PDO $dbh, $systemId)
 	{
@@ -18,7 +18,7 @@ class AuthorizationManager
 		$this->authenticated = false;
 	}
 
-	public function checkCredentialsIfLoggedIn()
+	public function checkCredentialsIfLoggedIn(): void
 	{
 		if(array_key_exists("PHPSESSID", $_COOKIE))
 		{
@@ -32,7 +32,7 @@ class AuthorizationManager
 		}
 	}
 
-	public function login(array $credentials)
+	public function login(array $credentials): void
 	{
 		$this->authenticated = AuthorizationCheckEntity::checkAuthorization($this->dbh, $credentials["Username"], $credentials["Password"], $this->systemId);
 
@@ -46,7 +46,7 @@ class AuthorizationManager
 		}
 	}
 
-	public function logout()
+	public function logout(): void
 	{
 		$params = session_get_cookie_params();
 		setcookie(session_name(), '', 0, $params['path'], $params['domain'], $params['secure'], isset($params['httponly']));

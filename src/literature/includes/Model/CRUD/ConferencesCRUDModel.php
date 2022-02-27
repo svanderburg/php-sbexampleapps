@@ -14,9 +14,9 @@ use SBExampleApps\Literature\Model\Entity\ConferenceEntity;
 
 class ConferencesCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -24,14 +24,14 @@ class ConferencesCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
-		function composeConferenceLink(KeyLinkField $field, Form $form)
+		function composeConferenceLink(KeyLinkField $field, Form $form): string
 		{
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
-		function deleteConferenceLink(Form $form)
+		function deleteConferenceLink(Form $form): string
 		{
 			return $_SERVER["SCRIPT_NAME"]."/conferences/".$form->fields["CONFERENCE_ID"]->value."?__operation=delete_conference".AnchorRow::composePreviousRowParameter($form);
 		}

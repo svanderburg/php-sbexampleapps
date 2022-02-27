@@ -2,7 +2,7 @@
 namespace SBExampleApps\Auth\View\HTML;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 
-function displayLoginStatus(AuthorizationManager $authorizationManager)
+function displayLoginStatus(AuthorizationManager $authorizationManager): void
 {
 	?>
 	<div id="login">
