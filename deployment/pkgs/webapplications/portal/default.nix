@@ -1,4 +1,4 @@
-{stdenv, lndir, pkgs, system}:
+{stdenv, lib, lndir, pkgs, system}:
 {portaldb, usersdb, ...}@interDeps:
 
 let
@@ -9,7 +9,7 @@ let
   };
 
   # Filter all web applications out of the inter dependencies
-  webappInterDeps = stdenv.lib.filter (serviceName:
+  webappInterDeps = lib.filter (serviceName:
     let
       service = builtins.getAttr serviceName interDeps;
     in
@@ -43,12 +43,12 @@ stdenv.mkDerivation {
 
         /* External application configuration */
         "externalApps" => array(
-            ${stdenv.lib.concatMapStrings (serviceName:
+            ${lib.concatMapStrings (serviceName:
               let
                 service = builtins.getAttr serviceName interDeps;
               in
               ''
-                "${service.name}" => new ExternalPage("${service.appName}", "http://${service.target.properties.hostname}${stdenv.lib.optionalString (service.target.container.port != 80) (":" + toString (service.target.container.port))}/${service.name}"),
+                "${service.name}" => new ExternalPage("${service.appName}", "http://${service.target.properties.hostname}${lib.optionalString (service.target.container ? port && service.target.container.port != 80) (":" + toString (service.target.container.port))}/${service.name}"),
               ''
             ) webappInterDeps}
         )
