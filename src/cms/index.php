@@ -20,7 +20,7 @@ require_once("includes/config.php");
 \SBLayout\View\HTML\setBaseURL();
 
 $usersDbh = new PDO($config["usersDbDsn"], $config["usersDbUsername"], $config["usersDbPassword"], array(
-	PDO::ATTR_PERSISTENT => true
+	//PDO::ATTR_PERSISTENT => true
 ));
 
 $authorizationManager = new AuthorizationManager($usersDbh, "cms");
@@ -29,7 +29,7 @@ $authorizationManager->checkCredentialsIfLoggedIn();
 $checker = new MyPagePermissionChecker($authorizationManager);
 
 $dbh = new PDO($config["dbDsn"], $config["dbUsername"], $config["dbPassword"], array(
-	PDO::ATTR_PERSISTENT => true
+	//PDO::ATTR_PERSISTENT => true
 ));
 
 $application = new Application(

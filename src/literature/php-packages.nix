@@ -13,10 +13,10 @@ let
     "svanderburg/php-sbbiblio" = {
       targetDir = "";
       src = fetchgit {
-        name = "svanderburg-php-sbbiblio-6812e3084050cd07785fb5a3f1ad558c79859a9e";
+        name = "svanderburg-php-sbbiblio-6d225403c4f8528fe2eea32904d0f752196cb095";
         url = "https://github.com/svanderburg/php-sbbiblio.git";
-        rev = "6812e3084050cd07785fb5a3f1ad558c79859a9e";
-        sha256 = "0845d3q13b5c37y6jxsx81bzk5yjlx3f8lp71a6bgv5qkkxaas0k";
+        rev = "6d225403c4f8528fe2eea32904d0f752196cb095";
+        sha256 = "06dxpi42qlz97wxlmfa19q9yhyyyxr8m5lx2yzsfwqacl1mbdgdb";
       };
     };
     "svanderburg/php-sbcrud" = {

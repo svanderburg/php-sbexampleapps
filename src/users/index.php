@@ -23,7 +23,7 @@ require_once("includes/config.php");
 \SBLayout\View\HTML\setBaseURL();
 
 $dbh = new PDO($config["dbDsn"], $config["dbUsername"], $config["dbPassword"], array(
-	PDO::ATTR_PERSISTENT => true
+	//PDO::ATTR_PERSISTENT => true
 ));
 
 $authorizationManager = new AuthorizationManager($dbh, "users");

@@ -7,7 +7,7 @@ use SBExampleApps\Portal\Model\Entity\NewsMessageEntity;
 require_once("includes/config.php");
 
 $dbh = new PDO($config["dbDsn"], $config["dbUsername"], $config["dbPassword"], array(
-	PDO::ATTR_PERSISTENT => true
+	//PDO::ATTR_PERSISTENT => true
 ));
 
 try

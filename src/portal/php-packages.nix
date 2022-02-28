@@ -13,10 +13,10 @@ let
     "svanderburg/php-sbcrud" = {
       targetDir = "";
       src = fetchgit {
-        name = "svanderburg-php-sbcrud-e28e621b0e01c8adea385ac18ceaa3ee68e67d54";
+        name = "svanderburg-php-sbcrud-675f40866c71df834075cdbf7ece5b333c35cdeb";
         url = "https://github.com/svanderburg/php-sbcrud.git";
-        rev = "e28e621b0e01c8adea385ac18ceaa3ee68e67d54";
-        sha256 = "1czrmr4rvgsda2gjn12pixbxixnfd0mp41904h77z67s1q1qj3hk";
+        rev = "675f40866c71df834075cdbf7ece5b333c35cdeb";
+        sha256 = "1r0khmgqwzizyb0fdfjrsdjijvngqdqr4643awx7dxmzbsdgy9k3";
       };
     };
     "svanderburg/php-sbdata" = {

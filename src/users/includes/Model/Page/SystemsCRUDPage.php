@@ -15,7 +15,7 @@ class SystemsCRUDPage extends DynamicContentCRUDPage
 
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, Page $dynamicSubPage = null)
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, Page $dynamicSubPage)
 	{
 		parent::__construct("Systems",
 			/* Parameter name */

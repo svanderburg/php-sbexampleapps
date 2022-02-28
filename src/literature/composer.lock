@@ -72,7 +72,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbbiblio.git",
-                "reference": "6812e3084050cd07785fb5a3f1ad558c79859a9e"
+                "reference": "6d225403c4f8528fe2eea32904d0f752196cb095"
             },
             "default-branch": true,
             "type": "library",
@@ -96,7 +96,7 @@
                 }
             ],
             "description": "Custom PHP library to display a bibliography",
-            "time": "2022-02-24T18:55:29+00:00"
+            "time": "2022-02-28T18:01:26+00:00"
         },
         {
             "name": "svanderburg/php-sbcrud",
