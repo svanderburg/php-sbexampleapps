@@ -1,7 +1,7 @@
 {system, pkgs}:
 
 let
-  callPackage = pkgs.lib.callPackageWith (pkgs // pkgs.xlibs // self);
+  callPackage = pkgs.lib.callPackageWith (pkgs // pkgs.xorg // self);
 
   self = {
     ### Databases
