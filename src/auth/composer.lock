@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "e316850043401eb9f6edb64df4b1fb63db690691"
+                "reference": "72a189a2d2d6e220b518654dba2009f3e20f5daa"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
@@ -64,7 +64,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2022-02-26T16:59:04+00:00"
+            "time": "2022-03-07T21:14:16+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -72,7 +72,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sblayout.git",
-                "reference": "7b56951ac05dc73e57499c68680dd140d944e711"
+                "reference": "fcbba66c36af3ab258b50dc5f396b82d2170851c"
             },
             "require-dev": {
                 "phpunit/phpunit": "9.x"
@@ -92,7 +92,8 @@
                     "src/SBLayout/View/HTML/controller.php",
                     "src/SBLayout/View/HTML/index.php",
                     "src/SBLayout/View/HTML/baseurl.php",
-                    "src/SBLayout/View/HTML/section.php"
+                    "src/SBLayout/View/HTML/section.php",
+                    "src/SBLayout/View/HTML/sections.php"
                 ]
             },
             "autoload-dev": {
@@ -112,7 +113,7 @@
                 }
             ],
             "description": "My custom website layout organiser framework for PHP",
-            "time": "2022-02-23T21:24:14+00:00"
+            "time": "2022-08-30T22:30:03+00:00"
         }
     ],
     "packages-dev": [],
@@ -126,5 +127,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
