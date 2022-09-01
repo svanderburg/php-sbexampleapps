@@ -4,6 +4,11 @@ body
 	color: #444444;
 	background-color: #dddddd;
 	line-height: 1.2em;
+
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	gap: 2px;
 }
 
 li
@@ -13,8 +18,8 @@ li
 
 img
 {
-	width: auto;
 	max-width: 100%;
+	width: auto;
 	height: auto;
 }
 
@@ -112,6 +117,11 @@ button, input[type=submit]
 
 #header
 {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
 	border-style: solid;
 	border-width: 1px;
 	border-color: #aaaaaa;
@@ -120,8 +130,6 @@ button, input[type=submit]
 	padding-right: 1em;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
-	margin-top: 2px;
-	margin-bottom: 2px;
 	color: #ffffff;
 }
 
@@ -139,9 +147,6 @@ button, input[type=submit]
 
 #login
 {
-	position: absolute;
-	top: 0;
-	right: 2em;
 	font-size: 87%;
 }
 
@@ -152,13 +157,17 @@ button, input[type=submit]
 
 #menu
 {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.5em;
+
 	background-color: #983251;
 	border-style: solid;
 	border-width: 1px;
 	border-color: #aaaaaa;
 	padding: 1em;
-	margin-top: 2px;
-	margin-bottom: 2px;
 }
 
 #menu a
@@ -172,9 +181,6 @@ button, input[type=submit]
 	background-color: #7c223e;
 	color: #ffffff;
 	padding: 0.5em;
-	margin-top: 0.5em;
-	width: 9em;
-	display: inline-block;
 }
 
 #menu a:hover
@@ -198,12 +204,11 @@ button, input[type=submit]
 #contents
 {
 	padding: 1em;
-	margin-top: 2px;
-	margin-bottom: 2px;
 	border-style: solid;
 	border-width: 1px;
 	border-color: #aaaaaa;
 	background-color: #ffffff;
+	flex: 1;
 }
 
 #rte
@@ -255,4 +260,12 @@ button, input[type=submit]
 	border-style: solid;
 	border-width: 3px;
 	border-color: #7c223e;
+}
+
+@media only screen and (min-width: 1024px)
+{
+	#menu a
+	{
+		width: 9em;
+	}
 }

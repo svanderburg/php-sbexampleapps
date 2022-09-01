@@ -1,30 +1,24 @@
-@media only screen and (min-width: 60em)
+#container
 {
-	#menu
-	{
-		padding-left: 13em; /* Width of submenu + margin/padding + 1 */
-	}
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	gap: 5px;
 }
 
 #submenu
 {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.5em;
+
 	background-color: #983251;
 	border-style: solid;
 	border-width: 1px;
 	border-color: #aaaaaa;
 	padding: 1em;
-	margin-top: 2px;
-	margin-bottom: 2px;
-}
-
-@media only screen and (min-width: 60em)
-{
-	#submenu
-	{
-		float: left;
-		width: 10em;
-		min-height: 15em;
-	}
 }
 
 #submenu a
@@ -38,17 +32,11 @@
 	background-color: #7c223e;
 	color: #ffffff;
 	padding: 0.5em;
-	margin-top: 0.5em;
-	width: 9em;
-	display: inline-block;
 }
 
-@media only screen and (min-width: 60em)
+div#submenu:empty
 {
-	#submenu a
-	{
-		display: block;
-	}
+	display: none;
 }
 
 #submenu a:hover
@@ -59,27 +47,6 @@
 #submenu a.active
 {
 	background-color: #34637f;
-}
-
-@media only print
-{
-	#submenu
-	{
-		display: none;
-	}
-
-	h1
-	{
-		color: #000000;
-	}
-}
-
-@media only screen and (min-width: 60em)
-{
-	#contents
-	{
-		margin-left: 13em; /* Width of submenu + margin/padding + 1 */
-	}
 }
 
 #submenu a.create-page, #submenu a.create-album
@@ -102,4 +69,45 @@
 	display: inline;
 	background-color: #983251;
 	border-style: none;
+}
+
+@media only screen and (min-width: 1024px)
+{
+	#container
+	{
+		flex-direction: row;
+	}
+
+	#submenu
+	{
+		text-align: left;
+		flex-direction: column;
+		justify-content: left;
+		width: 11em; /* Width of submenu link (9) + twice the padding (2 * 0.5) + twice the gap (2 * 0.5) */
+	}
+
+	div#submenu:empty
+	{
+		display: flex;
+	}
+
+	#submenu a
+	{
+		width: 9em;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+}
+
+@media only print
+{
+	#submenu
+	{
+		display: none;
+	}
+
+	h1
+	{
+		color: #000000;
+	}
 }

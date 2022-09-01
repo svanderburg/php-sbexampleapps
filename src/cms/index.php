@@ -9,6 +9,7 @@ use SBLayout\Model\Page\StaticContentPage;
 use SBLayout\Model\Page\Content\Contents;
 use SBLayout\Model\Section\ContentsSection;
 use SBLayout\Model\Section\StaticSection;
+use SBLayout\Model\Section\CompoundSection;
 use SBPageManager\Model\Page\PageManager;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Auth\Model\Page\AuthorizationPage;
@@ -37,14 +38,16 @@ $application = new Application(
 	"Simple Content Management System",
 
 	/* CSS stylesheets */
-	array("default.css", "submenu.css", "gallery.css", "cms.css"),
+	array("default.css", "submenu.css", "cms.css"),
 
 	/* Sections */
 	array(
 		"header" => new StaticSection("header.php"),
 		"menu" => new StaticSection("menu.php"),
-		"submenu" => new StaticSection("submenu.php"),
-		"contents" => new ContentsSection(true)
+		"container" => new CompoundSection(array(
+			"submenu" => new StaticSection("submenu.php"),
+			"contents" => new ContentsSection(true)
+		))
 	),
 
 	/* Pages */

@@ -16,7 +16,7 @@ class MyGalleryPage extends GalleryPage
 
 	public function __construct(AuthorizationManager $authorizationManager, PDO $dbh)
 	{
-		parent::__construct("Gallery");
+		parent::__construct("Gallery", array(), "HTML", null, "contents", array("gallery.css"));
 		$this->authorizationManager = $authorizationManager;
 		$this->dbh = $dbh;
 	}

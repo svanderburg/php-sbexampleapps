@@ -11,6 +11,7 @@ use SBLayout\Model\Page\Content\Contents;
 use SBLayout\Model\Section\ContentsSection;
 use SBLayout\Model\Section\MenuSection;
 use SBLayout\Model\Section\StaticSection;
+use SBLayout\Model\Section\CompoundSection;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Auth\Model\Page\AuthorizationPage;
 use SBExampleApps\CMSGallery\Model\Page\MyGalleryPage;
@@ -37,14 +38,16 @@ $application = new Application(
 	"Gallery-based Content Management System",
 
 	/* CSS stylesheets */
-	array("default.css", "submenu.css", "gallery.css", "gallerycontrols.css"),
+	array("default.css", "submenu.css", "gallerycontrols.css"),
 
 	/* Sections */
 	array(
 		"header" => new StaticSection("header.php"),
 		"menu" => new MenuSection(0),
-		"submenu" => new StaticSection("submenu.php"),
-		"contents" => new ContentsSection(true)
+		"container" => new CompoundSection(array(
+			"submenu" => new StaticSection("submenu.php"),
+			"contents" => new ContentsSection(true)
+		))
 	),
 
 	/* Pages */
