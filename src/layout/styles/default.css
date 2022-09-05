@@ -7,7 +7,6 @@ body
 
 	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;
 	gap: 2px;
 }
 
@@ -30,6 +29,7 @@ table
 	border-color: #aaaaaa;
 	margin-top: 1em;
 	margin-bottom: 1em;
+	overflow-x: auto;
 }
 
 th
@@ -221,6 +221,11 @@ button, input[type=submit]
 	color: #7c223e;
 }
 
+.formwrapper, .tablewrapper
+{
+	overflow-x: auto;
+}
+
 .table
 {
 	display: table;
@@ -266,6 +271,6 @@ button, input[type=submit]
 {
 	#menu a
 	{
-		width: 9em;
+		min-width: 9em;
 	}
 }

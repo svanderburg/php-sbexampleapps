@@ -2,7 +2,7 @@
 {
 	display: flex;
 	flex-direction: column;
-	justify-content: left;
+	justify-content: flex-start;
 	gap: 5px;
 }
 
@@ -82,6 +82,7 @@ div#submenu:empty
 	{
 		text-align: left;
 		flex-direction: column;
+		flex-wrap: nowrap;
 		justify-content: left;
 		width: 11em; /* Width of submenu link (9) + twice the padding (2 * 0.5) + twice the gap (2 * 0.5) */
 	}

@@ -106,3 +106,122 @@ There is nothing either good or bad but thinking makes it so.
 		<td>Value 3</td>
 	</tr>
 </table>
+
+<h3>Table example 3</h3>
+
+<div class="tablewrapper">
+	<table>
+		<tr>
+			<th>Column 1</th>
+			<th>Column 2</th>
+			<th>Column 3</th>
+		</tr>
+		<tr>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+		</tr>
+		<tr>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+		</tr>
+		<tr>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+		</tr>
+		<tr>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+		</tr>
+		<tr>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+		</tr>
+		<tr>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+		</tr>
+		<tr>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+		</tr>
+		<tr>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+			<td>This_is_a_very_long_sentence_that_probably_does_not_fit_well</td>
+		</tr>
+	</table>
+</div>
+
+<h3>Table example 4</h3>
+
+<div class="tablewrapper">
+	<table>
+		<tr>
+			<th>Column 1</th>
+			<th>Column 2</th>
+			<th>Column 3</th>
+			<th>Column 4</th>
+			<th>Column 5</th>
+			<th>Column 6</th>
+			<th>Column 7</th>
+			<th>Column 8</th>
+			<th>Column 9</th>
+			<th>Column 10</th>
+		</tr>
+		<tr>
+			<td>Value 1</td>
+			<td>Value 2</td>
+			<td>Value 3</td>
+			<td>Value 4</td>
+			<td>Value 5</td>
+			<td>Value 6</td>
+			<td>Value 7</td>
+			<td>Value 8</td>
+			<td>Value 9</td>
+			<td>Value 10</td>
+		</tr>
+		<tr>
+			<td>Value 1</td>
+			<td>Value 2</td>
+			<td>Value 3</td>
+			<td>Value 4</td>
+			<td>Value 5</td>
+			<td>Value 6</td>
+			<td>Value 7</td>
+			<td>Value 8</td>
+			<td>Value 9</td>
+			<td>Value 10</td>
+		</tr>
+		<tr>
+			<td>Value 1</td>
+			<td>Value 2</td>
+			<td>Value 3</td>
+			<td>Value 4</td>
+			<td>Value 5</td>
+			<td>Value 6</td>
+			<td>Value 7</td>
+			<td>Value 8</td>
+			<td>Value 9</td>
+			<td>Value 10</td>
+		</tr>
+		<tr>
+			<td>Value 1</td>
+			<td>Value 2</td>
+			<td>Value 3</td>
+			<td>Value 4</td>
+			<td>Value 5</td>
+			<td>Value 6</td>
+			<td>Value 7</td>
+			<td>Value 8</td>
+			<td>Value 9</td>
+			<td>Value 10</td>
+		</tr>
+	</table>
+</div>
