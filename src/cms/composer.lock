@@ -72,7 +72,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbcrud.git",
-                "reference": "e9e5e12df31152346f017f696bdfe35bf74e9d41"
+                "reference": "09d15dd986a1739a35f9290a280af23b4e1d7b03"
             },
             "require": {
                 "svanderburg/php-sbdata": "dev-master",
@@ -101,7 +101,7 @@
                 }
             ],
             "description": "Abstractions to construct web-based information systems",
-            "time": "2022-08-31T21:07:56+00:00"
+            "time": "2022-09-05T16:46:25+00:00"
         },
         {
             "name": "svanderburg/php-sbdata",
@@ -109,7 +109,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "72a189a2d2d6e220b518654dba2009f3e20f5daa"
+                "reference": "2532ede5954d15690cf6e00b6280a3ecd01aff4e"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
@@ -161,7 +161,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2022-03-07T21:14:16+00:00"
+            "time": "2022-09-22T20:43:06+00:00"
         },
         {
             "name": "svanderburg/php-sbeditor",
@@ -169,7 +169,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbeditor.git",
-                "reference": "d4af4608337e9d44108e084675dfef6a24ad0bc0"
+                "reference": "ff082a75714cd7fe3468479806e23b43cb7c7c68"
             },
             "require-dev": {
                 "svanderburg/php-sbdata": "dev-master"
@@ -204,7 +204,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbgallery.git",
-                "reference": "428718e5d71a7d9e3cfaf038e352f3ff735ec31b"
+                "reference": "62f0b5c260c3eeea857acd4fe187c50a6f0b3ee9"
             },
             "require": {
                 "ext-gd": "*",
@@ -249,7 +249,7 @@
                 }
             ],
             "description": "Simple embeddable picture gallery",
-            "time": "2022-09-01T15:41:15+00:00"
+            "time": "2022-09-05T16:48:45+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -306,7 +306,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbpagemanager.git",
-                "reference": "a7f9add41943d73a92c8fbc727ae4b967f0f4431"
+                "reference": "7b05db9e457593eb31242685c1ffff5bdaee0844"
             },
             "require": {
                 "svanderburg/php-sbcrud": "dev-master",
@@ -341,7 +341,7 @@
                 }
             ],
             "description": "Manages layout and content dynamically",
-            "time": "2022-09-01T15:42:33+00:00"
+            "time": "2022-09-05T16:53:03+00:00"
         }
     ],
     "packages-dev": [],
