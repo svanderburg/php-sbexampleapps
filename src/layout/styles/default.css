@@ -90,6 +90,11 @@ pre
 	overflow-x: auto;
 }
 
+input:read-only
+{
+	background-color: #dddddd;
+}
+
 form
 {
 	display: table;
@@ -208,6 +213,7 @@ button, input[type=submit]
 	border-color: #aaaaaa;
 	background-color: #ffffff;
 	flex: 1;
+	overflow: hidden; /* Force clipping */
 }
 
 #rte

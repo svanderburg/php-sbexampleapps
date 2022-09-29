@@ -72,7 +72,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbcrud.git",
-                "reference": "09d15dd986a1739a35f9290a280af23b4e1d7b03"
+                "reference": "e19d9e92d57847fa3ee6ed20f11f5a02e8bb4ca2"
             },
             "require": {
                 "svanderburg/php-sbdata": "dev-master",
@@ -101,7 +101,7 @@
                 }
             ],
             "description": "Abstractions to construct web-based information systems",
-            "time": "2022-09-05T16:46:25+00:00"
+            "time": "2022-09-29T23:10:10+00:00"
         },
         {
             "name": "svanderburg/php-sbdata",
@@ -109,7 +109,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "2532ede5954d15690cf6e00b6280a3ecd01aff4e"
+                "reference": "a303b7a75e6f5d4d62889eb99748a882dd34c073"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
@@ -130,13 +130,22 @@
                     "src/SBData/View/HTML/Field/checkboxfield.php",
                     "src/SBData/View/HTML/Field/numericinttextfield.php",
                     "src/SBData/View/HTML/Field/emailfield.php",
+                    "src/SBData/View/HTML/Field/generichiddenfield.php",
+                    "src/SBData/View/HTML/Field/generickeylinkfield.php",
+                    "src/SBData/View/HTML/Field/generictextfield.php",
+                    "src/SBData/View/HTML/Field/generictextareafield.php",
                     "src/SBData/View/HTML/Field/keylinkfield.php",
+                    "src/SBData/View/HTML/Field/metadatafield.php",
+                    "src/SBData/View/HTML/Field/rawtextareafield.php",
+                    "src/SBData/View/HTML/Field/rawtextfield.php",
                     "src/SBData/View/HTML/Field/readonlynumericinttextfield.php",
                     "src/SBData/View/HTML/Field/filefield.php",
                     "src/SBData/View/HTML/Field/datefield.php",
                     "src/SBData/View/HTML/Field/passwordfield.php",
                     "src/SBData/View/HTML/Field/textfield.php",
                     "src/SBData/View/HTML/Field/hiddenfield.php",
+                    "src/SBData/View/HTML/Field/hiddennumericintfield.php",
+                    "src/SBData/View/HTML/Field/numericintkeylinkfield.php",
                     "src/SBData/View/HTML/Field/dbcomboboxfield.php",
                     "src/SBData/View/HTML/Field/urlfield.php"
                 ]
@@ -161,7 +170,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2022-09-22T20:43:06+00:00"
+            "time": "2022-10-03T16:47:45+00:00"
         },
         {
             "name": "svanderburg/php-sbeditor",
@@ -169,7 +178,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbeditor.git",
-                "reference": "ff082a75714cd7fe3468479806e23b43cb7c7c68"
+                "reference": "378e2cc4919c0880de3a863fa3a7acecb7036cea"
             },
             "require-dev": {
                 "svanderburg/php-sbdata": "dev-master"
@@ -196,7 +205,7 @@
                 }
             ],
             "description": "Simple embeddable HTML editor",
-            "time": "2022-03-07T21:16:50+00:00"
+            "time": "2022-09-30T16:17:56+00:00"
         },
         {
             "name": "svanderburg/php-sbgallery",
@@ -204,7 +213,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbgallery.git",
-                "reference": "62f0b5c260c3eeea857acd4fe187c50a6f0b3ee9"
+                "reference": "6be8a9ffd2c939d3096bbee05d83a7299ff7b993"
             },
             "require": {
                 "ext-gd": "*",
@@ -249,7 +258,7 @@
                 }
             ],
             "description": "Simple embeddable picture gallery",
-            "time": "2022-09-05T16:48:45+00:00"
+            "time": "2022-10-03T21:59:11+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -306,7 +315,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbpagemanager.git",
-                "reference": "7b05db9e457593eb31242685c1ffff5bdaee0844"
+                "reference": "115a7e3ad72f1f25bb63c4bba876223a59fba5b2"
             },
             "require": {
                 "svanderburg/php-sbcrud": "dev-master",
@@ -341,7 +350,7 @@
                 }
             ],
             "description": "Manages layout and content dynamically",
-            "time": "2022-09-05T16:53:03+00:00"
+            "time": "2022-09-29T23:17:11+00:00"
         }
     ],
     "packages-dev": [],
