@@ -43,9 +43,9 @@ function generateMonth($date)
 }
 
 $paperIdField = new NumericIntTextField("PAPER_ID", true);
-$paperIdField->value = $GLOBALS["query"]["paperId"];
+$paperIdField->importValue($GLOBALS["query"]["paperId"]);
 $conferenceIdField = new NumericIntTextField("CONFERENCE_ID", true);
-$conferenceIdField->value = $GLOBALS["query"]["conferenceId"];
+$conferenceIdField->importValue($GLOBALS["query"]["conferenceId"]);
 
 if(!$paperIdField->checkField("PAPER_ID") || !$conferenceIdField->checkField("CONFERENCE_ID"))
 {
@@ -55,7 +55,7 @@ if(!$paperIdField->checkField("PAPER_ID") || !$conferenceIdField->checkField("CO
 }
 else
 {
-	$stmt = PaperEntity::queryOneForReference($dbh, $paperIdField->value, $conferenceIdField->value);
+	$stmt = PaperEntity::queryOneForReference($dbh, $paperIdField->exportValue(), $conferenceIdField->exportValue());
 
 	if(($paper = $stmt->fetch()) === false)
 	{
@@ -67,13 +67,10 @@ else
 	{
 		/* Process authors */
 		$authors = array();
-		$stmt = PaperEntity::queryAuthorsSummary($dbh, $paperIdField->value, $conferenceIdField->value);
+		$stmt = PaperEntity::queryAuthorsSummary($dbh, $paperIdField->exportValue(), $conferenceIdField->exportValue());
 
 		while(($author = $stmt->fetch()) !== false)
 			array_push($authors, new Author($author["AuthorName"], $author["Homepage"]));
-		
-		if(count($authors) == 0)
-			$authors = null;
 
 		/* Process editors */
 		$editors = null;

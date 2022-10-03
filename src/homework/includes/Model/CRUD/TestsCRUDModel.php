@@ -2,7 +2,7 @@
 namespace SBExampleApps\Homework\Model\CRUD;
 use PDO;
 use SBData\Model\Form;
-use SBData\Model\Field\KeyLinkField;
+use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
@@ -24,18 +24,20 @@ class TestsCRUDModel extends CRUDModel
 
 	public function executeOperation(): void
 	{
-		function composeTestLink(KeyLinkField $field, Form $form): string
+		function composeTestLink(NumericIntKeyLinkField $field, Form $form): string
 		{
-			return $_SERVER["PHP_SELF"]."/".$field->value;
+			$testId = $field->exportValue();
+			return $_SERVER["PHP_SELF"]."/".$testId;
 		}
 
 		function deleteTestLink(Form $form): string
 		{
-			return $_SERVER["SCRIPT_NAME"]."/tests/".$form->fields["TEST_ID"]->value."?__operation=delete_test".AnchorRow::composePreviousRowParameter($form);
+			$testId = $form->fields["TEST_ID"]->exportValue();
+			return $_SERVER["SCRIPT_NAME"]."/tests/".$testId."?__operation=delete_test".AnchorRow::composePreviousRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(
-			"TEST_ID" => new KeyLinkField("Id", __NAMESPACE__.'\\composeTestLink', true),
+			"TEST_ID" => new NumericIntKeyLinkField("Id", __NAMESPACE__.'\\composeTestLink', true),
 			"Title" => new TextField("Title", true, 20, 255),
 		), array(
 			"Delete" => __NAMESPACE__.'\\deleteTestLink'

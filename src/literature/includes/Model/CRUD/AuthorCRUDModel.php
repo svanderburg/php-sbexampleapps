@@ -69,7 +69,7 @@ class AuthorCRUDModel extends CRUDModel
 		/* Query the properties of the requested author and construct a form from it */
 		$this->constructAuthorForm();
 
-		$stmt = AuthorEntity::queryOne($this->dbh, $this->keyFields['authorId']->value);
+		$stmt = AuthorEntity::queryOne($this->dbh, $this->keyFields['authorId']->exportValue());
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -91,16 +91,18 @@ class AuthorCRUDModel extends CRUDModel
 
 		if($this->form->checkValid())
 		{
+			$authorId = $this->keyFields['authorId']->exportValue();
 			$author = $this->form->exportValues();
-			AuthorEntity::update($this->dbh, $author, $this->keyFields['authorId']->value);
-			header("Location: ".$_SERVER["SCRIPT_NAME"]."/authors/".$this->keyFields['authorId']->value);
+
+			AuthorEntity::update($this->dbh, $author, $authorId);
+			header("Location: ".$_SERVER["SCRIPT_NAME"]."/authors/".$authorId);
 			exit();
 		}
 	}
 
 	private function deleteAuthor(): void
 	{
-		AuthorEntity::remove($this->dbh, $this->keyFields['authorId']->value);
+		AuthorEntity::remove($this->dbh, $this->keyFields['authorId']->exportValue());
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}

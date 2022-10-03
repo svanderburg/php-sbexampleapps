@@ -18,7 +18,7 @@ if(count($_POST) > 0)
 	
 	if($form->checkValid())
 	{
-		header("Location: ".$_SERVER["PHP_SELF"]."/".$form->fields["testId"]->value);
+		header("Location: ".$_SERVER["PHP_SELF"]."/".$form->fields["testId"]->exportValue());
 		exit;
 	}
 }

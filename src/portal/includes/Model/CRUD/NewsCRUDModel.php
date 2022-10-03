@@ -28,14 +28,14 @@ class NewsCRUDModel extends CRUDModel
 
 		if(array_key_exists("page", $_GET))
 		{
-			$pageField->value = $_GET["page"];
+			$pageField->importValue($_GET["page"]);
 			if(!$pageField->checkField("Page"))
 				throw new Exception("Invalid page value provided!");
 		}
 		else
-			$pageField->value = 0;
+			$pageField->importValue(0);
 
-		$this->page = $pageField->value;
+		$this->page = $pageField->exportValue();
 		$this->stmt = NewsMessageEntity::queryAll($this->dbh, $this->page);
 	}
 }

@@ -3,6 +3,7 @@ namespace SBExampleApps\Homework\Model\CRUD;
 use PDO;
 use SBData\Model\Form;
 use SBData\Model\Field\HiddenField;
+use SBData\Model\Field\HiddenNumericIntField;
 use SBData\Model\Field\TextField;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
@@ -24,7 +25,7 @@ class ExamCRUDModel extends CRUDModel
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
-			"questionId" => new HiddenField(false),
+			"questionId" => new HiddenNumericIntField(false),
 			"answer" => new TextField("Answer", false, 20)
 		));
 	}
@@ -42,7 +43,7 @@ class ExamCRUDModel extends CRUDModel
 	private function viewExam(): void
 	{
 		$this->constructTestForm();
-		$_SESSION["exam"] = new Exam($this->keyFields["testId"]->value);
+		$_SESSION["exam"] = new Exam($this->keyFields["testId"]->exportValue());
 		$this->displaySuccessiveQuestion();
 	}
 
@@ -55,7 +56,7 @@ class ExamCRUDModel extends CRUDModel
 		if($this->form->checkValid())
 		{
 			/* Check the answer if the question was an exact one */
-			$_SESSION["exam"]->checkProvidedAnswer($this->form->fields["answer"]->value);
+			$_SESSION["exam"]->checkProvidedAnswer($this->form->fields["answer"]->exportValue());
 
 			$this->displaySuccessiveQuestion();
 		}

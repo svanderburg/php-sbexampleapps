@@ -42,7 +42,7 @@ class QuestionCRUDModel extends CRUDModel
 
 		$row = array(
 			"__operation" => "insert_question",
-			"TEST_ID" => $this->keyFields['testId']->value
+			"TEST_ID" => $this->keyFields['testId']->exportValue()
 		);
 		$this->form->importValues($row);
 	}
@@ -52,7 +52,7 @@ class QuestionCRUDModel extends CRUDModel
 		$this->constructQuestionForm();
 
 		/* Query the question and construct a form */
-		$stmt = QuestionEntity::queryOne($this->dbh, $this->keyFields['testId']->value, $this->keyFields['questionId']->value);
+		$stmt = QuestionEntity::queryOne($this->dbh, $this->keyFields['testId']->exportValue(), $this->keyFields['questionId']->exportValue());
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -77,7 +77,7 @@ class QuestionCRUDModel extends CRUDModel
 			$question = $this->form->exportValues();
 			$questionId = QuestionEntity::insert($this->dbh, $question);
 
-			header("Location: ".$_SERVER["SCRIPT_NAME"]."/tests/".$this->keyFields['testId']->value."/questions/".$questionId);
+			header("Location: ".$_SERVER["SCRIPT_NAME"]."/tests/".$this->keyFields['testId']->exportValue()."/questions/".$questionId);
 			exit();
 		}
 	}
@@ -91,16 +91,18 @@ class QuestionCRUDModel extends CRUDModel
 		if($this->form->checkValid())
 		{
 			$question = $this->form->exportValues();
-			QuestionEntity::update($this->dbh, $question, $this->keyFields['testId']->value, $this->keyFields['questionId']->value);
+			$testId = $this->keyFields['testId']->exportValue();
 
-			header("Location: ".$_SERVER["SCRIPT_NAME"]."/tests/".$this->keyFields['testId']->value."/questions/".$question["QUESTION_ID"]);
+			QuestionEntity::update($this->dbh, $question, $testId, $this->keyFields['questionId']->exportValue());
+
+			header("Location: ".$_SERVER["SCRIPT_NAME"]."/tests/".$testId."/questions/".$question["QUESTION_ID"]);
 			exit();
 		}
 	}
 
 	private function deleteQuestion(): void
 	{
-		QuestionEntity::remove($this->dbh, $this->keyFields['testId']->value, $this->keyFields['questionId']->value);
+		QuestionEntity::remove($this->dbh, $this->keyFields['testId']->exportValue(), $this->keyFields['questionId']->exportValue());
 
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();

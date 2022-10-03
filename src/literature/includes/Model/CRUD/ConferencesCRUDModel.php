@@ -2,7 +2,7 @@
 namespace SBExampleApps\Literature\Model\CRUD;
 use PDO;
 use SBData\Model\Form;
-use SBData\Model\Field\KeyLinkField;
+use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
@@ -26,18 +26,20 @@ class ConferencesCRUDModel extends CRUDModel
 
 	public function executeOperation(): void
 	{
-		function composeConferenceLink(KeyLinkField $field, Form $form): string
+		function composeConferenceLink(NumericIntKeyLinkField $field, Form $form): string
 		{
-			return $_SERVER["PHP_SELF"]."/".$field->value;
+			$conferenceId = $field->exportValue();
+			return $_SERVER["PHP_SELF"]."/".$conferenceId;
 		}
 
 		function deleteConferenceLink(Form $form): string
 		{
-			return $_SERVER["SCRIPT_NAME"]."/conferences/".$form->fields["CONFERENCE_ID"]->value."?__operation=delete_conference".AnchorRow::composePreviousRowParameter($form);
+			$conferenceId = $form->fields["CONFERENCE_ID"]->exportValue();
+			return $_SERVER["SCRIPT_NAME"]."/conferences/".$conferenceId."?__operation=delete_conference".AnchorRow::composePreviousRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(
-			"CONFERENCE_ID" => new KeyLinkField("Id", __NAMESPACE__.'\\composeConferenceLink', true),
+			"CONFERENCE_ID" => new NumericIntKeyLinkField("Id", __NAMESPACE__.'\\composeConferenceLink', true),
 			"Name" => new TextField("Name", true, 20, 255),
 			"Homepage" => new URLField("Homepage", false),
 			"PublisherName" => new TextField("Publisher", true, 20, 255),

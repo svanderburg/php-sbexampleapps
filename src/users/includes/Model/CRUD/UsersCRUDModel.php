@@ -25,12 +25,14 @@ class UsersCRUDModel extends CRUDModel
 	{
 		function composeUserLink(KeyLinkField $field, Form $form): string
 		{
-			return $_SERVER["PHP_SELF"]."/".$field->value;
+			$username = $field->exportValue();
+			return $_SERVER["PHP_SELF"]."/".$username;
 		}
 
 		function deleteUserLink(Form $form): string
 		{
-			return $_SERVER["SCRIPT_NAME"]."/users/".$form->fields["Username"]->value."?__operation=delete_user";
+			$username = $form->fields["Username"]->exportValue();
+			return $_SERVER["SCRIPT_NAME"]."/users/".$username."?__operation=delete_user";
 		}
 
 		$this->table = new DBTable(array(

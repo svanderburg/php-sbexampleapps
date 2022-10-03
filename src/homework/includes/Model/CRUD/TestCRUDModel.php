@@ -5,7 +5,7 @@ use PDO;
 use SBData\Model\Form;
 use SBData\Model\Field\CheckBoxField;
 use SBData\Model\Field\HiddenField;
-use SBData\Model\Field\KeyLinkField;
+use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
@@ -66,7 +66,7 @@ class TestCRUDModel extends CRUDModel
 		/* Query the properties of the requested test and construct a form and table from it */
 		$this->constructTestForm();
 
-		$stmt = TestEntity::queryOne($this->dbh, $this->keyFields['testId']->value);
+		$stmt = TestEntity::queryOne($this->dbh, $this->keyFields['testId']->exportValue());
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -79,18 +79,20 @@ class TestCRUDModel extends CRUDModel
 			$this->form->importValues($row);
 
 			/* Construct a table containing the questions for this form */
-			function composeQuestionLink(KeyLinkField $field, Form $form): string
+			function composeQuestionLink(NumericIntKeyLinkField $field, Form $form): string
 			{
-				return $_SERVER["PHP_SELF"]."/questions/".$field->value;
+				$questionId = $field->exportValue();
+				return $_SERVER["PHP_SELF"]."/questions/".$questionId;
 			}
 
 			function deleteQuestionLink(Form $form): string
 			{
-				return $_SERVER['PHP_SELF']."/questions/".$form->fields['QUESTION_ID']->value."?__operation=delete_question".AnchorRow::composePreviousRowParameter($form);
+				$questionId = $form->fields['QUESTION_ID']->exportValue();
+				return $_SERVER['PHP_SELF']."/questions/".$questionId."?__operation=delete_question".AnchorRow::composePreviousRowParameter($form);
 			}
 
 			$this->table = new DBTable(array(
-				"QUESTION_ID" => new KeyLinkField("Id", __NAMESPACE__.'\\composeQuestionLink', true),
+				"QUESTION_ID" => new NumericIntKeyLinkField("Id", __NAMESPACE__.'\\composeQuestionLink', true),
 				"Question" => new TextField("Question", true),
 				"Answer" => new TextField("Answer", true),
 				"Exact" => new CheckBoxField("Exact")
@@ -98,7 +100,7 @@ class TestCRUDModel extends CRUDModel
 				"Delete" => __NAMESPACE__.'\\deleteQuestionLink'
 			));
 
-			$this->table->stmt = TestEntity::queryAllQuestions($this->dbh, $this->keyFields['testId']->value);
+			$this->table->stmt = TestEntity::queryAllQuestions($this->dbh, $this->keyFields['testId']->exportValue());
 		}
 	}
 
@@ -110,8 +112,9 @@ class TestCRUDModel extends CRUDModel
 
 		if($this->form->checkValid())
 		{
+			$testId = $this->keyFields['testId']->exportValue();
 			$test = $this->form->exportValues();
-			TestEntity::update($this->dbh, $test, $this->keyFields['testId']->value);
+			TestEntity::update($this->dbh, $test, $testId);
 			header("Location: ".$_SERVER["SCRIPT_NAME"]."/tests/".$test['TEST_ID']);
 			exit();
 		}
@@ -119,7 +122,7 @@ class TestCRUDModel extends CRUDModel
 
 	private function deleteTest(): void
 	{
-		TestEntity::remove($this->dbh, $this->keyFields['testId']->value);
+		TestEntity::remove($this->dbh, $this->keyFields['testId']->exportValue());
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}

@@ -6,7 +6,7 @@ use SBData\Model\Form;
 use SBData\Model\Field\ComboBoxField\DBComboBoxField;
 use SBData\Model\Field\DateField;
 use SBData\Model\Field\HiddenField;
-use SBData\Model\Field\KeyLinkField;
+use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\ReadOnlyNumericIntTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
@@ -60,7 +60,7 @@ class ConferenceCRUDModel extends CRUDModel
 			"AUTHOR_ID" => new DBComboBoxField("Editor", AuthorEntity::querySummary($this->dbh), true)
 		));
 
-		$this->addEditorForm->fields["__operation"]->value = "insert_conference_author";
+		$this->addEditorForm->fields["__operation"]->importValue("insert_conference_author");
 	}
 
 	private function createConference(): void
@@ -93,7 +93,7 @@ class ConferenceCRUDModel extends CRUDModel
 		/* Query the properties of the requested conference and construct a form from it */
 		$this->constructConferenceForm();
 
-		$stmt = ConferenceEntity::queryOne($this->dbh, $this->keyFields['conferenceId']->value);
+		$stmt = ConferenceEntity::queryOne($this->dbh, $this->keyFields['conferenceId']->exportValue());
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -106,39 +106,43 @@ class ConferenceCRUDModel extends CRUDModel
 			$this->form->importValues($row);
 
 			/* Construct a table containing the editors for this form */
-			function composeAuthorLink(KeyLinkField $field, Form $form): string
+			function composeAuthorLink(NumericIntKeyLinkField $field, Form $form): string
 			{
-				return $_SERVER["SCRIPT_NAME"]."/authors/".$field->value;
+				$authorId = $field->exportValue();
+				return $_SERVER["SCRIPT_NAME"]."/authors/".$authorId;
 			}
 
 			function deleteConferenceAuthorLink(Form $form): string
 			{
-				return $_SERVER['PHP_SELF']."?__operation=delete_conference_author&amp;AUTHOR_ID=".$form->fields["AUTHOR_ID"]->value.AnchorRow::composePreviousRowParameter($form);
+				$authorId = $form->fields["AUTHOR_ID"]->exportValue();
+				return $_SERVER['PHP_SELF']."?__operation=delete_conference_author&amp;AUTHOR_ID=".$authorId.AnchorRow::composePreviousRowParameter($form);
 			}
 
 			$this->editorsTable = new DBTable(array(
-				"AUTHOR_ID" => new KeyLinkField("Id", __NAMESPACE__.'\\composeAuthorLink', true),
+				"AUTHOR_ID" => new NumericIntKeyLinkField("Id", __NAMESPACE__.'\\composeAuthorLink', true),
 				"LastName" => new TextField("Last name", true, 20, 255),
 				"FirstName" => new TextField("First name", true, 20, 255)
 			), array(
 				"Delete" => __NAMESPACE__.'\\deleteConferenceAuthorLink'
 			));
 
-			$this->editorsTable->stmt = ConferenceEntity::queryEditors($this->dbh, $this->keyFields['conferenceId']->value);
+			$this->editorsTable->stmt = ConferenceEntity::queryEditors($this->dbh, $this->keyFields['conferenceId']->exportValue());
 
 			/* Construct a table containing the papers for this conference */
-			function composePaperLink(KeyLinkField $field, Form $form): string
+			function composePaperLink(NumericIntKeyLinkField $field, Form $form): string
 			{
-				return $_SERVER["PHP_SELF"]."/papers/".$field->value;
+				$paperId = $field->exportValue();
+				return $_SERVER["PHP_SELF"]."/papers/".$paperId;
 			}
 
 			function deletePaperLink(Form $form): string
 			{
-				return $_SERVER['PHP_SELF']."/papers/".$form->fields["PAPER_ID"]->value."?__operation=delete_paper".AnchorRow::composePreviousRowParameter($form);
+				$paperId = $form->fields["PAPER_ID"]->exportValue();
+				return $_SERVER['PHP_SELF']."/papers/".$paperId."?__operation=delete_paper".AnchorRow::composePreviousRowParameter($form);
 			}
 
 			$this->papersTable = new DBTable(array(
-				"PAPER_ID" => new KeyLinkField("Id", __NAMESPACE__.'\\composePaperLink', true),
+				"PAPER_ID" => new NumericIntKeyLinkField("Id", __NAMESPACE__.'\\composePaperLink', true),
 				"Title" => new TextField("Title", true, 20, 255),
 				"Date" => new DateField("Date", true),
 				"URL" => new URLField("URL", false),
@@ -147,7 +151,7 @@ class ConferenceCRUDModel extends CRUDModel
 				"Delete" => __NAMESPACE__.'\\deletePaperLink'
 			));
 
-			$this->papersTable->stmt = PaperEntity::queryAll($this->dbh, $this->keyFields['conferenceId']->value);
+			$this->papersTable->stmt = PaperEntity::queryAll($this->dbh, $this->keyFields['conferenceId']->exportValue());
 		}
 	}
 
@@ -167,7 +171,7 @@ class ConferenceCRUDModel extends CRUDModel
 		if($this->form->checkValid())
 		{
 			$conference = $this->form->exportValues();
-			ConferenceEntity::update($this->dbh, $conference, $this->keyFields['conferenceId']->value);
+			ConferenceEntity::update($this->dbh, $conference, $this->keyFields['conferenceId']->exportValue());
 			header("Location: ".$_SERVER["SCRIPT_NAME"]."/conferences/".$conference['CONFERENCE_ID']);
 			exit();
 		}
@@ -175,7 +179,7 @@ class ConferenceCRUDModel extends CRUDModel
 
 	private function deleteConference(): void
 	{
-		ConferenceEntity::remove($this->dbh, $this->keyFields['conferenceId']->value);
+		ConferenceEntity::remove($this->dbh, $this->keyFields['conferenceId']->exportValue());
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
@@ -188,7 +192,7 @@ class ConferenceCRUDModel extends CRUDModel
 
 		if($this->addEditorForm->checkValid())
 		{
-			ConferenceEntity::insertEditor($this->dbh, $this->keyFields['conferenceId']->value, $this->addEditorForm->fields["AUTHOR_ID"]->value);
+			ConferenceEntity::insertEditor($this->dbh, $this->keyFields['conferenceId']->exportValue(), $this->addEditorForm->fields["AUTHOR_ID"]->exportValue());
 			header("Location: ".$_SERVER['HTTP_REFERER']."#editors");
 			exit();
 		}
@@ -199,11 +203,11 @@ class ConferenceCRUDModel extends CRUDModel
 	private function deleteConferenceAuthor(): void
 	{
 		$authorIdField = new TextField("Id", true);
-		$authorIdField->value = $_REQUEST["AUTHOR_ID"];
+		$authorIdField->importValue($_REQUEST["AUTHOR_ID"]);
 
 		if($authorIdField->checkField("AUTHOR_ID"))
 		{
-			ConferenceEntity::removeEditor($this->dbh, $this->keyFields['conferenceId']->value, $authorIdField->value);
+			ConferenceEntity::removeEditor($this->dbh, $this->keyFields['conferenceId']->exportValue(), $authorIdField->exportValue());
 			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment("editor-row"));
 			exit();
 		}

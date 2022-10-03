@@ -43,6 +43,6 @@ else
 		}
 	}
 	else
-		$form->fields["Referer"]->value = $_SERVER["HTTP_REFERER"];
+		$form->fields["Referer"]->importValue($_SERVER["HTTP_REFERER"]);
 }
 ?>

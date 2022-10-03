@@ -72,7 +72,7 @@ class NewsMessageCRUDModel extends CRUDModel
 		/* Query the properties of the requested news message and construct a form from it */
 		$this->constructNewsMessageForm();
 
-		$stmt = NewsMessageEntity::queryOne($this->dbh, $this->keyFields['messageId']->value);
+		$stmt = NewsMessageEntity::queryOne($this->dbh, $this->keyFields['messageId']->exportValue());
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -94,16 +94,18 @@ class NewsMessageCRUDModel extends CRUDModel
 
 		if($this->form->checkValid())
 		{
+			$messageId = $this->keyFields['messageId']->exportValue();
 			$newsMessage = $this->form->exportValues();
-			NewsMessageEntity::update($this->dbh, $newsMessage, $this->keyFields['messageId']->value);
-			header("Location: ".$_SERVER["SCRIPT_NAME"]."/news/".$this->keyFields['messageId']->value);
+
+			NewsMessageEntity::update($this->dbh, $newsMessage, $messageId);
+			header("Location: ".$_SERVER["SCRIPT_NAME"]."/news/".$messageId);
 			exit();
 		}
 	}
 
 	private function removeNewsMessage(): void
 	{
-		NewsMessageEntity::remove($this->dbh, $this->keyFields['messageId']->value);
+		NewsMessageEntity::remove($this->dbh, $this->keyFields['messageId']->exportValue());
 		header("Location: ".$_SERVER['HTTP_REFERER']);
 		exit();
 	}

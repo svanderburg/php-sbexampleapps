@@ -2,7 +2,7 @@
 namespace SBExampleApps\Literature\Model\CRUD;
 use PDO;
 use SBdata\Model\Form;
-use SBData\Model\Field\KeyLinkField;
+use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
@@ -24,18 +24,20 @@ class PublishersCRUDModel extends CRUDModel
 
 	public function executeOperation(): void
 	{
-		function composePublisherLink(KeyLinkField $field, Form $form): string
+		function composePublisherLink(NumericIntKeyLinkField $field, Form $form): string
 		{
-			return $_SERVER["PHP_SELF"]."/".$field->value;
+			$publisherId = $field->exportValue();
+			return $_SERVER["PHP_SELF"]."/".$publisherId;
 		}
 
 		function deletePublisherLink(Form $form): string
 		{
-			return $_SERVER["SCRIPT_NAME"]."/publishers/".$form->fields["PUBLISHER_ID"]->value."?__operation=delete_publisher".AnchorRow::composePreviousRowParameter($form);
+			$publisherId = $form->fields["PUBLISHER_ID"]->exportValue();
+			return $_SERVER["SCRIPT_NAME"]."/publishers/".$publisherId."?__operation=delete_publisher".AnchorRow::composePreviousRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(
-			"PUBLISHER_ID" => new KeyLinkField("Id", __NAMESPACE__.'\\composePublisherLink', true),
+			"PUBLISHER_ID" => new NumericIntKeyLinkField("Id", __NAMESPACE__.'\\composePublisherLink', true),
 			"Name" => new TextField("Name", true, 20, 255)
 		), array(
 			"Delete" => __NAMESPACE__.'\\deletePublisherLink'

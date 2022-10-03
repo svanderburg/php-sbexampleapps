@@ -25,12 +25,14 @@ class SystemsCRUDModel extends CRUDModel
 	{
 		function composeSystemLink(KeyLinkField $field, Form $form): string
 		{
-			return $_SERVER["PHP_SELF"]."/".$field->value;
+			$systemId = $field->exportValue();
+			return $_SERVER["PHP_SELF"]."/".$systemId;
 		}
 
 		function deleteSystemLink(Form $form): string
 		{
-			return $_SERVER["SCRIPT_NAME"]."/systems/".$form->fields["SYSTEM_ID"]->value."?__operation=delete_system";
+			$systemId = $form->fields["SYSTEM_ID"]->exportValue();
+			return $_SERVER["SCRIPT_NAME"]."/systems/".$systemId."?__operation=delete_system";
 		}
 
 		$this->table = new DBTable(array(
