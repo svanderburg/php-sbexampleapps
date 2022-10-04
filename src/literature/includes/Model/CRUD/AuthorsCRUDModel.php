@@ -34,7 +34,7 @@ class AuthorsCRUDModel extends CRUDModel
 		function deleteAuthorLink(Form $form): string
 		{
 			$authorId = $form->fields["AUTHOR_ID"]->exportValue();
-			return $_SERVER["SCRIPT_NAME"]."/authors/".$authorId."?__operation=delete_author".AnchorRow::composePreviousRowParameter($form);
+			return $_SERVER["SCRIPT_NAME"]."/authors/".$authorId."?__operation=delete_author".AnchorRow::composeRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

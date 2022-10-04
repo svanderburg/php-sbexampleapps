@@ -35,7 +35,7 @@ class ConferencesCRUDModel extends CRUDModel
 		function deleteConferenceLink(Form $form): string
 		{
 			$conferenceId = $form->fields["CONFERENCE_ID"]->exportValue();
-			return $_SERVER["SCRIPT_NAME"]."/conferences/".$conferenceId."?__operation=delete_conference".AnchorRow::composePreviousRowParameter($form);
+			return $_SERVER["SCRIPT_NAME"]."/conferences/".$conferenceId."?__operation=delete_conference".AnchorRow::composeRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

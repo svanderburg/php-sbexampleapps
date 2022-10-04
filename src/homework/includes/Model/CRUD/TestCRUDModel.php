@@ -88,7 +88,7 @@ class TestCRUDModel extends CRUDModel
 			function deleteQuestionLink(Form $form): string
 			{
 				$questionId = $form->fields['QUESTION_ID']->exportValue();
-				return $_SERVER['PHP_SELF']."/questions/".$questionId."?__operation=delete_question".AnchorRow::composePreviousRowParameter($form);
+				return $_SERVER['PHP_SELF']."/questions/".$questionId."?__operation=delete_question".AnchorRow::composeRowParameter($form);
 			}
 
 			$this->table = new DBTable(array(
@@ -123,7 +123,7 @@ class TestCRUDModel extends CRUDModel
 	private function deleteTest(): void
 	{
 		TestEntity::remove($this->dbh, $this->keyFields['testId']->exportValue());
-		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 

@@ -33,7 +33,7 @@ class PublishersCRUDModel extends CRUDModel
 		function deletePublisherLink(Form $form): string
 		{
 			$publisherId = $form->fields["PUBLISHER_ID"]->exportValue();
-			return $_SERVER["SCRIPT_NAME"]."/publishers/".$publisherId."?__operation=delete_publisher".AnchorRow::composePreviousRowParameter($form);
+			return $_SERVER["SCRIPT_NAME"]."/publishers/".$publisherId."?__operation=delete_publisher".AnchorRow::composeRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

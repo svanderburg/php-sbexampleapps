@@ -104,7 +104,7 @@ class QuestionCRUDModel extends CRUDModel
 	{
 		QuestionEntity::remove($this->dbh, $this->keyFields['testId']->exportValue(), $this->keyFields['questionId']->exportValue());
 
-		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 	

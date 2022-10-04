@@ -33,7 +33,7 @@ class TestsCRUDModel extends CRUDModel
 		function deleteTestLink(Form $form): string
 		{
 			$testId = $form->fields["TEST_ID"]->exportValue();
-			return $_SERVER["SCRIPT_NAME"]."/tests/".$testId."?__operation=delete_test".AnchorRow::composePreviousRowParameter($form);
+			return $_SERVER["SCRIPT_NAME"]."/tests/".$testId."?__operation=delete_test".AnchorRow::composeRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

@@ -102,7 +102,7 @@ class PaperCRUDModel extends CRUDModel
 			function deletePaperAuthorLink(Form $form): string
 			{
 				$authorId = $form->fields["AUTHOR_ID"]->exportValue();
-				return $_SERVER['PHP_SELF']."?__operation=delete_paper_author&amp;AUTHOR_ID=".$authorId.AnchorRow::composePreviousRowParameter($form);
+				return $_SERVER['PHP_SELF']."?__operation=delete_paper_author&amp;AUTHOR_ID=".$authorId.AnchorRow::composeRowParameter($form);
 			}
 
 			/* Construct a table containing the authors for this form */
@@ -181,7 +181,7 @@ class PaperCRUDModel extends CRUDModel
 
 		PaperEntity::remove($this->dbh, $paperId, $conferenceId);
 		PaperFileSet::removePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $paperId, $conferenceId);
-		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment("paper-row"));
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment("paper-row"));
 		exit();
 	}
 
@@ -209,7 +209,7 @@ class PaperCRUDModel extends CRUDModel
 		if($authorIdField->checkField("AUTHOR_ID"))
 		{
 			PaperEntity::removeAuthor($this->dbh, $this->keyFields['paperId']->exportValue(), $this->keyFields['conferenceId']->exportValue(), $authorIdField->exportValue());
-			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment("author-row"));
+			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment("author-row"));
 			exit();
 		}
 		else

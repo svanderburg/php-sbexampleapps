@@ -38,7 +38,7 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 		function deleteChangeLogLink(Form $form): string
 		{
 			$logId = $form->fields["LOG_ID"]->exportValue();
-			return "?__operation=remove_changelogentry&amp;LOG_ID=".$logId.AnchorRow::composePreviousRowParameter($form);
+			return "?__operation=remove_changelogentry&amp;LOG_ID=".$logId.AnchorRow::composeRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(
@@ -119,7 +119,7 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 		if($logIdField->checkField("Id") && $idField->checkField("Id"))
 		{
 			ChangeLogEntriesEntity::remove($this->dbh, $_REQUEST["LOG_ID"]);
-			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composeRowFragment());
+			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment());
 			exit();
 		}
 		else

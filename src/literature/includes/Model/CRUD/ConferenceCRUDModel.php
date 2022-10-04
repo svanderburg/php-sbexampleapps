@@ -115,7 +115,7 @@ class ConferenceCRUDModel extends CRUDModel
 			function deleteConferenceAuthorLink(Form $form): string
 			{
 				$authorId = $form->fields["AUTHOR_ID"]->exportValue();
-				return $_SERVER['PHP_SELF']."?__operation=delete_conference_author&amp;AUTHOR_ID=".$authorId.AnchorRow::composePreviousRowParameter($form);
+				return $_SERVER['PHP_SELF']."?__operation=delete_conference_author&amp;AUTHOR_ID=".$authorId.AnchorRow::composeRowParameter($form);
 			}
 
 			$this->editorsTable = new DBTable(array(
@@ -138,7 +138,7 @@ class ConferenceCRUDModel extends CRUDModel
 			function deletePaperLink(Form $form): string
 			{
 				$paperId = $form->fields["PAPER_ID"]->exportValue();
-				return $_SERVER['PHP_SELF']."/papers/".$paperId."?__operation=delete_paper".AnchorRow::composePreviousRowParameter($form);
+				return $_SERVER['PHP_SELF']."/papers/".$paperId."?__operation=delete_paper".AnchorRow::composeRowParameter($form);
 			}
 
 			$this->papersTable = new DBTable(array(
@@ -180,7 +180,7 @@ class ConferenceCRUDModel extends CRUDModel
 	private function deleteConference(): void
 	{
 		ConferenceEntity::remove($this->dbh, $this->keyFields['conferenceId']->exportValue());
-		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 
@@ -208,7 +208,7 @@ class ConferenceCRUDModel extends CRUDModel
 		if($authorIdField->checkField("AUTHOR_ID"))
 		{
 			ConferenceEntity::removeEditor($this->dbh, $this->keyFields['conferenceId']->exportValue(), $authorIdField->exportValue());
-			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment("editor-row"));
+			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment("editor-row"));
 			exit();
 		}
 		else

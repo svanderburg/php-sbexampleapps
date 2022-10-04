@@ -103,7 +103,7 @@ class AuthorCRUDModel extends CRUDModel
 	private function deleteAuthor(): void
 	{
 		AuthorEntity::remove($this->dbh, $this->keyFields['authorId']->exportValue());
-		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 

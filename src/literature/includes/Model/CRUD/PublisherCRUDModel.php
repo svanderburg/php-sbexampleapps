@@ -97,7 +97,7 @@ class PublisherCRUDModel extends CRUDModel
 	private function deletePublisher(): void
 	{
 		PublisherEntity::remove($this->dbh, $this->keyFields['publisherId']->exportValue());
-		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 
