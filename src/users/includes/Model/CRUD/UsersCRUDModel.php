@@ -5,6 +5,7 @@ use SBData\Model\Form;
 use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Users\Model\Entity\UserEntity;
@@ -32,7 +33,7 @@ class UsersCRUDModel extends CRUDModel
 		function deleteUserLink(Form $form): string
 		{
 			$username = $form->fields["Username"]->exportValue();
-			return $_SERVER["SCRIPT_NAME"]."/users/".$username."?__operation=delete_user";
+			return $_SERVER["SCRIPT_NAME"]."/users/".$username."?__operation=delete_user".AnchorRow::composeRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

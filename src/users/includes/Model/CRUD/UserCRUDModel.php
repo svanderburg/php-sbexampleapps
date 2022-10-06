@@ -9,6 +9,7 @@ use SBData\Model\Field\PasswordField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\ComboBoxField\DBComboBoxField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Users\Model\Entity\SystemEntity;
@@ -104,7 +105,7 @@ class UserCRUDModel extends CRUDModel
 			function deleteUserSystemLink(Form $form): string
 			{
 				$systemId = $form->fields["SYSTEM_ID"]->exportValue();
-				return $_SERVER['PHP_SELF']."?__operation=delete_user_system&amp;SYSTEM_ID=".$systemId;
+				return $_SERVER['PHP_SELF']."?__operation=delete_user_system&amp;SYSTEM_ID=".$systemId.AnchorRow::composeRowParameter($form);
 			}
 
 			$this->table = new DBTable(array(
@@ -143,7 +144,7 @@ class UserCRUDModel extends CRUDModel
 	private function deleteUser(): void
 	{
 		UserEntity::remove($this->dbh, $this->keyFields['Username']->exportValue());
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 
@@ -156,7 +157,7 @@ class UserCRUDModel extends CRUDModel
 		if($this->addSystemForm->checkValid())
 		{
 			UserEntity::insertAuthorizedSystem($this->dbh, $this->keyFields['Username']->exportValue(), $this->addSystemForm->fields["SYSTEM_ID"]->exportValue());
-			header("Location: ".$_SERVER['HTTP_REFERER']);
+			header("Location: ".$_SERVER['HTTP_REFERER']."#systems");
 			exit();
 		}
 		else
@@ -171,7 +172,7 @@ class UserCRUDModel extends CRUDModel
 		if($systemIdField->checkField("SYSTEM_ID"))
 		{
 			UserEntity::removeAuthorizedSystem($this->dbh, $this->keyFields['Username']->exportValue(), $systemIdField->exportValue());
-			header("Location: ".$_SERVER['HTTP_REFERER']);
+			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment("user-system-row"));
 			exit();
 		}
 		else

@@ -5,6 +5,7 @@ use SBData\Model\Form;
 use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Users\Model\Entity\SystemEntity;
@@ -32,7 +33,7 @@ class SystemsCRUDModel extends CRUDModel
 		function deleteSystemLink(Form $form): string
 		{
 			$systemId = $form->fields["SYSTEM_ID"]->exportValue();
-			return $_SERVER["SCRIPT_NAME"]."/systems/".$systemId."?__operation=delete_system";
+			return $_SERVER["SCRIPT_NAME"]."/systems/".$systemId."?__operation=delete_system".AnchorRow::composeRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

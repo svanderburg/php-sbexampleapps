@@ -5,6 +5,7 @@ use PDO;
 use SBData\Model\Form;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\TextField;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Users\Model\Entity\SystemEntity;
@@ -92,7 +93,7 @@ class SystemCRUDModel extends CRUDModel
 	private function deleteSystem(): void
 	{
 		SystemEntity::remove($this->dbh, $this->keyFields['systemId']->exportValue());
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 

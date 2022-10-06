@@ -16,6 +16,7 @@ global $crudModel;
 if($crudModel->addSystemForm !== null || $crudModel->table !== null)
 {
 	?>
+	<a name="systems"></a>
 	<h2>Systems</h2>
 	<?php
 }
@@ -29,5 +30,5 @@ if($crudModel->addSystemForm !== null)
 }
 
 if($crudModel->table !== null)
-	\SBData\View\HTML\displaySemiEditableTable($crudModel->table);
+	\SBData\View\HTML\displaySemiEditableTable($crudModel->table, true, "No items", "user-system-row");
 ?>
