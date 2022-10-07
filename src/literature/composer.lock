@@ -104,7 +104,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbcrud.git",
-                "reference": "d934bee6133327b745fcfe574cff4b476f3d71c3"
+                "reference": "baec489db8994b7bb1863014121fa42839ec8a56"
             },
             "require": {
                 "svanderburg/php-sbdata": "dev-master",
@@ -133,7 +133,7 @@
                 }
             ],
             "description": "Abstractions to construct web-based information systems",
-            "time": "2022-10-04T22:53:13+00:00"
+            "time": "2022-10-07T17:38:54+00:00"
         },
         {
             "name": "svanderburg/php-sbdata",
