@@ -2,7 +2,7 @@
 namespace SBExampleApps\Users\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\Field\TextField;
+use SBData\Model\Value\Value;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -17,9 +17,9 @@ class UserCRUDPage extends StaticContentCRUDPage
 	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
 	{
 		parent::__construct("User",
-			/* Key fields */
+			/* Key values */
 			array(
-				"Username" => new TextField("Username", true, 20, 255)
+				"Username" => new Value(true, 255)
 			),
 			/* Default contents */
 			new Contents("crud/user.php"),

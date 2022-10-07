@@ -20,7 +20,7 @@ class UsersCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("Users",
 			/* Parameter name */
 			"Username",
-			/* Key fields */
+			/* Key values */
 			array(),
 			/* Default contents */
 			new Contents("crud/users.php"),

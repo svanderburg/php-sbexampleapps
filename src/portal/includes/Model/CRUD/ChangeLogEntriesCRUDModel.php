@@ -9,6 +9,7 @@ use SBData\Model\Field\NumericIntTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBData\Model\Value\Value;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -110,20 +111,17 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 
 	private function removeChangeLogEntry(): void
 	{
-		$logIdField = new TextField("Id", true);
-		$logIdField->importValue($_REQUEST["LOG_ID"]);
+		$logIdValue = new Value(true, 255);
+		$logIdValue->value = $_REQUEST["LOG_ID"];
 
-		$idField = new NumericIntTextField("Id", true);
-		$idField->importValue($_REQUEST["__id"]);
-
-		if($logIdField->checkField("Id") && $idField->checkField("Id"))
+		if($logIdValue->checkValue("Id"))
 		{
-			ChangeLogEntriesEntity::remove($this->dbh, $_REQUEST["LOG_ID"]);
+			ChangeLogEntriesEntity::remove($this->dbh, $logIdValue->value);
 			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment());
 			exit();
 		}
 		else
-			throw new Exceptions("The keys are not valid!");
+			throw new Exceptions("The log id is not valid!");
 	}
 
 	public function executeOperation(): void

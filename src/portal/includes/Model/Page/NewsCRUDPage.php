@@ -23,7 +23,7 @@ class NewsCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("News",
 			/* Parameter name */
 			"messageId",
-			/* Key fields */
+			/* Key values */
 			array(),
 			/* Default contents */
 			new Contents("crud/news.php"),

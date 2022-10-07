@@ -20,7 +20,7 @@ class TestsCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("Tests",
 			/* Parameter name */
 			"testId",
-			/* Key fields */
+			/* Key values */
 			array(),
 			/* Default contents */
 			new Contents("crud/tests.php"),

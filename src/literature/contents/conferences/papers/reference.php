@@ -1,5 +1,5 @@
 <?php
-use SBData\Model\Field\NumericIntTextField;
+use SBData\Model\Value\IntegerValue;
 use SBBiblio\Model\Author;
 use SBBiblio\Model\Book;
 use SBBiblio\Model\InProceedings;
@@ -42,12 +42,12 @@ function generateMonth($date)
 	}
 }
 
-$paperIdField = new NumericIntTextField("PAPER_ID", true);
-$paperIdField->importValue($GLOBALS["query"]["paperId"]);
-$conferenceIdField = new NumericIntTextField("CONFERENCE_ID", true);
-$conferenceIdField->importValue($GLOBALS["query"]["conferenceId"]);
+$paperIdValue = new IntegerValue(true);
+$paperIdValue->value = $GLOBALS["query"]["paperId"];
+$conferenceIdValue = new IntegerValue(true);
+$conferenceIdValue->value = $GLOBALS["query"]["conferenceId"];
 
-if(!$paperIdField->checkField("PAPER_ID") || !$conferenceIdField->checkField("CONFERENCE_ID"))
+if(!$paperIdValue->checkValue("PAPER_ID") || !$conferenceIdValue->checkValue("CONFERENCE_ID"))
 {
 	?>
 	<p>The keys are invalid!</p>
@@ -55,7 +55,7 @@ if(!$paperIdField->checkField("PAPER_ID") || !$conferenceIdField->checkField("CO
 }
 else
 {
-	$stmt = PaperEntity::queryOneForReference($dbh, $paperIdField->exportValue(), $conferenceIdField->exportValue());
+	$stmt = PaperEntity::queryOneForReference($dbh, $paperIdValue->value, $conferenceIdValue->value);
 
 	if(($paper = $stmt->fetch()) === false)
 	{
@@ -67,7 +67,7 @@ else
 	{
 		/* Process authors */
 		$authors = array();
-		$stmt = PaperEntity::queryAuthorsSummary($dbh, $paperIdField->exportValue(), $conferenceIdField->exportValue());
+		$stmt = PaperEntity::queryAuthorsSummary($dbh, $paperIdValue->value, $conferenceIdValue->value);
 
 		while(($author = $stmt->fetch()) !== false)
 			array_push($authors, new Author($author["AuthorName"], $author["Homepage"]));

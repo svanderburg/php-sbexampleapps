@@ -20,7 +20,7 @@ class PublishersCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("Publishers",
 			/* Parameter name */
 			"publisherId",
-			/* Key fields */
+			/* Key values */
 			array(),
 			/* Default contents */
 			new Contents("crud/publishers.php"),

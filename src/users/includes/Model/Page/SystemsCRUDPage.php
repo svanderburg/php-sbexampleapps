@@ -20,7 +20,7 @@ class SystemsCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("Systems",
 			/* Parameter name */
 			"systemId",
-			/* Key fields */
+			/* Key values */
 			array(),
 			/* Default contents */
 			new Contents("crud/systems.php"),

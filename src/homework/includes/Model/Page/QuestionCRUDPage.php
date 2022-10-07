@@ -2,8 +2,8 @@
 namespace SBExampleApps\Homework\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\Field\NumericIntTextField;
-use SBData\Model\Field\TextField;
+use SBData\Model\Value\Value;
+use SBData\Model\Value\IntegerValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -18,10 +18,10 @@ class QuestionCRUDPage extends StaticContentCRUDPage
 	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
 	{
 		parent::__construct("Question",
-			/* Key fields */
+			/* Key values */
 			array(
-				"testId" => new TextField(true, 20, 255),
-				"questionId" => new NumericIntTextField(true)
+				"testId" => new Value(true, 255),
+				"questionId" => new IntegerValue(true)
 			),
 			/* Default contents */
 			new Contents("crud/question.php"),

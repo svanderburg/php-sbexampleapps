@@ -3,7 +3,7 @@ namespace SBExampleApps\Portal\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\Field\NumericIntTextField;
+use SBData\Model\Value\IntegerValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -21,9 +21,9 @@ class NewsMessageCRUDPage extends StaticContentCRUDPage
 		$htmlEditorJsPath = $baseURL."/scripts/htmleditor.js";
 
 		parent::__construct("News message",
-			/* Key fields */
+			/* Key values */
 			array(
-				"messageId" => new NumericIntTextField("Id", true)
+				"messageId" => new IntegerValue(true)
 			),
 			/* Default contents */
 			new Contents("crud/newsmessage.php", null, null, array($htmlEditorJsPath)),

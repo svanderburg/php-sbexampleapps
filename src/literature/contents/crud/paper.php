@@ -38,7 +38,7 @@ if($crudModel->hasPDF)
 {
 	?>
 	<p>
-	<a href="<?php print(dirname($_SERVER["SCRIPT_NAME"])); ?>/pdf/<?php print($crudModel->keyFields["conferenceId"]->exportValue()); ?>/<?php print($crudModel->keyFields["paperId"]->exportValue()); ?>.pdf">View PDF</a>
+	<a href="<?php print(dirname($_SERVER["SCRIPT_NAME"])); ?>/pdf/<?php print($crudModel->keyValues["conferenceId"]->value); ?>/<?php print($crudModel->keyValues["paperId"]->value); ?>.pdf">View PDF</a>
 	<?php
 	if($authorizationManager->authenticated)
 	{

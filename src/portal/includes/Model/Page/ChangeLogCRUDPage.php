@@ -19,7 +19,7 @@ class ChangeLogCRUDPage extends StaticContentCRUDPage
 		$baseURL = Page::computeBaseURL();
 
 		parent::__construct("Changelog",
-			/* Key fields */
+			/* Key values */
 			array(),
 			/* Default contents */
 			new Contents("crud/changelog.php"),

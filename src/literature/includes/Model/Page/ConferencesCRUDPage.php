@@ -20,7 +20,7 @@ class ConferencesCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("Conferences",
 			/* Parameter name */
 			"conferenceId",
-			/* Key fields */
+			/* Key values */
 			array(),
 			/* Default contents */
 			new Contents("crud/conferences.php"),

@@ -14,7 +14,7 @@ class SearchCRUDPage extends StaticContentCRUDPage
 	public function __construct(PDO $dbh, array $subPages = array())
 	{
 		parent::__construct("Search papers",
-			/* Key fields */
+			/* Key values */
 			array(),
 			/* Default contents */
 			new Contents("crud/search.php"),

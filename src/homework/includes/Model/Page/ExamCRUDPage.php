@@ -2,7 +2,7 @@
 namespace SBExampleApps\Homework\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\Field\TextField;
+use SBData\Model\Value\Value;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Homework\Model\CRUD\ExamCRUDModel;
@@ -14,9 +14,9 @@ class ExamCRUDPage extends StaticContentCRUDPage
 	public function __construct(PDO $dbh, array $subPages = array())
 	{
 		parent::__construct("Exam",
-			/* Key fields */
+			/* Key values */
 			array(
-				"testId" => new TextField("Id", true, 20, 255)
+				"testId" => new Value(true, 255)
 			),
 			/* Default contents */
 			new Contents("crud/exam.php"),

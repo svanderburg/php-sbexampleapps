@@ -20,7 +20,7 @@ class AuthorsCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("Authors",
 			/* Parameter name */
 			"authorId",
-			/* Key fields */
+			/* Key values */
 			array(),
 			/* Default contents */
 			new Contents("crud/authors.php"),

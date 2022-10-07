@@ -12,6 +12,7 @@ use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBData\Model\Value\IntegerValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -93,7 +94,7 @@ class ConferenceCRUDModel extends CRUDModel
 		/* Query the properties of the requested conference and construct a form from it */
 		$this->constructConferenceForm();
 
-		$stmt = ConferenceEntity::queryOne($this->dbh, $this->keyFields['conferenceId']->exportValue());
+		$stmt = ConferenceEntity::queryOne($this->dbh, $this->keyValues['conferenceId']->value);
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -126,7 +127,7 @@ class ConferenceCRUDModel extends CRUDModel
 				"Delete" => __NAMESPACE__.'\\deleteConferenceAuthorLink'
 			));
 
-			$this->editorsTable->stmt = ConferenceEntity::queryEditors($this->dbh, $this->keyFields['conferenceId']->exportValue());
+			$this->editorsTable->stmt = ConferenceEntity::queryEditors($this->dbh, $this->keyValues['conferenceId']->value);
 
 			/* Construct a table containing the papers for this conference */
 			function composePaperLink(NumericIntKeyLinkField $field, Form $form): string
@@ -151,7 +152,7 @@ class ConferenceCRUDModel extends CRUDModel
 				"Delete" => __NAMESPACE__.'\\deletePaperLink'
 			));
 
-			$this->papersTable->stmt = PaperEntity::queryAll($this->dbh, $this->keyFields['conferenceId']->exportValue());
+			$this->papersTable->stmt = PaperEntity::queryAll($this->dbh, $this->keyValues['conferenceId']->value);
 		}
 	}
 
@@ -171,7 +172,7 @@ class ConferenceCRUDModel extends CRUDModel
 		if($this->form->checkValid())
 		{
 			$conference = $this->form->exportValues();
-			ConferenceEntity::update($this->dbh, $conference, $this->keyFields['conferenceId']->exportValue());
+			ConferenceEntity::update($this->dbh, $conference, $this->keyValues['conferenceId']->value);
 			header("Location: ".$_SERVER["SCRIPT_NAME"]."/conferences/".$conference['CONFERENCE_ID']);
 			exit();
 		}
@@ -179,7 +180,7 @@ class ConferenceCRUDModel extends CRUDModel
 
 	private function deleteConference(): void
 	{
-		ConferenceEntity::remove($this->dbh, $this->keyFields['conferenceId']->exportValue());
+		ConferenceEntity::remove($this->dbh, $this->keyValues['conferenceId']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
@@ -192,7 +193,7 @@ class ConferenceCRUDModel extends CRUDModel
 
 		if($this->addEditorForm->checkValid())
 		{
-			ConferenceEntity::insertEditor($this->dbh, $this->keyFields['conferenceId']->exportValue(), $this->addEditorForm->fields["AUTHOR_ID"]->exportValue());
+			ConferenceEntity::insertEditor($this->dbh, $this->keyValues['conferenceId']->value, $this->addEditorForm->fields["AUTHOR_ID"]->exportValue());
 			header("Location: ".$_SERVER['HTTP_REFERER']."#editors");
 			exit();
 		}
@@ -202,12 +203,12 @@ class ConferenceCRUDModel extends CRUDModel
 
 	private function deleteConferenceAuthor(): void
 	{
-		$authorIdField = new TextField("Id", true);
-		$authorIdField->importValue($_REQUEST["AUTHOR_ID"]);
+		$authorIdValue = new IntegerValue(true);
+		$authorIdValue->value = $_REQUEST["AUTHOR_ID"];
 
-		if($authorIdField->checkField("AUTHOR_ID"))
+		if($authorIdValue->checkValue("AUTHOR_ID"))
 		{
-			ConferenceEntity::removeEditor($this->dbh, $this->keyFields['conferenceId']->exportValue(), $authorIdField->exportValue());
+			ConferenceEntity::removeEditor($this->dbh, $this->keyValues['conferenceId']->value, $authorIdValue->value);
 			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment("editor-row"));
 			exit();
 		}

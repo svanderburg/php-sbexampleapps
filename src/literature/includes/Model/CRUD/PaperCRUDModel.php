@@ -14,6 +14,7 @@ use SBData\Model\Field\TextAreaField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBData\Model\Value\IntegerValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -81,7 +82,7 @@ class PaperCRUDModel extends CRUDModel
 		$this->constructPaperForm();
 
 		/* Query the paper and construct a form */
-		$stmt = PaperEntity::queryOne($this->dbh, $this->keyFields['paperId']->exportValue(), $this->keyFields['conferenceId']->exportValue());
+		$stmt = PaperEntity::queryOne($this->dbh, $this->keyValues['paperId']->value, $this->keyValues['conferenceId']->value);
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -114,7 +115,7 @@ class PaperCRUDModel extends CRUDModel
 				"Delete" => __NAMESPACE__.'\\deletePaperAuthorLink'
 			));
 
-			$this->authorsTable->stmt = PaperEntity::queryAuthors($this->dbh, $this->keyFields['paperId']->exportValue(), $this->keyFields['conferenceId']->exportValue());
+			$this->authorsTable->stmt = PaperEntity::queryAuthors($this->dbh, $this->keyValues['paperId']->value, $this->keyValues['conferenceId']->value);
 
 			$this->hasPDF = $row['hasPDF'] == 1;
 		}
@@ -135,7 +136,7 @@ class PaperCRUDModel extends CRUDModel
 
 		if($this->form->checkValid())
 		{
-			$conferenceId = $this->keyFields['conferenceId']->exportValue();
+			$conferenceId = $this->keyValues['conferenceId']->value;
 
 			$paper = $this->form->exportValues();
 			$paper['hasPDF'] = PaperFileSet::pdfProvided() ? 1 : 0;
@@ -161,8 +162,8 @@ class PaperCRUDModel extends CRUDModel
 			$paper = $this->form->exportValues();
 			$paper['hasPDF'] = PaperFileSet::pdfProvided() ? 1 : 0;
 
-			$paperId = $this->keyFields['paperId']->exportValue();
-			$conferenceId = $this->keyFields['conferenceId']->exportValue();
+			$paperId = $this->keyValues['paperId']->value;
+			$conferenceId = $this->keyValues['conferenceId']->value;
 
 			PaperEntity::update($this->dbh, $paper, $paperId, $conferenceId);
 
@@ -176,8 +177,8 @@ class PaperCRUDModel extends CRUDModel
 
 	private function deletePaper(): void
 	{
-		$paperId = $this->keyFields['paperId']->exportValue();
-		$conferenceId = $this->keyFields['conferenceId']->exportValue();
+		$paperId = $this->keyValues['paperId']->value;
+		$conferenceId = $this->keyValues['conferenceId']->value;
 
 		PaperEntity::remove($this->dbh, $paperId, $conferenceId);
 		PaperFileSet::removePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $paperId, $conferenceId);
@@ -193,7 +194,7 @@ class PaperCRUDModel extends CRUDModel
 
 		if($this->addAuthorForm->checkValid())
 		{
-			PaperEntity::insertAuthor($this->dbh, $this->keyFields['paperId']->exportValue(), $this->keyFields['conferenceId']->exportValue(), $this->addAuthorForm->fields["AUTHOR_ID"]->exportValue());
+			PaperEntity::insertAuthor($this->dbh, $this->keyValues['paperId']->value, $this->keyValues['conferenceId']->value, $this->addAuthorForm->fields["AUTHOR_ID"]->exportValue());
 			header("Location: ".$_SERVER['HTTP_REFERER']."#authors");
 			exit();
 		}
@@ -203,12 +204,12 @@ class PaperCRUDModel extends CRUDModel
 
 	private function deletePaperAuthor(): void
 	{
-		$authorIdField = new TextField("Id", true);
-		$authorIdField->importValue($_REQUEST["AUTHOR_ID"]);
+		$authorIdValue = new IntegerValue(true);
+		$authorIdValue->value = $_REQUEST["AUTHOR_ID"];
 
-		if($authorIdField->checkField("AUTHOR_ID"))
+		if($authorIdValue->checkValue("AUTHOR_ID"))
 		{
-			PaperEntity::removeAuthor($this->dbh, $this->keyFields['paperId']->exportValue(), $this->keyFields['conferenceId']->exportValue(), $authorIdField->exportValue());
+			PaperEntity::removeAuthor($this->dbh, $this->keyValues['paperId']->value, $this->keyValues['conferenceId']->value, $authorIdValue->value);
 			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment("author-row"));
 			exit();
 		}
@@ -218,8 +219,8 @@ class PaperCRUDModel extends CRUDModel
 
 	private function deletePaperPDF(): void
 	{
-		$paperId = $this->keyFields['paperId']->exportValue();
-		$conferenceId = $this->keyFields['conferenceId']->exportValue();
+		$paperId = $this->keyValues['paperId']->value;
+		$conferenceId = $this->keyValues['conferenceId']->value;
 
 		PaperEntity::removePDF($this->dbh, $paperId, $conferenceId);
 		PaperFileSet::removePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $paperId, $conferenceId);

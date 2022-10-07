@@ -2,7 +2,7 @@
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\Field\NumericIntTextField;
+use SBData\Model\Value\IntegerValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -17,10 +17,10 @@ class PaperCRUDPage extends StaticContentCRUDPage
 	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = null)
 	{
 		parent::__construct("Paper",
-			/* Key fields */
+			/* Key values */
 			array(
-				"conferenceId" => new NumericIntTextField(true),
-				"paperId" => new NumericIntTextField(true)
+				"conferenceId" => new IntegerValue(true),
+				"paperId" => new IntegerValue(true)
 			),
 			/* Default contents */
 			new Contents("crud/paper.php"),

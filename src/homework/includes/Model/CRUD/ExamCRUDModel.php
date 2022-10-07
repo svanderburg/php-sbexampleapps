@@ -43,7 +43,7 @@ class ExamCRUDModel extends CRUDModel
 	private function viewExam(): void
 	{
 		$this->constructTestForm();
-		$_SESSION["exam"] = new Exam($this->keyFields["testId"]->exportValue());
+		$_SESSION["exam"] = new Exam($this->keyValues["testId"]->value);
 		$this->displaySuccessiveQuestion();
 	}
 

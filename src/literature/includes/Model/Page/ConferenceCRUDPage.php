@@ -2,7 +2,7 @@
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\Field\TextField;
+use SBData\Model\Value\Value;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -18,9 +18,9 @@ class ConferenceCRUDPage extends StaticContentCRUDPage
 	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = null)
 	{
 		parent::__construct("Conference",
-			/* Key fields */
+			/* Key values */
 			array(
-				"conferenceId" => new TextField("Id", true, 20, 255)
+				"conferenceId" => new Value(true, 255)
 			),
 			/* Default contents */
 			new Contents("crud/conference.php"),

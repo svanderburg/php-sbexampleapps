@@ -66,7 +66,7 @@ class TestCRUDModel extends CRUDModel
 		/* Query the properties of the requested test and construct a form and table from it */
 		$this->constructTestForm();
 
-		$stmt = TestEntity::queryOne($this->dbh, $this->keyFields['testId']->exportValue());
+		$stmt = TestEntity::queryOne($this->dbh, $this->keyValues['testId']->value);
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -100,7 +100,7 @@ class TestCRUDModel extends CRUDModel
 				"Delete" => __NAMESPACE__.'\\deleteQuestionLink'
 			));
 
-			$this->table->stmt = TestEntity::queryAllQuestions($this->dbh, $this->keyFields['testId']->exportValue());
+			$this->table->stmt = TestEntity::queryAllQuestions($this->dbh, $this->keyValues['testId']->value);
 		}
 	}
 
@@ -112,7 +112,7 @@ class TestCRUDModel extends CRUDModel
 
 		if($this->form->checkValid())
 		{
-			$testId = $this->keyFields['testId']->exportValue();
+			$testId = $this->keyValues['testId']->value;
 			$test = $this->form->exportValues();
 			TestEntity::update($this->dbh, $test, $testId);
 			header("Location: ".$_SERVER["SCRIPT_NAME"]."/tests/".$test['TEST_ID']);
@@ -122,7 +122,7 @@ class TestCRUDModel extends CRUDModel
 
 	private function deleteTest(): void
 	{
-		TestEntity::remove($this->dbh, $this->keyFields['testId']->exportValue());
+		TestEntity::remove($this->dbh, $this->keyValues['testId']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}

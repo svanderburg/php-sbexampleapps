@@ -2,7 +2,7 @@
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\Field\TextField;
+use SBData\Model\Value\Value;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -17,9 +17,9 @@ class PublisherCRUDPage extends StaticContentCRUDPage
 	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
 	{
 		parent::__construct("Publisher",
-			/* Key fields */
+			/* Key values */
 			array(
-				"publisherId" => new TextField("Id", true, 20, 255)
+				"publisherId" => new Value(true, 255)
 			),
 			/* Default contents */
 			new Contents("crud/publisher.php"),

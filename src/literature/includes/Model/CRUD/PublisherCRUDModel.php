@@ -65,7 +65,7 @@ class PublisherCRUDModel extends CRUDModel
 		/* Query the properties of the requested publisher and construct a form from it */
 		$this->constructPublisherForm();
 
-		$stmt = PublisherEntity::queryOne($this->dbh, $this->keyFields['publisherId']->exportValue());
+		$stmt = PublisherEntity::queryOne($this->dbh, $this->keyValues['publisherId']->value);
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -88,7 +88,7 @@ class PublisherCRUDModel extends CRUDModel
 		if($this->form->checkValid())
 		{
 			$publisher = $this->form->exportValues();
-			PublisherEntity::update($this->dbh, $publisher, $this->keyFields['publisherId']->exportValue());
+			PublisherEntity::update($this->dbh, $publisher, $this->keyValues['publisherId']->value);
 			header("Location: ".$_SERVER["SCRIPT_NAME"]."/publishers/".$publisher['PUBLISHER_ID']);
 			exit();
 		}
@@ -96,7 +96,7 @@ class PublisherCRUDModel extends CRUDModel
 
 	private function deletePublisher(): void
 	{
-		PublisherEntity::remove($this->dbh, $this->keyFields['publisherId']->exportValue());
+		PublisherEntity::remove($this->dbh, $this->keyValues['publisherId']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
