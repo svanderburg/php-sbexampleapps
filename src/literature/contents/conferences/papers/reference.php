@@ -97,7 +97,7 @@ else
 				$paper["PublisherName"], $editors, $paper["ConferenceLocation"]),
 			generateMonth($date), $date->format('Y'),
 			$paper["PaperAbstract"],
-			$paper["PaperURL"],
+			$paper["PaperURL"] == "" ? null : $paper["PaperURL"],
 			$paper["PaperComment"] == "" ? null : $paper["PaperComment"]);
 
 		\SBBiblio\View\HTML\displayPublication($publication, dirname($_SERVER["PHP_SELF"])."/pdf");
