@@ -106,7 +106,10 @@ class UserCRUDModel extends CRUDModel
 			function deleteUserSystemLink(Form $form): string
 			{
 				$systemId = $form->fields["SYSTEM_ID"]->exportValue();
-				return $_SERVER['PHP_SELF']."?__operation=delete_user_system&amp;SYSTEM_ID=".$systemId.AnchorRow::composeRowParameter($form);
+				return $_SERVER['PHP_SELF']."?".http_build_query(array(
+					"__operation" => "delete_user_system",
+					"SYSTEM_ID" => $systemId
+				), "", null, PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
 			}
 
 			$this->table = new DBTable(array(

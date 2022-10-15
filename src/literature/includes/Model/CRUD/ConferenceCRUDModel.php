@@ -116,7 +116,10 @@ class ConferenceCRUDModel extends CRUDModel
 			function deleteConferenceAuthorLink(Form $form): string
 			{
 				$authorId = $form->fields["AUTHOR_ID"]->exportValue();
-				return $_SERVER['PHP_SELF']."?__operation=delete_conference_author&amp;AUTHOR_ID=".$authorId.AnchorRow::composeRowParameter($form);
+				return $_SERVER['PHP_SELF']."?".http_build_query(array(
+					"__operation" => "delete_conference_author",
+					"AUTHOR_ID" => $authorId
+				), "", null, PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
 			}
 
 			$this->editorsTable = new DBTable(array(

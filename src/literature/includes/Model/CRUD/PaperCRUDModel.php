@@ -103,7 +103,10 @@ class PaperCRUDModel extends CRUDModel
 			function deletePaperAuthorLink(Form $form): string
 			{
 				$authorId = $form->fields["AUTHOR_ID"]->exportValue();
-				return $_SERVER['PHP_SELF']."?__operation=delete_paper_author&amp;AUTHOR_ID=".$authorId.AnchorRow::composeRowParameter($form);
+				return $_SERVER['PHP_SELF']."?".http_build_query(array(
+					"__operation" => "delete_paper_author",
+					"AUTHOR_ID" => $authorId
+				), "", null, PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
 			}
 
 			/* Construct a table containing the authors for this form */
