@@ -119,7 +119,7 @@ class ConferenceCRUDModel extends CRUDModel
 				return $_SERVER['PHP_SELF']."?".http_build_query(array(
 					"__operation" => "delete_conference_author",
 					"AUTHOR_ID" => $authorId
-				), "", null, PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
+				), "", "&amp;", PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
 			}
 
 			$this->editorsTable = new DBTable(array(

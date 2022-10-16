@@ -42,7 +42,7 @@ class ChangeLogEntriesCRUDModel extends CRUDModel
 			return "?".http_build_query(array(
 				"__operation" => "remove_changelogentry",
 				"LOG_ID" => $logId
-			), "", null, PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
+			), "", "&amp;", PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

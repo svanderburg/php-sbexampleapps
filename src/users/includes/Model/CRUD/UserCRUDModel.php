@@ -109,7 +109,7 @@ class UserCRUDModel extends CRUDModel
 				return $_SERVER['PHP_SELF']."?".http_build_query(array(
 					"__operation" => "delete_user_system",
 					"SYSTEM_ID" => $systemId
-				), "", null, PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
+				), "", "&amp;", PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
 			}
 
 			$this->table = new DBTable(array(

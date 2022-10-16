@@ -23,7 +23,7 @@ while(($row = $crudModel->stmt->fetch()) !== false)
 	if($crudModel->page > 0)
 	{
 		?>
-		<a style="float: left;" href="<?php print($_SERVER["PHP_SELF"]."?".http_build_query(array("page" => $crudModel->page - 1), "", null, PHP_QUERY_RFC3986)); ?>">&laquo; Previous</a>
+		<a style="float: left;" href="<?php print($_SERVER["PHP_SELF"]."?".http_build_query(array("page" => $crudModel->page - 1), "", "&amp;", PHP_QUERY_RFC3986)); ?>">&laquo; Previous</a>
 		<?php
 	}
 	
@@ -34,7 +34,7 @@ while(($row = $crudModel->stmt->fetch()) !== false)
 		if(($crudModel->page + 1) * 10 < intval($row[0]))
 		{
 			?>
-			<a style="float: right;" href="<?php print($_SERVER["PHP_SELF"]."?".http_build_query(array("page" => $crudModel->page + 1), "", null, PHP_QUERY_RFC3986)); ?>">Next &raquo;</a>
+			<a style="float: right;" href="<?php print($_SERVER["PHP_SELF"]."?".http_build_query(array("page" => $crudModel->page + 1), "", "&amp;", PHP_QUERY_RFC3986)); ?>">Next &raquo;</a>
 			<?php
 		}
 	}
