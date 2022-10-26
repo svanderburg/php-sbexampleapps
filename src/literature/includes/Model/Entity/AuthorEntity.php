@@ -33,6 +33,15 @@ class AuthorEntity
 		return $stmt;
 	}
 
+	public static function queryOneSummary(PDO $dbh, int $id): PDOStatement
+	{
+		$stmt = $dbh->prepare("select AUTHOR_ID, LastName from author where AUTHOR_ID = ? order by LastName");
+		if(!$stmt->execute(array($id)))
+			throw new Exception($stmt->errorInfo()[2]);
+
+		return $stmt;
+	}
+
 	public static function nextAuthorId(PDO $dbh): int
 	{
 		$stmt = $dbh->prepare("select MAX(AUTHOR_ID) from author");

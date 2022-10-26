@@ -2,6 +2,7 @@
 namespace SBExampleApps\Homework\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Content\Contents;
+use SBData\Model\ParameterMap;
 use SBData\Model\Value\Value;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
@@ -18,10 +19,12 @@ class TestCRUDPage extends StaticContentCRUDPage
 	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
 	{
 		parent::__construct("Test",
-			/* Key values */
-			array(
+			/* Key parameters */
+			new ParameterMap(array(
 				"testId" => new Value(true, 255)
-			),
+			)),
+			/* Request parameters */
+			new ParameterMap(),
 			/* Default contents */
 			new Contents("crud/test.php"),
 			/* Error contents */

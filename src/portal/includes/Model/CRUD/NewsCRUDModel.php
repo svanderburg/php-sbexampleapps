@@ -3,7 +3,7 @@ namespace SBExampleApps\Portal\Model\CRUD;
 use Exception;
 use PDO;
 use PDOStatement;
-use SBData\Model\Field\NumericIntTextField;
+use SBData\Model\Value\PageValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Portal\Model\Entity\NewsMessageEntity;
@@ -14,7 +14,7 @@ class NewsCRUDModel extends CRUDModel
 
 	public PDOStatement $stmt;
 
-	public $page;
+	public int $page;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -24,18 +24,16 @@ class NewsCRUDModel extends CRUDModel
 
 	public function executeOperation(): void
 	{
-		$pageField = new NumericIntTextField("Page", true);
+		$pageValue = new PageValue();
 
 		if(array_key_exists("page", $_GET))
 		{
-			$pageField->importValue($_GET["page"]);
-			if(!$pageField->checkField("Page"))
+			$pageValue->value = $_GET["page"];
+			if(!$pageValue->checkValue("Page"))
 				throw new Exception("Invalid page value provided!");
 		}
-		else
-			$pageField->importValue(0);
 
-		$this->page = $pageField->exportValue();
+		$this->page = (int)$pageValue->value;
 		$this->stmt = NewsMessageEntity::queryAll($this->dbh, $this->page);
 	}
 }

@@ -47,9 +47,9 @@ if($authorizationManager->authenticated && $crudModel->addEditorForm !== null)
 if($crudModel->editorsTable !== null)
 {
 	if($authorizationManager->authenticated)
-		\SBData\View\HTML\displaySemiEditableTable($crudModel->editorsTable, true, "No editors", "editor-row");
+		\SBData\View\HTML\displaySemiEditableTable($crudModel->editorsTable, "No editors", "editor-row");
 	else
-		\SBData\View\HTML\displayTable($crudModel->editorsTable, false, "No editors");
+		\SBData\View\HTML\displayTable($crudModel->editorsTable, "No editors");
 }
 
 /* Display papers section */
@@ -59,8 +59,8 @@ if($crudModel->papersTable !== null)
 	<h2>Papers</h2>
 	<?php
 	if($authorizationManager->authenticated)
-		\SBData\View\HTML\displaySemiEditableTable($crudModel->papersTable, true, "No papers", "paper-row");
+		\SBData\View\HTML\displaySemiEditableTable($crudModel->papersTable, "No papers", "paper-row");
 	else
-		\SBData\View\HTML\displayTable($crudModel->papersTable, false, "No papers");
+		\SBData\View\HTML\displayTable($crudModel->papersTable, "No papers");
 }
 ?>

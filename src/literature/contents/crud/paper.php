@@ -71,8 +71,8 @@ if($authorizationManager->authenticated && $crudModel->addAuthorForm !== null)
 if($crudModel->authorsTable !== null)
 {
 	if($authorizationManager->authenticated)
-		\SBData\View\HTML\displaySemiEditableTable($crudModel->authorsTable, true, "No authors", "author-row");
+		\SBData\View\HTML\displaySemiEditableTable($crudModel->authorsTable, "No authors", "author-row");
 	else
-		\SBData\View\HTML\displayTable($crudModel->authorsTable, false, "No authors");
+		\SBData\View\HTML\displayTable($crudModel->authorsTable, "No authors");
 }
 ?>

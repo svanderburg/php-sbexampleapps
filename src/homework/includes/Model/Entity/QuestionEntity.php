@@ -78,7 +78,7 @@ class QuestionEntity
 			"TEST_ID = ? ".
 			"where QUESTION_ID = ? and TEST_ID = ?");
 
-		if(!$stmt->execute(array($question['QUESTION_ID'], $question['Question'], $question['Answer'], $question['Exact'], $question['TEST_ID'], $questionId, $testId)))
+		if(!$stmt->execute(array($question['QUESTION_ID'], $question['Question'], $question['Answer'], $question['Exact'] == "1" ? 1 : 0, $question['TEST_ID'], $questionId, $testId)))
 			throw new Exception($stmt->errorInfo()[2]);
 	}
 	

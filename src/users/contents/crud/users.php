@@ -4,5 +4,5 @@
 <?php
 global $crudModel;
 
-\SBData\View\HTML\displaySemiEditableTable($crudModel->table, true);
+\SBData\View\HTML\displaySemiEditableTable($crudModel->table);
 ?>

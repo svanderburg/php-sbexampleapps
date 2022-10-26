@@ -30,5 +30,5 @@ if($crudModel->addSystemForm !== null)
 }
 
 if($crudModel->table !== null)
-	\SBData\View\HTML\displaySemiEditableTable($crudModel->table, true, "No items", "user-system-row");
+	\SBData\View\HTML\displaySemiEditableTable($crudModel->table, "No items", "user-system-row");
 ?>

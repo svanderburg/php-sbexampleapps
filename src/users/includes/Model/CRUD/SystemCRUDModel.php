@@ -61,7 +61,7 @@ class SystemCRUDModel extends CRUDModel
 		/* Query the properties of the requested system and construct a form from it */
 		$this->constructSystemForm();
 
-		$stmt = SystemEntity::queryOne($this->dbh, $this->keyValues['systemId']->value);
+		$stmt = SystemEntity::queryOne($this->dbh, $this->keyParameterMap->values['systemId']->value);
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -84,7 +84,7 @@ class SystemCRUDModel extends CRUDModel
 		if($this->form->checkValid())
 		{
 			$system = $this->form->exportValues();
-			SystemEntity::update($this->dbh, $system, $this->keyValues['systemId']->value);
+			SystemEntity::update($this->dbh, $system, $this->keyParameterMap->values['systemId']->value);
 			header("Location: ".$_SERVER["SCRIPT_NAME"]."/systems/".$system['SYSTEM_ID']);
 			exit();
 		}
@@ -92,7 +92,7 @@ class SystemCRUDModel extends CRUDModel
 
 	private function deleteSystem(): void
 	{
-		SystemEntity::remove($this->dbh, $this->keyValues['systemId']->value);
+		SystemEntity::remove($this->dbh, $this->keyParameterMap->values['systemId']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}

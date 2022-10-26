@@ -3,6 +3,7 @@ namespace SBExampleApps\Portal\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
+use SBData\Model\ParameterMap;
 use SBData\Model\Value\IntegerValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
@@ -21,10 +22,12 @@ class NewsMessageCRUDPage extends StaticContentCRUDPage
 		$htmlEditorJsPath = $baseURL."/scripts/htmleditor.js";
 
 		parent::__construct("News message",
-			/* Key values */
-			array(
+			/* Key parameters */
+			new ParameterMap(array(
 				"messageId" => new IntegerValue(true)
-			),
+			)),
+			/* Request parameters */
+			new ParameterMap(),
 			/* Default contents */
 			new Contents("crud/newsmessage.php", null, null, array($htmlEditorJsPath)),
 			/* Error contents */

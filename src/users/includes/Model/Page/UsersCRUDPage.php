@@ -3,6 +3,7 @@ namespace SBExampleApps\Users\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
+use SBData\Model\ParameterMap;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\DynamicContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -20,8 +21,10 @@ class UsersCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("Users",
 			/* Parameter name */
 			"Username",
-			/* Key values */
-			array(),
+			/* Key parameters */
+			new ParameterMap(),
+			/* Request parameters */
+			new ParameterMap(),
 			/* Default contents */
 			new Contents("crud/users.php"),
 			/* Error contents */

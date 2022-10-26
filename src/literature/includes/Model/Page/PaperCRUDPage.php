@@ -2,6 +2,7 @@
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Content\Contents;
+use SBData\Model\ParameterMap;
 use SBData\Model\Value\IntegerValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
@@ -17,11 +18,13 @@ class PaperCRUDPage extends StaticContentCRUDPage
 	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = null)
 	{
 		parent::__construct("Paper",
-			/* Key values */
-			array(
+			/* Key parameters */
+			new ParameterMap(array(
 				"conferenceId" => new IntegerValue(true),
 				"paperId" => new IntegerValue(true)
-			),
+			)),
+			/* Request parameters */
+			new ParameterMap(),
 			/* Default contents */
 			new Contents("crud/paper.php"),
 			/* Error contents */

@@ -33,6 +33,15 @@ class PublisherEntity
 		return $stmt;
 	}
 
+	public static function queryOneSummary(PDO $dbh, string $id): PDOStatement
+	{
+		$stmt = $dbh->prepare("select PUBLISHER_ID, Name from publisher where PUBLISHER_ID = ? order by Name");
+		if(!$stmt->execute(array($id)))
+			throw new Exception($stmt->errorInfo()[2]);
+
+		return $stmt;
+	}
+
 	public static function insert(PDO $dbh, array $publisher): void
 	{
 		$stmt = $dbh->prepare("insert into publisher values (?, ?)");

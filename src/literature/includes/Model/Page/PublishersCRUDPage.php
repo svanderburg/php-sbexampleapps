@@ -3,6 +3,7 @@ namespace SBExampleApps\Literature\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
+use SBData\Model\ParameterMap;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\DynamicContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -20,8 +21,10 @@ class PublishersCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("Publishers",
 			/* Parameter name */
 			"publisherId",
-			/* Key values */
-			array(),
+			/* Key parameters */
+			new ParameterMap(),
+			/* Request parameters */
+			new ParameterMap(),
 			/* Default contents */
 			new Contents("crud/publishers.php"),
 			/* Error contents */

@@ -18,7 +18,6 @@ use SBData\Model\Value\IntegerValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Literature\Model\Entity\AuthorEntity;
 use SBExampleApps\Literature\Model\Entity\PaperEntity;
 use SBExampleApps\Literature\Model\FileSet\PaperFileSet;
 
@@ -61,7 +60,7 @@ class PaperCRUDModel extends CRUDModel
 	{
 		$this->addAuthorForm = new Form(array(
 			"__operation" => new HiddenField(true),
-			"AUTHOR_ID" => new DBComboBoxField("Author", AuthorEntity::querySummary($this->dbh), true)
+			"AUTHOR_ID" => new DBComboBoxField("Author", $this->dbh, "SBExampleApps\\Literature\\Model\\Entity\\AuthorEntity::querySummary", "SBExampleApps\\Literature\\Model\\Entity\\AuthorEntity::queryOneSummary", true)
 		));
 
 		$this->addAuthorForm->fields["__operation"]->importValue("insert_paper_author");
@@ -82,7 +81,7 @@ class PaperCRUDModel extends CRUDModel
 		$this->constructPaperForm();
 
 		/* Query the paper and construct a form */
-		$stmt = PaperEntity::queryOne($this->dbh, $this->keyValues['paperId']->value, $this->keyValues['conferenceId']->value);
+		$stmt = PaperEntity::queryOne($this->dbh, $this->keyParameterMap->values['paperId']->value, $this->keyParameterMap->values['conferenceId']->value);
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -118,7 +117,7 @@ class PaperCRUDModel extends CRUDModel
 				"Delete" => __NAMESPACE__.'\\deletePaperAuthorLink'
 			));
 
-			$this->authorsTable->stmt = PaperEntity::queryAuthors($this->dbh, $this->keyValues['paperId']->value, $this->keyValues['conferenceId']->value);
+			$this->authorsTable->stmt = PaperEntity::queryAuthors($this->dbh, $this->keyParameterMap->values['paperId']->value, $this->keyParameterMap->values['conferenceId']->value);
 
 			$this->hasPDF = $row['hasPDF'] == 1;
 		}
@@ -139,7 +138,7 @@ class PaperCRUDModel extends CRUDModel
 
 		if($this->form->checkValid())
 		{
-			$conferenceId = $this->keyValues['conferenceId']->value;
+			$conferenceId = $this->keyParameterMap->values['conferenceId']->value;
 
 			$paper = $this->form->exportValues();
 			$paper['hasPDF'] = PaperFileSet::pdfProvided() ? 1 : 0;
@@ -165,8 +164,8 @@ class PaperCRUDModel extends CRUDModel
 			$paper = $this->form->exportValues();
 			$paper['hasPDF'] = PaperFileSet::pdfProvided() ? 1 : 0;
 
-			$paperId = $this->keyValues['paperId']->value;
-			$conferenceId = $this->keyValues['conferenceId']->value;
+			$paperId = $this->keyParameterMap->values['paperId']->value;
+			$conferenceId = $this->keyParameterMap->values['conferenceId']->value;
 
 			PaperEntity::update($this->dbh, $paper, $paperId, $conferenceId);
 
@@ -180,8 +179,8 @@ class PaperCRUDModel extends CRUDModel
 
 	private function deletePaper(): void
 	{
-		$paperId = $this->keyValues['paperId']->value;
-		$conferenceId = $this->keyValues['conferenceId']->value;
+		$paperId = $this->keyParameterMap->values['paperId']->value;
+		$conferenceId = $this->keyParameterMap->values['conferenceId']->value;
 
 		PaperEntity::remove($this->dbh, $paperId, $conferenceId);
 		PaperFileSet::removePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $paperId, $conferenceId);
@@ -197,7 +196,7 @@ class PaperCRUDModel extends CRUDModel
 
 		if($this->addAuthorForm->checkValid())
 		{
-			PaperEntity::insertAuthor($this->dbh, $this->keyValues['paperId']->value, $this->keyValues['conferenceId']->value, $this->addAuthorForm->fields["AUTHOR_ID"]->exportValue());
+			PaperEntity::insertAuthor($this->dbh, $this->keyParameterMap->values['paperId']->value, $this->keyParameterMap->values['conferenceId']->value, $this->addAuthorForm->fields["AUTHOR_ID"]->exportValue());
 			header("Location: ".$_SERVER['HTTP_REFERER']."#authors");
 			exit();
 		}
@@ -212,7 +211,7 @@ class PaperCRUDModel extends CRUDModel
 
 		if($authorIdValue->checkValue("AUTHOR_ID"))
 		{
-			PaperEntity::removeAuthor($this->dbh, $this->keyValues['paperId']->value, $this->keyValues['conferenceId']->value, $authorIdValue->value);
+			PaperEntity::removeAuthor($this->dbh, $this->keyParameterMap->values['paperId']->value, $this->keyParameterMap->values['conferenceId']->value, $authorIdValue->value);
 			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment("author-row"));
 			exit();
 		}
@@ -222,8 +221,8 @@ class PaperCRUDModel extends CRUDModel
 
 	private function deletePaperPDF(): void
 	{
-		$paperId = $this->keyValues['paperId']->value;
-		$conferenceId = $this->keyValues['conferenceId']->value;
+		$paperId = $this->keyParameterMap->values['paperId']->value;
+		$conferenceId = $this->keyParameterMap->values['conferenceId']->value;
 
 		PaperEntity::removePDF($this->dbh, $paperId, $conferenceId);
 		PaperFileSet::removePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $paperId, $conferenceId);

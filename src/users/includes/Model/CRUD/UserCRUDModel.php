@@ -13,7 +13,6 @@ use SBData\Model\Table\Anchor\AnchorRow;
 use SBData\Model\Value\Value;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
-use SBExampleApps\Users\Model\Entity\SystemEntity;
 use SBExampleApps\Users\Model\Entity\UserEntity;
 
 class UserCRUDModel extends CRUDModel
@@ -44,11 +43,9 @@ class UserCRUDModel extends CRUDModel
 
 	private function constructAddSystemForm(): void
 	{
-		$stmt = SystemEntity::queryAll($this->dbh);
-
 		$this->addSystemForm = new Form(array(
 			"__operation" => new HiddenField(true),
-			"SYSTEM_ID" => new DBComboBoxField("System", $stmt, true)
+			"SYSTEM_ID" => new DBComboBoxField("System", $this->dbh, "SBExampleApps\\Users\\Model\\Entity\\SystemEntity::queryAll", "SBExampleApps\\Users\\Model\\Entity\\SystemEntity::queryOne", true)
 		));
 
 		$this->addSystemForm->fields["__operation"]->importValue("insert_user_system");
@@ -84,7 +81,7 @@ class UserCRUDModel extends CRUDModel
 		/* Query the properties of the requested user and construct a form from it */
 		$this->constructUserForm(false);
 
-		$stmt = UserEntity::queryOne($this->dbh, $this->keyValues['Username']->value);
+		$stmt = UserEntity::queryOne($this->dbh, $this->keyParameterMap->values['Username']->value);
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -119,7 +116,7 @@ class UserCRUDModel extends CRUDModel
 				"Delete" => __NAMESPACE__.'\\deleteUserSystemLink'
 			));
 
-			$this->table->stmt = UserEntity::queryAllAuthorizedSystems($this->dbh, $this->keyValues['Username']->value);
+			$this->table->stmt = UserEntity::queryAllAuthorizedSystems($this->dbh, $this->keyParameterMap->values['Username']->value);
 		}
 	}
 
@@ -139,7 +136,7 @@ class UserCRUDModel extends CRUDModel
 		if($this->form->checkValid())
 		{
 			$user = $this->form->exportValues();
-			UserEntity::update($this->dbh, $user, $this->keyValues['Username']->value);
+			UserEntity::update($this->dbh, $user, $this->keyParameterMap->values['Username']->value);
 			header("Location: ".$_SERVER["SCRIPT_NAME"]."/users/".$user['Username']);
 			exit();
 		}
@@ -147,7 +144,7 @@ class UserCRUDModel extends CRUDModel
 
 	private function deleteUser(): void
 	{
-		UserEntity::remove($this->dbh, $this->keyValues['Username']->value);
+		UserEntity::remove($this->dbh, $this->keyParameterMap->values['Username']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
@@ -160,7 +157,7 @@ class UserCRUDModel extends CRUDModel
 
 		if($this->addSystemForm->checkValid())
 		{
-			UserEntity::insertAuthorizedSystem($this->dbh, $this->keyValues['Username']->value, $this->addSystemForm->fields["SYSTEM_ID"]->exportValue());
+			UserEntity::insertAuthorizedSystem($this->dbh, $this->keyParameterMap->values['Username']->value, $this->addSystemForm->fields["SYSTEM_ID"]->exportValue());
 			header("Location: ".$_SERVER['HTTP_REFERER']."#systems");
 			exit();
 		}
@@ -175,7 +172,7 @@ class UserCRUDModel extends CRUDModel
 
 		if($systemIdValue->checkValue("SYSTEM_ID"))
 		{
-			UserEntity::removeAuthorizedSystem($this->dbh, $this->keyValues['Username']->value, $systemIdValue->value);
+			UserEntity::removeAuthorizedSystem($this->dbh, $this->keyParameterMap->values['Username']->value, $systemIdValue->value);
 			header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment("user-system-row"));
 			exit();
 		}

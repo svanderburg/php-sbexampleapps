@@ -3,6 +3,7 @@ namespace SBExampleApps\Portal\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
+use SBData\Model\ParameterMap;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\DynamicContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -23,8 +24,10 @@ class NewsCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("News",
 			/* Parameter name */
 			"messageId",
-			/* Key values */
-			array(),
+			/* Key parameters */
+			new ParameterMap(),
+			/* Request parameters */
+			new ParameterMap(),
 			/* Default contents */
 			new Contents("crud/news.php"),
 			/* Error contents */

@@ -13,7 +13,7 @@ global $crudModel, $authorizationManager;
 </p>
 <?php
 if($authorizationManager->authenticated)
-	\SBData\View\HTML\displaySemiEditableTable($crudModel->table, true);
+	\SBData\View\HTML\displaySemiEditableTable($crudModel->table);
 else
 	\SBData\View\HTML\displayTable($crudModel->table);
 ?>

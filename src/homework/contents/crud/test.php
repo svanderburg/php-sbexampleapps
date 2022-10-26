@@ -26,6 +26,6 @@ if($crudModel->table !== null)
 	?>
 	<h2>Questions</h2>
 	<?php
-	\SBData\View\HTML\displaySemiEditableTable($crudModel->table, true);
+	\SBData\View\HTML\displaySemiEditableTable($crudModel->table);
 }
 ?>

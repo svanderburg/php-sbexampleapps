@@ -3,6 +3,7 @@ namespace SBExampleApps\Portal\Model\Page;
 use PDO;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
+use SBData\Model\ParameterMap;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -19,8 +20,10 @@ class ChangeLogCRUDPage extends StaticContentCRUDPage
 		$baseURL = Page::computeBaseURL();
 
 		parent::__construct("Changelog",
-			/* Key values */
-			array(),
+			/* Key parameters */
+			new ParameterMap(),
+			/* Request parameters */
+			new ParameterMap(),
 			/* Default contents */
 			new Contents("crud/changelog.php"),
 			/* Error contents */
