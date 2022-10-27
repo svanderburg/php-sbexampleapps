@@ -4,6 +4,7 @@ use PDO;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
 use SBData\Model\ParameterMap;
+use SBData\Model\Value\PageValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\DynamicContentCRUDPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -27,7 +28,9 @@ class NewsCRUDPage extends DynamicContentCRUDPage
 			/* Key parameters */
 			new ParameterMap(),
 			/* Request parameters */
-			new ParameterMap(),
+			new ParameterMap(array(
+				"page" => new PageValue()
+			)),
 			/* Default contents */
 			new Contents("crud/news.php"),
 			/* Error contents */

@@ -3,7 +3,6 @@ namespace SBExampleApps\Portal\Model\CRUD;
 use Exception;
 use PDO;
 use PDOStatement;
-use SBData\Model\Value\PageValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBExampleApps\Portal\Model\Entity\NewsMessageEntity;
@@ -24,16 +23,7 @@ class NewsCRUDModel extends CRUDModel
 
 	public function executeOperation(): void
 	{
-		$pageValue = new PageValue();
-
-		if(array_key_exists("page", $_GET))
-		{
-			$pageValue->value = $_GET["page"];
-			if(!$pageValue->checkValue("Page"))
-				throw new Exception("Invalid page value provided!");
-		}
-
-		$this->page = (int)$pageValue->value;
+		$this->page = (int)$this->requestParameterMap->values["page"]->value;
 		$this->stmt = NewsMessageEntity::queryAll($this->dbh, $this->page);
 	}
 }
