@@ -21,7 +21,7 @@ class AuthorizationPage extends HiddenStaticContentPage
 		$this->logoutTitle = $logoutTitle;
 	}
 
-	public function __get($name)
+	public function __get(string $name): mixed
 	{
 		if($name == "title")
 		{
