@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "125b3f9cdc540959c6b2b2a715b6b4f298369314"
+                "reference": "502b053ea3475f4e562f8f7ede48904ee65f8e7e"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
@@ -26,6 +26,8 @@
                 },
                 "files": [
                     "src/SBData/View/HTML/table.php",
+                    "src/SBData/View/HTML/pager.php",
+                    "src/SBData/View/HTML/pageddbtable.php",
                     "src/SBData/View/HTML/form.php",
                     "src/SBData/View/HTML/field.php",
                     "src/SBData/View/HTML/Field/arraycomboboxfield.php",
@@ -56,7 +58,8 @@
             "autoload-dev": {
                 "psr-4": {
                     "Examples\\Books\\": "examples/books/includes",
-                    "Examples\\CAPTCHA\\": "examples/captcha/includes"
+                    "Examples\\CAPTCHA\\": "examples/captcha/includes",
+                    "Examples\\TodoList\\": "examples/todolist/includes"
                 },
                 "files": [
                     "examples/captcha/includes/View/HTML/Field/captchafield.php"
@@ -73,7 +76,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2022-10-15T13:38:19+00:00"
+            "time": "2022-10-24T21:42:42+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",
