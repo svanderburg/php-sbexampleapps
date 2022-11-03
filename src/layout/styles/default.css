@@ -241,6 +241,11 @@ button, input[type=submit]
 	margin-bottom: 0.5em;
 }
 
+.tbody
+{
+	display: table-row-group;
+}
+
 .tr
 {
 	display: table-row;
