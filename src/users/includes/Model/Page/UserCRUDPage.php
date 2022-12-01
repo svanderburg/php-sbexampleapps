@@ -1,45 +1,36 @@
 <?php
 namespace SBExampleApps\Users\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBData\Model\Value\Value;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\StaticContentCRUDPage;
+use SBLayout\Model\PageNotFoundException;
+use SBCrud\Model\Page\CRUDDetailPage;
+use SBExampleApps\Users\Model\Page\Content\UserContents;
 use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Users\Model\CRUD\UserCRUDModel;
+use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
+use SBExampleApps\Users\Model\Entity\UserEntity;
 
-class UserCRUDPage extends StaticContentCRUDPage
+class UserCRUDPage extends CRUDDetailPage
 {
-	public PDO $dbh;
+	public array $entity;
 
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, string $username)
 	{
-		parent::__construct("User",
-			/* Key parameters */
-			new ParameterMap(array(
-				"Username" => new Value(true, 255)
-			)),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/user.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-
-			/* Contents per operation */
-			array(),
-			$subPages);
-
-		$this->dbh = $dbh;
+		parent::__construct("User", new UserContents(), array(
+			"update_user" => new RestrictedOperationPage("Update user", new UserContents(), $authorizationManager),
+			"delete_user" => new RestrictedOperationPage("Delete user", new UserContents(), $authorizationManager),
+			"insert_user_system" => new RestrictedOperationPage("Attach system link", new UserContents(), $authorizationManager),
+			"delete_user_system" => new RestrictedOperationPage("Remove system link", new UserContents(), $authorizationManager)
+		));
 		$this->authorizationManager = $authorizationManager;
-	}
 
-	public function constructCRUDModel(): CRUDModel
-	{
-		return new UserCRUDModel($this, $this->dbh);
+		$stmt = UserEntity::queryOne($dbh, $username);
+
+		if(($entity = $stmt->fetch()) === false)
+			throw new PageNotFoundException("Cannot find user with username: ".$username);
+
+		// We deliberately don't update the title for this since it is privacy sensitive information
+		$this->entity = $entity;
 	}
 
 	public function checkAccessibility(): bool

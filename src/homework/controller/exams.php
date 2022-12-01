@@ -8,7 +8,7 @@ $form = new Form(array(
 	"testId" => new DBComboBoxField("Test", $dbh, "SBExampleApps\\Homework\\Model\\Entity\\TestEntity::queryAll", "SBExampleApps\\Homework\\Model\\Entity\\TestEntity::queryOne", true)
 ));
 
-if(count($_POST) > 0)
+if($_SERVER["REQUEST_METHOD"] == "POST")
 {
 	$form->importValues($_POST);
 	$form->checkFields();

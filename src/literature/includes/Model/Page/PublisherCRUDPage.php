@@ -1,45 +1,30 @@
 <?php
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBData\Model\Value\Value;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\StaticContentCRUDPage;
-use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Literature\Model\CRUD\PublisherCRUDModel;
+use SBLayout\Model\PageNotFoundException;
+use SBCrud\Model\Page\CRUDDetailPage;
+use SBCrud\Model\Page\OperationPage;
+use SBExampleApps\Literature\Model\Entity\PublisherEntity;
+use SBExampleApps\Literature\Model\Page\Content\PublisherContents;
 
-class PublisherCRUDPage extends StaticContentCRUDPage
+class PublisherCRUDPage extends CRUDDetailPage
 {
-	public PDO $dbh;
+	public array $entity;
 
-	public AuthorizationManager $authorizationManager;
-
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
+	public function __construct(PDO $dbh, string $publisherId)
 	{
-		parent::__construct("Publisher",
-			/* Key parameters */
-			new ParameterMap(array(
-				"publisherId" => new Value(true, 255)
-			)),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/publisher.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
+		parent::__construct("Publisher", new PublisherContents(), array(
+			"update_publisher" => new OperationPage("Update publisher", new PublisherContents()),
+			"delete_publisher" => new OperationPage("Delete publisher", new PublisherContents())
+		));
 
-			/* Contents per operation */
-			array(),
-			$subPages);
+		$stmt = PublisherEntity::queryOne($dbh, $publisherId);
 
-		$this->dbh = $dbh;
-		$this->authorizationManager = $authorizationManager;
-	}
+		if(($entity = $stmt->fetch()) === false)
+			throw new PageNotFoundException("Cannot find publisher with id: ".$publisherId);
 
-	public function constructCRUDModel(): CRUDModel
-	{
-		return new PublisherCRUDModel($this, $this->dbh, $this->authorizationManager);
+		$this->entity = $entity;
+		$this->title = $entity["Name"];
 	}
 }
 ?>

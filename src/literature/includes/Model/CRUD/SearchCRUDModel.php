@@ -47,35 +47,35 @@ class SearchCRUDModel extends CRUDModel
 
 		if($this->form->checkValid())
 		{
-			function composePaperLink(NumericIntKeyLinkField $field, Form $form): string
+			$composePaperLink = function (NumericIntKeyLinkField $field, Form $form): string
 			{
 				$paperId = $field->exportValue();
 				$conferenceId = $form->fields["CONFERENCE_ID"]->exportValue();
-				return $_SERVER["SCRIPT_NAME"]."/conferences/".$conferenceId."/papers/".$paperId;
-			}
+				return $_SERVER["SCRIPT_NAME"]."/conferences/".rawurlencode($conferenceId)."/papers/".rawurlencode($paperId);
+			};
 
-			function composeConferenceLink(NumericIntKeyLinkField $field, Form $form): string
+			$composeConferenceLink = function (NumericIntKeyLinkField $field, Form $form): string
 			{
 				$conferenceId = $form->fields["CONFERENCE_ID"]->exportValue();
-				return $_SERVER["SCRIPT_NAME"]."/conferences/".$conferenceId;
-			}
+				return $_SERVER["SCRIPT_NAME"]."/conferences/".rawurlencode($conferenceId);
+			};
 
-			function composePublisherLink(NumericIntKeyLinkField $field, Form $form): string
+			$composePublisherLink = function (NumericIntKeyLinkField $field, Form $form): string
 			{
 				$publisherId = $form->fields["PUBLISHER_ID"]->exportValue();
-				return $_SERVER["SCRIPT_NAME"]."/publishers/".$publisherId;
+				return $_SERVER["SCRIPT_NAME"]."/publishers/".rawurlencode($publisherId);
 			}
 
 			/* Construct a table containing the resulting papers */
 			$this->table = new DBTable(array(
-				"PAPER_ID" => new NumericIntKeyLinkField("Id", __NAMESPACE__.'\\composePaperLink', true),
+				"PAPER_ID" => new NumericIntKeyLinkField("Id", $composePaperLink, true),
 				"Title" => new TextField("Title", true, 20, 255),
 				"Date" => new DateField("Date", true),
 				"URL" => new URLField("URL", false),
 				"PUBLISHER_ID" => new MetaDataField(true, 255),
-				"PublisherName" => new NumericIntKeyLinkField("Publisher", __NAMESPACE__.'\\composePublisherLink', true),
+				"PublisherName" => new NumericIntKeyLinkField("Publisher", $composePublisherLink, true),
 				"CONFERENCE_ID" => new MetaDataField(true, 255),
-				"ConferenceName" => new NumericIntKeyLinkField("Conference", __NAMESPACE__.'\\composeConferenceLink', true)
+				"ConferenceName" => new NumericIntKeyLinkField("Conference", $composeConferenceLink, true)
 			));
 
 			$this->table->stmt = PaperEntity::searchByKeyword($this->dbh, $this->form->fields["keyword"]->exportValue());

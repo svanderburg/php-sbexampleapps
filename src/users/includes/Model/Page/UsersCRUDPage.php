@@ -1,60 +1,39 @@
 <?php
 namespace SBExampleApps\Users\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Page;
+use SBLayout\Model\Page\ContentPage;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\DynamicContentCRUDPage;
+use SBData\Model\Value\Value;
+use SBCrud\Model\Page\CRUDMasterPage;
+use SBExampleApps\Users\Model\Page\Content\UserContents;
+use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Users\Model\CRUD\UsersCRUDModel;
-use SBExampleApps\Users\Model\CRUD\UserCRUDModel;
 
-class UsersCRUDPage extends DynamicContentCRUDPage
+class UsersCRUDPage extends CRUDMasterPage
 {
 	public PDO $dbh;
 
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, Page $dynamicSubPage)
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager)
 	{
-		parent::__construct("Users",
-			/* Parameter name */
-			"Username",
-			/* Key parameters */
-			new ParameterMap(),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/users.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-			/* Contents per operation */
-			array(
-				"create_user" => new Contents("crud/user.php"),
-				"insert_user" => new Contents("crud/user.php")
-			),
-			$dynamicSubPage);
+		parent::__construct("Users", "Username", new Contents("users.php", "users.php"), array(
+			"create_user" => new RestrictedOperationPage("Create user", new UserContents(), $authorizationManager),
+			"insert_user" => new RestrictedOperationPage("Insert user", new UserContents(), $authorizationManager)
+		));
 
 		$this->dbh = $dbh;
 		$this->authorizationManager = $authorizationManager;
 	}
-	
-	public function constructCRUDModel(): CRUDModel
+
+	public function createParamValue(): Value
 	{
-		if(array_key_exists("__operation", $_REQUEST))
-		{
-			switch($_REQUEST["__operation"])
-			{
-				case "create_user":
-				case "insert_user":
-					return new UserCRUDModel($this, $this->dbh);
-				default:
-					return new UsersCRUDModel($this, $this->dbh);
-			}
-		}
-		else
-			return new UsersCRUDModel($this, $this->dbh);
+		return new Value(true, 255);
+	}
+
+	public function createDetailPage(array $query): ?ContentPage
+	{
+		return new UserCRUDPage($this->dbh, $this->authorizationManager, $query["Username"]);
 	}
 
 	public function checkAccessibility(): bool

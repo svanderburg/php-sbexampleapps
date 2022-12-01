@@ -1,45 +1,35 @@
 <?php
 namespace SBExampleApps\Users\Model\Page;
 use PDO;
+use SBLayout\Model\PageNotFoundException;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBData\Model\Value\Value;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\StaticContentCRUDPage;
+use SBCrud\Model\Page\CRUDDetailPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Users\Model\CRUD\SystemCRUDModel;
+use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
+use SBExampleApps\Users\Model\Entity\SystemEntity;
+use SBExampleApps\Users\Model\Page\Content\SystemContents;
 
-class SystemCRUDPage extends StaticContentCRUDPage
+class SystemCRUDPage extends CRUDDetailPage
 {
-	public PDO $dbh;
-
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
+	public array $entity;
+
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, string $systemId)
 	{
-		parent::__construct("System",
-			/* Key parameters */
-			new ParameterMap(array(
-				"systemId" => new Value(true, 255)
-			)),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/system.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-
-			/* Contents per operation */
-			array(),
-			$subPages);
-
-		$this->dbh = $dbh;
+		parent::__construct("System", new SystemContents(), array(
+			"update_system" => new RestrictedOperationPage("Update system", new SystemContents(), $authorizationManager),
+			"delete_system" => new RestrictedOperationPage("Delete system", new SystemContents(), $authorizationManager)
+		));
 		$this->authorizationManager = $authorizationManager;
-	}
 
-	public function constructCRUDModel(): CRUDModel
-	{
-		return new SystemCRUDModel($this, $this->dbh);
+		$stmt = SystemEntity::queryOne($dbh, $systemId);
+
+		if(($entity = $stmt->fetch()) === false)
+			throw new PageNotFoundException("Cannot find system with id: ".$systemId);
+
+		$this->title = $entity["Description"];
+		$this->entity = $entity;
 	}
 
 	public function checkAccessibility(): bool

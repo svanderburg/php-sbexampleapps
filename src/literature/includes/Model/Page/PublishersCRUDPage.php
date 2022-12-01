@@ -1,60 +1,35 @@
 <?php
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Page;
+use SBLayout\Model\Page\ContentPage;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\DynamicContentCRUDPage;
-use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Literature\Model\CRUD\PublishersCRUDModel;
-use SBExampleApps\Literature\Model\CRUD\PublisherCRUDModel;
+use SBData\Model\Value\Value;
+use SBCrud\Model\Page\CRUDMasterPage;
+use SBCrud\Model\Page\OperationPage;
+use SBExampleApps\Literature\Model\Page\Content\PublisherContents;
 
-class PublishersCRUDPage extends DynamicContentCRUDPage
+class PublishersCRUDPage extends CRUDMasterPage
 {
 	public PDO $dbh;
 
-	public AuthorizationManager $authorizationManager;
-
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, Page $dynamicSubPage)
+	public function __construct(PDO $dbh)
 	{
-		parent::__construct("Publishers",
-			/* Parameter name */
-			"publisherId",
-			/* Key parameters */
-			new ParameterMap(),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/publishers.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-			/* Contents per operation */
-			array(
-				"create_publisher" => new Contents("crud/publisher.php"),
-				"insert_publisher" => new Contents("crud/publisher.php")
-			),
-			$dynamicSubPage);
+		parent::__construct("Publishers", "publisherId", new Contents("publishers.php", "publishers.php"), array(
+			"create_publisher" => new OperationPage("Create publisher", new PublisherContents()),
+			"insert_publisher" => new OperationPage("Insert publisher", new PublisherContents())
+		));
 
 		$this->dbh = $dbh;
-		$this->authorizationManager = $authorizationManager;
 	}
-	
-	public function constructCRUDModel(): CRUDModel
+
+	public function createParamValue(): Value
 	{
-		if(array_key_exists("__operation", $_REQUEST))
-		{
-			switch($_REQUEST["__operation"])
-			{
-				case "create_publisher":
-				case "insert_publisher":
-					return new PublisherCRUDModel($this, $this->dbh, $this->authorizationManager);
-				default:
-					return new PublishersCRUDModel($this, $this->dbh);
-			}
-		}
-		else
-			return new PublishersCRUDModel($this, $this->dbh);
+		return new Value(true, 255);
+	}
+
+	public function createDetailPage(array $query): ?ContentPage
+	{
+		return new PublisherCRUDPage($this->dbh, $query["publisherId"]);
 	}
 }
 ?>

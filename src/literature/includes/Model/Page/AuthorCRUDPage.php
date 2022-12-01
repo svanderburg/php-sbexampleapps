@@ -1,45 +1,29 @@
 <?php
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBData\Model\Value\IntegerValue;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\StaticContentCRUDPage;
-use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Literature\Model\CRUD\AuthorCRUDModel;
+use SBLayout\Model\PageNotFoundException;
+use SBCrud\Model\Page\CRUDDetailPage;
+use SBCrud\Model\Page\OperationPage;
+use SBExampleApps\Literature\Model\Page\Content\AuthorContents;
+use SBExampleApps\Literature\Model\Entity\AuthorEntity;
 
-class AuthorCRUDPage extends StaticContentCRUDPage
+class AuthorCRUDPage extends CRUDDetailPage
 {
-	public PDO $dbh;
+	public array $entity;
 
-	public AuthorizationManager $authorizationManager;
-
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
+	public function __construct(PDO $dbh, int $authorId)
 	{
-		parent::__construct("Author",
-			/* Key parameters */
-			new ParameterMap(array(
-				"authorId" => new IntegerValue(true)
-			)),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/author.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
+		parent::__construct("Author", new AuthorContents(), array(
+			"update_author" => new OperationPage("Update author", new AuthorContents()),
+			"delete_author" => new OperationPage("Delete author", new AuthorContents())
+		));
 
-			/* Contents per operation */
-			array(),
-			$subPages);
+		$stmt = AuthorEntity::queryOne($dbh, $authorId);
+		if(($entity = $stmt->fetch()) === false)
+			throw new PageNotFoundException("Cannot find author with id".$authorId);
 
-		$this->dbh = $dbh;
-		$this->authorizationManager = $authorizationManager;
-	}
-
-	public function constructCRUDModel(): CRUDModel
-	{
-		return new AuthorCRUDModel($this, $this->dbh, $this->authorizationManager);
+		$this->entity = $entity;
+		// Do not change title, because it contains privacy sensitive information
 	}
 }
 ?>

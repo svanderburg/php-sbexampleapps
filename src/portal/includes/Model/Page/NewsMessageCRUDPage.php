@@ -1,49 +1,29 @@
 <?php
 namespace SBExampleApps\Portal\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Page;
-use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBData\Model\Value\IntegerValue;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\StaticContentCRUDPage;
-use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Portal\Model\CRUD\NewsMessageCRUDModel;
+use SBLayout\Model\PageNotFoundException;
+use SBCrud\Model\Page\CRUDDetailPage;
+use SBCrud\Model\Page\OperationPage;
+use SBExampleApps\Portal\Model\Entity\NewsMessageEntity;
+use SBExampleApps\Portal\Model\Page\Content\NewsMessageContents;
 
-class NewsMessageCRUDPage extends StaticContentCRUDPage
+class NewsMessageCRUDPage extends CRUDDetailPage
 {
-	public PDO $dbh;
+	public array $entity;
 
-	public AuthorizationManager $authorizationManager;
-
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
+	public function __construct(PDO $dbh, string $messageId)
 	{
-		$baseURL = Page::computeBaseURL();
-		$htmlEditorJsPath = $baseURL."/scripts/htmleditor.js";
+		parent::__construct("News message", new NewsMessageContents(), array(
+			"update_newsmessage" => new OperationPage("Update news message", new NewsMessageContents()),
+			"remove_newsmessage" => new OperationPage("Remove news message", new NewsMessageContents())
+		));
 
-		parent::__construct("News message",
-			/* Key parameters */
-			new ParameterMap(array(
-				"messageId" => new IntegerValue(true)
-			)),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/newsmessage.php", null, null, array($htmlEditorJsPath)),
-			/* Error contents */
-			new Contents("crud/error.php"),
+		$stmt = NewsMessageEntity::queryOne($dbh, $GLOBALS["query"]["messageId"]);
+		if(($entity = $stmt->fetch()) === false)
+			throw new PageNotFoundException("Cannot find news message with id: ".$GLOBALS["query"]["messageId"]);
 
-			/* Contents per operation */
-			array(),
-			$subPages);
-
-		$this->dbh = $dbh;
-		$this->authorizationManager = $authorizationManager;
-	}
-
-	public function constructCRUDModel(): CRUDModel
-	{
-		return new NewsMessageCRUDModel($this, $this->dbh, $this->authorizationManager);
+		$this->title = $entity["Title"];
+		$this->entity = $entity;
 	}
 }
 ?>

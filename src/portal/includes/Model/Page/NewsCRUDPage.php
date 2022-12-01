@@ -1,66 +1,43 @@
 <?php
 namespace SBExampleApps\Portal\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Page;
+use SBLayout\Model\Page\ContentPage;
 use SBLayout\Model\Page\Content\Contents;
 use SBData\Model\ParameterMap;
+use SBData\Model\Value\Value;
+use SBData\Model\Value\NaturalNumberValue;
 use SBData\Model\Value\PageValue;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\DynamicContentCRUDPage;
-use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Portal\Model\CRUD\NewsCRUDModel;
-use SBExampleApps\Portal\Model\CRUD\NewsMessageCRUDModel;
+use SBCrud\Model\Page\CRUDMasterPage;
+use SBCrud\Model\Page\OperationPage;
+use SBExampleApps\Portal\Model\Page\Content\NewsMessageContents;
 
-class NewsCRUDPage extends DynamicContentCRUDPage
+class NewsCRUDPage extends CRUDMasterPage
 {
-	public PDO $dbh;
-
-	public AuthorizationManager $authorizationManager;
-
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, Page $dynamicSubPage)
+	public function __construct(PDO $dbh)
 	{
-		$baseURL = Page::computeBaseURL();
-		$htmlEditorJsPath = $baseURL."/scripts/htmleditor.js";
-
-		parent::__construct("News",
-			/* Parameter name */
-			"messageId",
-			/* Key parameters */
-			new ParameterMap(),
-			/* Request parameters */
-			new ParameterMap(array(
-				"page" => new PageValue()
-			)),
-			/* Default contents */
-			new Contents("crud/news.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-			/* Contents per operation */
-			array(
-				"create_newsmessage" => new Contents("crud/newsmessage.php", null, null, array($htmlEditorJsPath)),
-				"insert_newsmessage" => new Contents("crud/newsmessage.php", null, null, array($htmlEditorJsPath))
-			),
-			$dynamicSubPage);
+		parent::__construct("News", "messageId", new Contents("news.php", "news.php"), array(
+			"create_newsmessage" => new OperationPage("Create news message", new NewsMessageContents()),
+			"insert_newsmessage" => new OperationPage("Insert news message", new NewsMessageContents())
+		));
 
 		$this->dbh = $dbh;
-		$this->authorizationManager = $authorizationManager;
 	}
-	
-	public function constructCRUDModel(): CRUDModel
+
+	public function createParamValue(): Value
 	{
-		if(array_key_exists("__operation", $_REQUEST))
-		{
-			switch($_REQUEST["__operation"])
-			{
-				case "create_newsmessage":
-				case "insert_newsmessage":
-					return new NewsMessageCRUDModel($this, $this->dbh, $this->authorizationManager);
-				default:
-					return new NewsCRUDModel($this, $this->dbh);
-			}
-		}
-		else
-			return new NewsCRUDModel($this, $this->dbh);
+		return new NaturalNumberValue(true);
+	}
+
+	public function createRequestParameterMap(): ParameterMap
+	{
+		return new ParameterMap(array(
+			"page" => new PageValue()
+		));
+	}
+
+	public function createDetailPage(array $query): ?ContentPage
+	{
+		return new NewsMessageCRUDPage($this->dbh, $query["messageId"]);
 	}
 }
 ?>

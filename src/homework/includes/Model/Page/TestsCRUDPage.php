@@ -1,60 +1,39 @@
 <?php
 namespace SBExampleApps\Homework\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Page;
+use SBLayout\Model\Page\ContentPage;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\DynamicContentCRUDPage;
+use SBData\Model\Value\Value;
+use SBCrud\Model\Page\CRUDMasterPage;
+use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Homework\Model\CRUD\TestsCRUDModel;
-use SBExampleApps\Homework\Model\CRUD\TestCRUDModel;
+use SBExampleApps\Homework\Model\Page\Content\TestContents;
 
-class TestsCRUDPage extends DynamicContentCRUDPage
+class TestsCRUDPage extends CRUDMasterPage
 {
 	public PDO $dbh;
 
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, Page $dynamicSubPage)
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager)
 	{
-		parent::__construct("Tests",
-			/* Parameter name */
-			"testId",
-			/* Key parameters */
-			new ParameterMap(),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/tests.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-			/* Contents per operation */
-			array(
-				"create_test" => new Contents("crud/test.php"),
-				"insert_test" => new Contents("crud/test.php")
-			),
-			$dynamicSubPage);
+		parent::__construct("Tests", "testId", new Contents("tests.php", "tests.php"), array(
+			"create_test" => new RestrictedOperationPage("Create test", new TestContents(), $authorizationManager),
+			"insert_test" => new RestrictedOperationPage("Insert test", new TestContents(), $authorizationManager)
+		));
 
 		$this->dbh = $dbh;
 		$this->authorizationManager = $authorizationManager;
 	}
-	
-	public function constructCRUDModel(): CRUDModel
+
+	public function createParamValue(): Value
 	{
-		if(array_key_exists("__operation", $_REQUEST))
-		{
-			switch($_REQUEST["__operation"])
-			{
-				case "create_test":
-				case "insert_test":
-					return new TestCRUDModel($this, $this->dbh);
-				default:
-					return new TestsCRUDModel($this, $this->dbh);
-			}
-		}
-		else
-			return new TestsCRUDModel($this, $this->dbh);
+		return new Value(true, 255);
+	}
+
+	public function createDetailPage(array $query): ?ContentPage
+	{
+		return new TestCRUDPage($this->dbh, $this->authorizationManager, $query["testId"]);
 	}
 
 	public function checkAccessibility(): bool

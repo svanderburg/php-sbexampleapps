@@ -15,9 +15,7 @@ use SBLayout\Model\Section\StaticSection;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Auth\Model\Page\AuthorizationPage;
 use SBExampleApps\Homework\Model\Page\TestsCRUDPage;
-use SBExampleApps\Homework\Model\Page\TestCRUDPage;
-use SBExampleApps\Homework\Model\Page\QuestionCRUDPage;
-use SBExampleApps\Homework\Model\Page\ExamCRUDPage;
+use SBExampleApps\Homework\Model\Page\ExamsCRUDPage;
 
 require_once("includes/config.php");
 
@@ -50,14 +48,13 @@ $application = new Application(
 
 	/* Pages */
 	new PageAlias("Home", "home", array(
+		"400" => new HiddenStaticContentPage("Bad request", new Contents("error/400.php")),
 		"403" => new HiddenStaticContentPage("Forbidden", new Contents("error/403.php")),
 		"404" => new HiddenStaticContentPage("Page not found", new Contents("error/404.php")),
 
 		"home" => new StaticContentPage("Home", new Contents("home.php")),
-		"tests" => new TestsCRUDPage($dbh, $authorizationManager, new TestCRUDPage($dbh, $authorizationManager, array(
-			"questions" => new DynamicContentPage("Questions", "questionId", new Contents("tests/questions.php"), new QuestionCRUDPage($dbh, $authorizationManager))
-		))),
-		"exams" => new DynamicContentPage("Exams", "testId", new Contents("exams.php", "exams.php"), new ExamCRUDPage($dbh)),
+		"tests" => new TestsCRUDPage($dbh, $authorizationManager),
+		"exams" => new ExamsCRUDPage(),
 		"auth" => new AuthorizationPage($authorizationManager, "Login", "Login status")
 	))
 );

@@ -15,13 +15,9 @@ use SBLayout\Model\Section\StaticSection;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Auth\Model\Page\AuthorizationPage;
 use SBExampleApps\Literature\Model\Page\AuthorsCRUDPage;
-use SBExampleApps\Literature\Model\Page\AuthorCRUDPage;
 use SBExampleApps\Literature\Model\Page\ConferencesCRUDPage;
-use SBExampleApps\Literature\Model\Page\ConferenceCRUDPage;
 use SBExampleApps\Literature\Model\Page\PaperCRUDPage;
 use SBExampleApps\Literature\Model\Page\PublishersCRUDPage;
-use SBExampleApps\Literature\Model\Page\PublisherCRUDPage;
-use SBExampleApps\Literature\Model\Page\SearchCRUDPage;
 
 require_once("includes/config.php");
 
@@ -54,18 +50,15 @@ $application = new Application(
 
 	/* Pages */
 	new PageAlias("Home", "home", array(
+		"400" => new HiddenStaticContentPage("Bad request", new Contents("error/400.php")),
 		"403" => new HiddenStaticContentPage("Forbidden", new Contents("error/403.php")),
 		"404" => new HiddenStaticContentPage("Page not found", new Contents("error/404.php")),
 
 		"home" => new StaticContentPage("Home", new Contents("home.php")),
-		"authors" => new AuthorsCRUDPage($dbh, $authorizationManager, new AuthorCRUDPage($dbh, $authorizationManager)),
-		"publishers" => new PublishersCRUDPage($dbh, $authorizationManager, new PublisherCRUDPage($dbh, $authorizationManager)),
-		"conferences" => new ConferencesCRUDPage($dbh, $authorizationManager, new ConferenceCRUDPage($dbh, $authorizationManager, array(
-			"papers" => new DynamicContentPage("Papers", "paperId", new Contents("conferences/papers.php"), new PaperCRUDPage($dbh, $authorizationManager, array(
-				"reference" => new HiddenStaticContentPage("Reference", new Contents("conferences/papers/reference.php", null, array(), array("publications.js")))
-			)))
-		))),
-		"search" => new SearchCRUDPage($dbh),
+		"authors" => new AuthorsCRUDPage($dbh, $authorizationManager),
+		"publishers" => new PublishersCRUDPage($dbh, $authorizationManager),
+		"conferences" => new ConferencesCRUDPage($dbh, $authorizationManager),
+		"search" => new StaticContentPage("Search", new Contents("search.php", "search.php")),
 
 		"auth" => new AuthorizationPage($authorizationManager, "Login", "Login status")
 	))

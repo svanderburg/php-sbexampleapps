@@ -1,60 +1,40 @@
 <?php
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Page;
+use SBData\Model\Value\Value;
+use SBData\Model\Value\NaturalNumberValue;
+use SBLayout\Model\Page\ContentPage;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\DynamicContentCRUDPage;
+use SBCrud\Model\Page\CRUDMasterPage;
+use SBCrud\Model\Page\OperationPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Literature\Model\CRUD\AuthorsCRUDModel;
-use SBExampleApps\Literature\Model\CRUD\AuthorCRUDModel;
+use SBExampleApps\Literature\Model\Page\Content\AuthorContents;
 
-class AuthorsCRUDPage extends DynamicContentCRUDPage
+class AuthorsCRUDPage extends CRUDMasterPage
 {
 	public PDO $dbh;
 
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, Page $dynamicSubPage)
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager)
 	{
-		parent::__construct("Authors",
-			/* Parameter name */
-			"authorId",
-			/* Key parameters */
-			new ParameterMap(),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/authors.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-			/* Contents per operation */
-			array(
-				"create_author" => new Contents("crud/author.php"),
-				"insert_author" => new Contents("crud/author.php")
-			),
-			$dynamicSubPage);
+		parent::__construct("Authors", "authorId", new Contents("authors.php", "authors.php"), array(
+			"create_author" => new OperationPage("Create author", new AuthorContents()),
+			"insert_author" => new OperationPage("Insert author", new AuthorContents())
+		));
 
 		$this->dbh = $dbh;
 		$this->authorizationManager = $authorizationManager;
 	}
-	
-	public function constructCRUDModel(): CRUDModel
+
+	public function createParamValue(): Value
 	{
-		if(array_key_exists("__operation", $_REQUEST))
-		{
-			switch($_REQUEST["__operation"])
-			{
-				case "create_author":
-				case "insert_author":
-					return new AuthorCRUDModel($this, $this->dbh, $this->authorizationManager);
-				default:
-					return new AuthorsCRUDModel($this, $this->dbh);
-			}
-		}
-		else
-			return new AuthorsCRUDModel($this, $this->dbh);
+		return new NaturalNumberValue(true);
+	}
+
+	public function createDetailPage(array $query): ?ContentPage
+	{
+		return new AuthorCRUDPage($this->dbh, $query["authorId"]);
 	}
 }
 ?>

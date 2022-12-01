@@ -54,12 +54,13 @@ $application = new Application(
 
 	/* Pages */
 	new PageAlias("Home", "home", array(
+		"400" => new HiddenStaticContentPage("Bad request", new Contents("error/400.php")),
 		"403" => new HiddenStaticContentPage("Forbidden", new Contents("error/403.php")),
 		"404" => new HiddenStaticContentPage("Page not found", new Contents("error/404.php")),
 
 		"home" => new StaticContentPage("Home", new Contents("home.php")),
-		"news" => new NewsCRUDPage($dbh, $authorizationManager, new NewsMessageCRUDPage($dbh, $authorizationManager)),
-		"changelog" => new ChangeLogCRUDPage($dbh, $authorizationManager),
+		"news" => new NewsCRUDPage($dbh),
+		"changelog" => new ChangeLogCRUDPage(),
 		"gallery" => new MyGalleryPage($authorizationManager, $dbh),
 		"tests" => new StaticContentPage("Tests", new Contents("tests.php"), array(
 			"layouttests" => new StaticContentPage("Layout tests", new Contents("tests/layouttests.php"))

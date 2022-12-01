@@ -1,61 +1,35 @@
 <?php
 namespace SBExampleApps\Homework\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBData\Model\Value\Value;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\StaticContentCRUDPage;
+use SBLayout\Model\PageNotFoundException;
+use SBCrud\Model\Page\CRUDDetailPage;
+use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Homework\Model\CRUD\QuestionCRUDModel;
-use SBExampleApps\Homework\Model\CRUD\TestCRUDModel;
+use SBExampleApps\Homework\Model\Page\Content\TestContents;
+use SBExampleApps\Homework\Model\Entity\TestEntity;
 
-class TestCRUDPage extends StaticContentCRUDPage
+class TestCRUDPage extends CRUDDetailPage
 {
-	public PDO $dbh;
-
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, string $testId)
 	{
-		parent::__construct("Test",
-			/* Key parameters */
-			new ParameterMap(array(
-				"testId" => new Value(true, 255)
-			)),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/test.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
+		parent::__construct("Test", new TestContents(), array(
+			"update_test" => new RestrictedOperationPage("Update test", new TestContents(), $authorizationManager),
+			"delete_test" => new RestrictedOperationPage("Delete test", new TestContents(), $authorizationManager)
+		), array(
+			"questions" => new QuestionsCRUDPage($dbh, $authorizationManager)
+		));
 
-			/* Contents per operation */
-			array(
-				"create_question" => new Contents("crud/question.php"),
-				"insert_question" => new Contents("crud/question.php")
-			),
-			$subPages);
-
-		$this->dbh = $dbh;
 		$this->authorizationManager = $authorizationManager;
-	}
 
-	public function constructCRUDModel(): CRUDModel
-	{
-		if(array_key_exists("__operation", $_REQUEST))
-		{
-			switch($_REQUEST["__operation"])
-			{
-				case "create_question":
-				case "insert_question":
-					return new QuestionCRUDModel($this, $this->dbh);
-				default:
-					return new TestCRUDModel($this, $this->dbh);
-			}
-		}
-		else
-			return new TestCRUDModel($this, $this->dbh);
+		$stmt = TestEntity::queryOne($dbh, $testId);
+
+		if(($entity = $stmt->fetch()) === false)
+			throw new PageNotFoundException("Cannot find test with id: ".$testId);
+
+		$this->title = $entity["Title"];
+		$this->entity = $entity;
 	}
 
 	public function checkAccessibility(): bool

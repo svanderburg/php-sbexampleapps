@@ -1,61 +1,32 @@
 <?php
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBData\Model\Value\Value;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\StaticContentCRUDPage;
-use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Literature\Model\CRUD\ConferenceCRUDModel;
-use SBExampleApps\Literature\Model\CRUD\PaperCRUDModel;
+use SBLayout\Model\PageNotFoundException;
+use SBCrud\Model\Page\CRUDDetailPage;
+use SBCrud\Model\Page\OperationPage;
+use SBExampleApps\Literature\Model\Page\Content\ConferenceContents;
+use SBExampleApps\Literature\Model\Entity\ConferenceEntity;
 
-class ConferenceCRUDPage extends StaticContentCRUDPage
+class ConferenceCRUDPage extends CRUDDetailPage
 {
-	public PDO $dbh;
-
-	public AuthorizationManager $authorizationManager;
-
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = null)
+	public function __construct(PDO $dbh, int $conferenceId)
 	{
-		parent::__construct("Conference",
-			/* Key parameters */
-			new ParameterMap(array(
-				"conferenceId" => new Value(true, 255)
-			)),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/conference.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
+		parent::__construct("Conference", new ConferenceContents(), array(
+			"update_conference" => new OperationPage("Update conference", new ConferenceContents()),
+			"delete_conference" => new OperationPage("Update conference", new ConferenceContents()),
+			"insert_conference_author" => new OperationPage("Insert author link", new ConferenceContents()),
+			"delete_conference_author" => new OperationPage("Delete author link", new ConferenceContents())
+		), array(
+			"papers" => new PapersCRUDPage($dbh)
+		));
 
-			/* Contents per operation */
-			array(
-				"create_paper" => new Contents("crud/paper.php"),
-				"insert_paper" => new Contents("crud/paper.php")
-			),
-			$subPages);
+		$stmt = ConferenceEntity::queryOne($dbh, $conferenceId);
 
-		$this->dbh = $dbh;
-		$this->authorizationManager = $authorizationManager;
-	}
+		if(($entity = $stmt->fetch()) === false)
+			throw new PageNotFoundException("Cannot find conference with id:".$conferenceId);
 
-	public function constructCRUDModel(): CRUDModel
-	{
-		if(array_key_exists("__operation", $_REQUEST))
-		{
-			switch($_REQUEST["__operation"])
-			{
-				case "create_paper":
-				case "insert_paper":
-					return new PaperCRUDModel($this, $this->dbh, $this->authorizationManager);
-				default:
-					return new ConferenceCRUDModel($this, $this->dbh, $this->authorizationManager);
-			}
-		}
-		else
-			return new ConferenceCRUDModel($this, $this->dbh, $this->authorizationManager);
+		$this->entity = $entity;
+		$this->title = $entity["Name"];
 	}
 }
 ?>

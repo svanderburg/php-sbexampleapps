@@ -16,6 +16,16 @@ class ChangeLogEntriesEntity
 		return $stmt;
 	}
 
+	public static function queryOne(PDO $dbh, string $logId): PDOStatement
+	{
+		$stmt = $dbh->prepare("select * from changelogentries where LOG_ID = ?");
+
+		if(!$stmt->execute(array($logId)))
+			throw new Exception($stmt->errorInfo()[2]);
+
+		return $stmt;
+	}
+
 	public static function insert(PDO $dbh, array $entry): PDOStatement
 	{
 		$stmt = $dbh->prepare("insert into changelogentries values (?, ?, ?)");

@@ -1,60 +1,37 @@
 <?php
 namespace SBExampleApps\Users\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Page;
+use SBLayout\Model\Page\ContentPage;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\DynamicContentCRUDPage;
+use SBData\Model\Value\Value;
+use SBCrud\Model\Page\CRUDMasterPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Users\Model\CRUD\SystemsCRUDModel;
-use SBExampleApps\Users\Model\CRUD\SystemCRUDModel;
+use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
+use SBExampleApps\Users\Model\Page\Content\SystemContents;
 
-class SystemsCRUDPage extends DynamicContentCRUDPage
+class SystemsCRUDPage extends CRUDMasterPage
 {
-	public PDO $dbh;
-
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, Page $dynamicSubPage)
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager)
 	{
-		parent::__construct("Systems",
-			/* Parameter name */
-			"systemId",
-			/* Key parameters */
-			new ParameterMap(),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/systems.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-			/* Contents per operation */
-			array(
-				"create_system" => new Contents("crud/system.php"),
-				"insert_system" => new Contents("crud/system.php")
-			),
-			$dynamicSubPage);
+		parent::__construct("Systems", "systemId", new Contents("systems.php", "systems.php"), array(
+			"create_system" => new RestrictedOperationPage("Create system", new SystemContents(), $authorizationManager),
+			"insert_system" => new RestrictedOperationPage("Insert system", new SystemContents(), $authorizationManager)
+		));
 
 		$this->dbh = $dbh;
 		$this->authorizationManager = $authorizationManager;
 	}
-	
-	public function constructCRUDModel(): CRUDModel
+
+	public function createParamValue(): Value
 	{
-		if(array_key_exists("__operation", $_REQUEST))
-		{
-			switch($_REQUEST["__operation"])
-			{
-				case "create_system":
-				case "insert_system":
-					return new SystemCRUDModel($this, $this->dbh);
-				default:
-					return new SystemsCRUDModel($this, $this->dbh);
-			}
-		}
-		else
-			return new SystemsCRUDModel($this, $this->dbh);
+		return new Value(true, 255);
+	}
+
+	public function createDetailPage(array $query): ?ContentPage
+	{
+		return new SystemCRUDPage($this->dbh, $this->authorizationManager, $query["systemId"]);
 	}
 
 	public function checkAccessibility(): bool

@@ -1,45 +1,31 @@
 <?php
 namespace SBExampleApps\Portal\Model\Page;
-use PDO;
-use SBLayout\Model\Page\Page;
+use SBLayout\Model\Page\ContentPage;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\StaticContentCRUDPage;
-use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Portal\Model\CRUD\ChangeLogEntriesCRUDModel;
+use SBData\Model\Value\Value;
+use SBCrud\Model\Page\CRUDMasterPage;
+use SBCrud\Model\Page\OperationPage;
+use SBExampleApps\Portal\Model\Page\Content\ChangeLogEntryContents;
 
-class ChangeLogCRUDPage extends StaticContentCRUDPage
+class ChangeLogCRUDPage extends CRUDMasterPage
 {
-	public PDO $dbh;
-
-	public AuthorizationManager $authorizationManager;
-
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
+	public function __construct()
 	{
-		$baseURL = Page::computeBaseURL();
-
-		parent::__construct("Changelog",
-			/* Key parameters */
-			new ParameterMap(),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/changelog.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-
-			/* Contents per operation */
-			array(),
-			$subPages);
-
-		$this->dbh = $dbh;
-		$this->authorizationManager = $authorizationManager;
+		parent::__construct("Changelog", "logId", new Contents("changelog.php", "changelog.php"), array(
+			"create_changelogentry" => new OperationPage("Create changelog entry", new ChangeLogEntryContents()),
+			"insert_changelogentry" => new OperationPage("Insert changelog entry", new ChangeLogEntryContents()),
+			"update_changelogentry" => new OperationPage("Update changelog entry", new ChangeLogEntryContents())
+		));
 	}
 
-	public function constructCRUDModel(): CRUDModel
+	public function createParamValue(): Value
 	{
-		return new ChangeLogEntriesCRUDModel($this, $this->dbh, $this->authorizationManager);
+		return new Value(true, 255);
+	}
+
+	public function createDetailPage(array $query): ?ContentPage
+	{
+		return new ChangeLogEntryCRUDPage();
 	}
 }
 ?>

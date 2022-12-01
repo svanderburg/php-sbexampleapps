@@ -4,6 +4,7 @@ use PDO;
 use SBGallery\Model\Gallery;
 use SBGallery\Model\GalleryPermissionChecker;
 use SBGallery\Model\Page\GalleryPage;
+use SBGallery\Model\Page\Content\GalleryContents;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\CMSGallery\Model\MyGallery;
 use SBExampleApps\CMSGallery\Model\MyGalleryPermissionChecker;
@@ -12,18 +13,15 @@ class MyGalleryPage extends GalleryPage
 {
 	private AuthorizationManager $authorizationManager;
 
-	private PDO $dbh;
-
 	public function __construct(AuthorizationManager $authorizationManager, PDO $dbh)
 	{
-		parent::__construct("Gallery", array(), "Pages", "gallery.php", "contents", array("gallery.css"));
+		parent::__construct($dbh, "Gallery", new GalleryContents(null, "contents", "Pages", array("gallery.css"), array(), "gallery.php"));
 		$this->authorizationManager = $authorizationManager;
-		$this->dbh = $dbh;
 	}
 
-	public function constructGallery(): Gallery
+	public function constructGallery(PDO $dbh): Gallery
 	{
-		return new MyGallery($this->dbh);
+		return new MyGallery($dbh);
 	}
 
 	public function constructGalleryPermissionChecker(): GalleryPermissionChecker

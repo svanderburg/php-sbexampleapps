@@ -1,41 +1,16 @@
 <?php
 namespace SBExampleApps\Homework\Model\Page;
-use PDO;
-use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBData\Model\Value\Value;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\StaticContentCRUDPage;
-use SBExampleApps\Homework\Model\CRUD\ExamCRUDModel;
+use SBCrud\Model\Page\CRUDDetailPage;
+use SBCrud\Model\Page\OperationPage;
+use SBExampleApps\Homework\Model\Page\Content\ExamContents;
 
-class ExamCRUDPage extends StaticContentCRUDPage
+class ExamCRUDPage extends CRUDDetailPage
 {
-	public PDO $dbh;
-
-	public function __construct(PDO $dbh, array $subPages = array())
+	public function __construct()
 	{
-		parent::__construct("Exam",
-			/* Key parameters */
-			new ParameterMap(array(
-				"testId" => new Value(true, 255)
-			)),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/exam.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-
-			/* Contents per operation */
-			array(),
-			$subPages);
-
-		$this->dbh = $dbh;
-	}
-
-	public function constructCRUDModel(): CRUDModel
-	{
-		return new ExamCRUDModel($this, $this->dbh);
+		parent::__construct("Exam", new ExamContents(), array(
+			"submit_answer" => new OperationPage("Submit answer", new ExamContents())
+		));
 	}
 }
 ?>

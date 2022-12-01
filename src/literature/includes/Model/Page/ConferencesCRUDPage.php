@@ -1,60 +1,36 @@
 <?php
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Page;
+use SBLayout\Model\Page\ContentPage;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\DynamicContentCRUDPage;
-use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Literature\Model\CRUD\ConferencesCRUDModel;
-use SBExampleApps\Literature\Model\CRUD\ConferenceCRUDModel;
+use SBData\Model\Value\Value;
+use SBData\Model\Value\NaturalNumberValue;
+use SBCrud\Model\Page\CRUDMasterPage;
+use SBCrud\Model\Page\OperationPage;
+use SBExampleApps\Literature\Model\Page\Content\ConferenceContents;
 
-class ConferencesCRUDPage extends DynamicContentCRUDPage
+class ConferencesCRUDPage extends CRUDMasterPage
 {
 	public PDO $dbh;
 
-	public AuthorizationManager $authorizationManager;
-
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, Page $dynamicSubPage)
+	public function __construct(PDO $dbh)
 	{
-		parent::__construct("Conferences",
-			/* Parameter name */
-			"conferenceId",
-			/* Key parameters */
-			new ParameterMap(),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/conferences.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-			/* Contents per operation */
-			array(
-				"create_conference" => new Contents("crud/conference.php"),
-				"insert_conference" => new Contents("crud/conference.php")
-			),
-			$dynamicSubPage);
+		parent::__construct("Conferences", "conferenceId", new Contents("conferences.php", "conferences.php"), array(
+			"create_conference" => new OperationPage("Create conference", new ConferenceContents()),
+			"insert_conference" => new OperationPage("Delete conference", new ConferenceContents())
+		));
 
 		$this->dbh = $dbh;
-		$this->authorizationManager = $authorizationManager;
 	}
-	
-	public function constructCRUDModel(): CRUDModel
+
+	public function createParamValue(): Value
 	{
-		if(array_key_exists("__operation", $_REQUEST))
-		{
-			switch($_REQUEST["__operation"])
-			{
-				case "create_conference":
-				case "insert_conference":
-					return new ConferenceCRUDModel($this, $this->dbh, $this->authorizationManager);
-				default:
-					return new ConferencesCRUDModel($this, $this->dbh);
-			}
-		}
-		else
-			return new ConferencesCRUDModel($this, $this->dbh);
+		return new NaturalNumberValue(true);
+	}
+
+	public function createDetailPage(array $query): ?ContentPage
+	{
+		return new ConferenceCRUDPage($this->dbh, $query["conferenceId"]);
 	}
 }
 ?>

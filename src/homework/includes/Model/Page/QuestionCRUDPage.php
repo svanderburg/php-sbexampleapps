@@ -1,46 +1,35 @@
 <?php
 namespace SBExampleApps\Homework\Model\Page;
 use PDO;
-use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\ParameterMap;
-use SBData\Model\Value\Value;
-use SBData\Model\Value\IntegerValue;
-use SBCrud\Model\CRUDModel;
-use SBCrud\Model\Page\StaticContentCRUDPage;
+use SBLayout\Model\PageNotFoundException;
+use SBCrud\Model\Page\CRUDDetailPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
-use SBExampleApps\Homework\Model\CRUD\QuestionCRUDModel;
+use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
+use SBExampleApps\Homework\Model\Entity\QuestionEntity;
+use SBExampleApps\Homework\Model\Page\Content\QuestionContents;
 
-class QuestionCRUDPage extends StaticContentCRUDPage
+class QuestionCRUDPage extends CRUDDetailPage
 {
-	public PDO $dbh;
+	public array $entity;
 
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, array $subPages = array())
+	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, string $testId, string $questionId)
 	{
-		parent::__construct("Question",
-			/* Key parameters */
-			new ParameterMap(array(
-				"testId" => new Value(true, 255),
-				"questionId" => new IntegerValue(true)
-			)),
-			/* Request parameters */
-			new ParameterMap(),
-			/* Default contents */
-			new Contents("crud/question.php"),
-			/* Error contents */
-			new Contents("crud/error.php"),
-			/* Contents per operation */
-			array(),
-			$subPages);
+		parent::__construct("Question", new QuestionContents(), array(
+			"update_question" => new RestrictedOperationPage("Update question", new QuestionContents(), $authorizationManager),
+			"delete_question" => new RestrictedOperationPage("Delete question", new QuestionContents(), $authorizationManager),
+		));
 
-		$this->dbh = $dbh;
 		$this->authorizationManager = $authorizationManager;
-	}
 
-	public function constructCRUDModel(): CRUDModel
-	{
-		return new QuestionCRUDModel($this, $this->dbh);
+		$stmt = QuestionEntity::queryOne($dbh, $testId, $questionId);
+
+		if(($entity = $stmt->fetch()) === false)
+			throw new PageNotFoundException("Cannot find question with id: ".$questionId);
+
+		$this->entity = $entity;
+		// Do not change the title, because questions are too detailed/long
 	}
 
 	public function checkAccessibility(): bool
