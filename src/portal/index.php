@@ -63,7 +63,8 @@ $application = new Application(
 		"changelog" => new ChangeLogCRUDPage(),
 		"gallery" => new MyGalleryPage($authorizationManager, $dbh),
 		"tests" => new StaticContentPage("Tests", new Contents("tests.php"), array(
-			"layouttests" => new StaticContentPage("Layout tests", new Contents("tests/layouttests.php"))
+			"layouttests" => new StaticContentPage("Layout tests", new Contents("tests/layouttests.php")),
+			"sitemap" => new StaticContentPage("Sitemap", new Contents("sitemap.php"))
 		)),
 		"features" => new StaticContentPage("Features", new Contents("features.php"), $config["externalApps"]),
 		"auth" => new AuthorizationPage($authorizationManager, "Login", "Login status")
