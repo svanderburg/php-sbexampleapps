@@ -15,7 +15,7 @@ global $route, $crudInterface, $authorizationManager;
 	}
 
 	if($authorizationManager->authenticated)
-		\SBData\View\HTML\displaySemiEditableTable($crudInterface->table, "No editors", "editor-row");
+		\SBData\View\HTML\displaySemiEditableTable($crudInterface->table, "No editors");
 	else
 		\SBData\View\HTML\displayTable($crudInterface->table, "No editors");
 	?>

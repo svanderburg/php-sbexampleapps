@@ -104,7 +104,7 @@ class PaperAuthorCRUDInterface extends CRUDInterface
 		if($authorIdValue->checkValue("AUTHOR_ID"))
 		{
 			PaperEntity::removeAuthor($this->dbh, $GLOBALS["query"]["paperId"], $GLOBALS["query"]["conferenceId"], $authorIdValue->value);
-			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment("author-row"));
+			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment());
 			exit();
 		}
 		else

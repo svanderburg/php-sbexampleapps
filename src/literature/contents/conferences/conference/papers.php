@@ -16,7 +16,7 @@ global $route, $table, $authorizationManager;
 	}
 
 	if($authorizationManager->authenticated)
-		\SBData\View\HTML\displaySemiEditableTable($table, "No papers", "paper-row");
+		\SBData\View\HTML\displaySemiEditableTable($table, "No papers");
 	else
 		\SBData\View\HTML\displayTable($table, "No papers");
 	?>

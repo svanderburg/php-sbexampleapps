@@ -17,7 +17,7 @@ global $crudInterface, $authorizationManager;
 	if($crudInterface->table !== null)
 	{
 		if($authorizationManager->authenticated)
-			\SBData\View\HTML\displaySemiEditableTable($crudInterface->table, "No authors", "author-row");
+			\SBData\View\HTML\displaySemiEditableTable($crudInterface->table, "No authors");
 		else
 			\SBData\View\HTML\displayTable($crudInterface->table, "No authors");
 	}

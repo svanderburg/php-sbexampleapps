@@ -103,7 +103,7 @@ class AuthorizedSystemsCRUDInterface extends CRUDInterface
 		if($systemIdValue->checkValue("SYSTEM_ID"))
 		{
 			UserEntity::removeAuthorizedSystem($this->dbh, $GLOBALS["query"]["Username"], $systemIdValue->value);
-			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment("user-system-row"));
+			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment());
 			exit();
 		}
 		else

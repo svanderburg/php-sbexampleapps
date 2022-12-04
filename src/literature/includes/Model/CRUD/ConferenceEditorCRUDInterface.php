@@ -105,7 +105,7 @@ class ConferenceEditorCRUDInterface extends CRUDInterface
 		if($authorIdValue->checkValue("AUTHOR_ID"))
 		{
 			ConferenceEntity::removeEditor($this->dbh, $GLOBALS["query"]["conferenceId"], $authorIdValue->value);
-			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment("editor-row"));
+			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment());
 			exit();
 		}
 		else

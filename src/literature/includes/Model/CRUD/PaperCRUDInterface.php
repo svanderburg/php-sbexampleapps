@@ -11,6 +11,7 @@ use SBData\Model\Field\ReadOnlyNumericIntTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\TextAreaField;
 use SBData\Model\Field\URLField;
+use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -122,7 +123,7 @@ class PaperCRUDInterface extends CRUDInterface
 
 		PaperEntity::remove($this->dbh, $paperId, $conferenceId);
 		PaperFileSet::removePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $paperId, $conferenceId);
-		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment("paper-row"));
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 
