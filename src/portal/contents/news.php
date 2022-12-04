@@ -1,23 +1,22 @@
 <?php
-global $dbh, $stmt, $authorizationManager, $baseURL;
-
 use SBExampleApps\Portal\Model\Entity\NewsMessageEntity;
-?>
-<p>
-	<?php
-	if($authorizationManager->authenticated)
-	{
-		?>
-		<a href="?__operation=create_newsmessage">Add news message</a>
-		<?php
-	}
+
+global $route, $dbh, $stmt, $authorizationManager, $baseURL;
+
+\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
+
+if($authorizationManager->authenticated)
+{
 	?>
-</p>
-<?php
+	<p>
+		<a href="?__operation=create_newsmessage">Add news message</a>
+	</p>
+	<?php
+}
+
 while(($row = $stmt->fetch()) !== false)
 	\SBExampleApps\Portal\View\displayNewsMessage($row, $authorizationManager);
 ?>
-
 <p>
 	<?php
 	$page = $GLOBALS["requestParameters"]["page"];

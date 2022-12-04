@@ -1,17 +1,17 @@
 <?php
 global $table, $authorizationManager;
-?>
-<p>
-	<?php
-	if($authorizationManager->authenticated)
-	{
-		?>
-		<a href="?__operation=create_publisher">Add publisher</a>
-		<?php
-	}
+
+\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
+
+if($authorizationManager->authenticated)
+{
 	?>
-</p>
-<?php
+	<p>
+		<a href="?__operation=create_publisher">Add publisher</a>
+	</p>
+	<?php
+}
+
 if($authorizationManager->authenticated)
 	\SBData\View\HTML\displaySemiEditableTable($table);
 else

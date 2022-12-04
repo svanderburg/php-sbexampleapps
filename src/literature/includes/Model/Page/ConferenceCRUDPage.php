@@ -2,6 +2,7 @@
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
 use SBLayout\Model\PageNotFoundException;
+use SBLayout\Model\Page\PageAlias;
 use SBCrud\Model\Page\CRUDDetailPage;
 use SBCrud\Model\Page\OperationPage;
 use SBExampleApps\Literature\Model\Page\Content\ConferenceContents;
@@ -17,7 +18,9 @@ class ConferenceCRUDPage extends CRUDDetailPage
 			"insert_conference_author" => new OperationPage("Insert author link", new ConferenceContents()),
 			"delete_conference_author" => new OperationPage("Delete author link", new ConferenceContents())
 		), array(
-			"papers" => new PapersCRUDPage($dbh)
+			"conference" => new PageAlias("Conference", "conferences/".$conferenceId),
+			"papers" => new PapersCRUDPage($dbh),
+			"editors" => new ConferenceEditorsCRUDPage(),
 		));
 
 		$stmt = ConferenceEntity::queryOne($dbh, $conferenceId);

@@ -2,6 +2,7 @@
 namespace SBExampleApps\Users\Model\Page;
 use PDO;
 use SBLayout\Model\PageNotFoundException;
+use SBLayout\Model\Page\PageAlias;
 use SBCrud\Model\Page\CRUDDetailPage;
 use SBExampleApps\Users\Model\Page\Content\UserContents;
 use SBExampleApps\Auth\Model\AuthorizationManager;
@@ -19,8 +20,9 @@ class UserCRUDPage extends CRUDDetailPage
 		parent::__construct("User", new UserContents(), array(
 			"update_user" => new RestrictedOperationPage("Update user", new UserContents(), $authorizationManager),
 			"delete_user" => new RestrictedOperationPage("Delete user", new UserContents(), $authorizationManager),
-			"insert_user_system" => new RestrictedOperationPage("Attach system link", new UserContents(), $authorizationManager),
-			"delete_user_system" => new RestrictedOperationPage("Remove system link", new UserContents(), $authorizationManager)
+		), array(
+			"user" => new PageAlias("User", "users/".$username),
+			"systems" => new AuthorizedSystemsCRUDPage($authorizationManager)
 		));
 		$this->authorizationManager = $authorizationManager;
 

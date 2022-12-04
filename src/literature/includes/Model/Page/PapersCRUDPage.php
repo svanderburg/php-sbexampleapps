@@ -14,7 +14,7 @@ class PapersCRUDPage extends CRUDMasterPage
 {
 	public function __construct(PDO $dbh)
 	{
-		parent::__construct("Papers", "paperId", new Contents("conferences/conference/papers.php"), array(
+		parent::__construct("Papers", "paperId", new Contents("conferences/conference/papers.php", "conferences/conference/papers.php"), array(
 			"create_paper" => new OperationPage("Create paper", new PaperContents()),
 			"insert_paper" => new OperationPage("Insert paper", new PaperContents())
 		));

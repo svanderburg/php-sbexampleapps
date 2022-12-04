@@ -1,20 +1,19 @@
 <?php
-global $crudInterface, $authorizationManager;
+global $route, $crudInterface, $authorizationManager;
+
+\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
 
 $authorsURL = $_SERVER["SCRIPT_NAME"]."/authors";
-?>
-<p>
-	<a href="<?= $authorsURL ?>">&laquo; Authors</a>
-	<?php
-	if($authorizationManager->authenticated)
-	{
-		?>
-		| <a href="<?= $authorsURL ?>?__operation=create_author">Add author</a>
-		<?php
-	}
+
+if($authorizationManager->authenticated)
+{
 	?>
-</p>
-<?php
+	<p>
+		<a href="<?= $authorsURL ?>?__operation=create_author">Add author</a>
+	</p>
+	<?php
+}
+
 if($authorizationManager->authenticated)
 {
 	\SBData\View\HTML\displayEditableForm($crudInterface->form,

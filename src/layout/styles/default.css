@@ -75,7 +75,7 @@ a
 	color: #2d5b76;
 }
 
-a:visited
+a:visited, a.active
 {
 	color: #a53a5a;
 }
@@ -275,6 +275,47 @@ button, input[type=submit]
 	border-style: solid;
 	border-width: 3px;
 	border-color: #7c223e;
+}
+
+div.menusection:empty
+{
+	display: none;
+}
+
+.menusection a
+{
+	text-decoration: none;
+	padding: 0.5em;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #aaaaaa;
+	background-color: #dddddd;
+	color: #2d5b76;
+}
+
+.menusection a:hover
+{
+	background-color: #aaaaaa;
+}
+
+.menusection a.active
+{
+	background-color: #aaaaaa;
+	color: #2d5b76;
+}
+
+.tabpage
+{
+	margin-top: 0.5em;
+	padding: 0.5em;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #aaaaaa;
+}
+
+.breadcrumbs
+{
+	font-size: 85%;
 }
 
 @media only screen and (min-width: 1024px)

@@ -1,12 +1,11 @@
 <?php
-use SBData\Model\Value\IntegerValue;
 use SBBiblio\Model\Author;
 use SBBiblio\Model\Book;
 use SBBiblio\Model\InProceedings;
 use SBExampleApps\Literature\Model\Entity\ConferenceEntity;
 use SBExampleApps\Literature\Model\Entity\PaperEntity;
 
-global $dbh;
+global $route, $dbh;
 
 function generateMonth($date)
 {
@@ -42,20 +41,12 @@ function generateMonth($date)
 	}
 }
 
-$paperIdValue = new IntegerValue(true);
-$paperIdValue->value = $GLOBALS["query"]["paperId"];
-$conferenceIdValue = new IntegerValue(true);
-$conferenceIdValue->value = $GLOBALS["query"]["conferenceId"];
-
-if(!$paperIdValue->checkValue("PAPER_ID") || !$conferenceIdValue->checkValue("CONFERENCE_ID"))
-{
-	?>
-	<p>The keys are invalid!</p>
+\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
+\SBLayout\View\HTML\displayEmbeddedMenuSection($route, 4);
+?>
+<div class="tabpage">
 	<?php
-}
-else
-{
-	$stmt = PaperEntity::queryOneForReference($dbh, $paperIdValue->value, $conferenceIdValue->value);
+	$stmt = PaperEntity::queryOneForReference($dbh, $GLOBALS["query"]["paperId"], $GLOBALS["query"]["conferenceId"]);
 
 	if(($paper = $stmt->fetch()) === false)
 	{
@@ -67,7 +58,7 @@ else
 	{
 		/* Process authors */
 		$authors = array();
-		$stmt = PaperEntity::queryAuthorsSummary($dbh, $paperIdValue->value, $conferenceIdValue->value);
+		$stmt = PaperEntity::queryAuthorsSummary($dbh, $GLOBALS["query"]["paperId"], $GLOBALS["query"]["conferenceId"]);
 
 		while(($author = $stmt->fetch()) !== false)
 			array_push($authors, new Author($author["AuthorName"], $author["Homepage"]));
@@ -102,5 +93,5 @@ else
 
 		\SBBiblio\View\HTML\displayPublication($publication, dirname($_SERVER["PHP_SELF"])."/pdf");
 	}
-}
-?>
+	?>
+</div>

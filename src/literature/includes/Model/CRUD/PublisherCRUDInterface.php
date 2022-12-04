@@ -36,7 +36,6 @@ class PublisherCRUDInterface extends CRUDInterface
 	private function constructPublisherForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"__operation" => new HiddenField(true),
 			 "PUBLISHER_ID" => new TextField("Id", true, 20, 255),
 			"Name" => new TextField("Name", true, 20, 255)
 		));

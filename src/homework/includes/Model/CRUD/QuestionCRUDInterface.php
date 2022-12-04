@@ -99,7 +99,7 @@ class QuestionCRUDInterface extends CRUDInterface
 	{
 		QuestionEntity::remove($this->dbh, $GLOBALS["query"]["testId"], $GLOBALS["query"]["questionId"]);
 
-		header("Location: ".$_SERVER["SCRIPT_NAME"]."/tests/".rawurlencode($GLOBALS["query"]["testId"]).AnchorRow::composePreviousRowFragment());
+		header("Location: ".$this->route->composeParentPageURL($_SERVER["SCRIPT_NAME"]).AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 	

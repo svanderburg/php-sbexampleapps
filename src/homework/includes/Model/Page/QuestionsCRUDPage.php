@@ -16,7 +16,7 @@ class QuestionsCRUDPage extends CRUDMasterPage
 
 	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager)
 	{
-		parent::__construct("Questions", "questionId", new Contents("tests/test/questions.php"), array(
+		parent::__construct("Questions", "questionId", new Contents("tests/test/questions.php", "tests/test/questions.php"), array(
 			"create_question" => new RestrictedOperationPage("Create question", new QuestionContents(), $authorizationManager),
 			"insert_question" => new RestrictedOperationPage("Insert question", new QuestionContents(), $authorizationManager)
 		));

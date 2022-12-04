@@ -1,10 +1,12 @@
+<?php
+\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
+?>
 <p>
 	<?php
 	if(array_key_exists("testId", $GLOBALS["query"]))
 	{
 		$testURL = $_SERVER["SCRIPT_NAME"]."/tests/".$GLOBALS["query"]["testId"];
 		?>
-		<a href="<?= $testURL ?>">&laquo; Test: <?= $GLOBALS["query"]["testId"] ?></a> |
 		<a href="<?= $testURL."/questions" ?>?__operation=create_question">Add question</a>
 		<?php
 	}

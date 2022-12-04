@@ -1,31 +1,25 @@
 <?php
-$testsURL = $_SERVER["SCRIPT_NAME"]."/tests";
+\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
+\SBLayout\View\HTML\displayEmbeddedMenuSection($route, 2);
 ?>
-<p>
-	<a href="<?= $testsURL ?>">&laquo; Tests</a> |
-	<a href="<?= $testsURL ?>?__operation=create_test">Add test</a>
+<div class="tabpage">
 	<?php
+	$testsURL = $_SERVER["SCRIPT_NAME"]."/tests";
+
 	if(array_key_exists("query", $GLOBALS) && array_key_exists("testId", $GLOBALS["query"]))
 	{
 		?>
-		| <a href="<?= $_SERVER["PHP_SELF"]."/questions" ?>?__operation=create_question">Add question</a>
+		<p>
+			<a href="?__operation=create_test">Add test</a>
+		</p>
 		<?php
 	}
-	?>
-</p>
-<?php
-global $crudInterface;
 
-\SBData\View\HTML\displayEditableForm($crudInterface->form,
-	"Submit",
-	"One or more fields are incorrectly specified and marked with a red color!",
-	"This field is incorrectly specified!");
+	global $crudInterface;
 
-if($crudInterface->table !== null)
-{
+	\SBData\View\HTML\displayEditableForm($crudInterface->form,
+		"Submit",
+		"One or more fields are incorrectly specified and marked with a red color!",
+		"This field is incorrectly specified!");
 	?>
-	<h2>Questions</h2>
-	<?php
-	\SBData\View\HTML\displaySemiEditableTable($crudInterface->table);
-}
-?>
+</div>

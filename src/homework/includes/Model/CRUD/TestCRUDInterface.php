@@ -6,10 +6,7 @@ use SBLayout\Model\Route;
 use SBData\Model\Form;
 use SBData\Model\Field\CheckBoxField;
 use SBData\Model\Field\HiddenField;
-use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\TextField;
-use SBData\Model\Table\DBTable;
-use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -24,8 +21,6 @@ class TestCRUDInterface extends CRUDInterface
 	public PDO $dbh;
 
 	public CRUDForm $form;
-
-	public ?DBTable $table = null;
 
 	public function __construct(Route $route, CRUDPage $crudPage, PDO $dbh)
 	{
@@ -71,30 +66,6 @@ class TestCRUDInterface extends CRUDInterface
 		$this->constructTestForm();
 		$this->form->importValues($this->crudPage->entity);
 		$this->form->setOperation("update_test");
-
-		/* Construct a table containing the questions for this form */
-		$composeQuestionLink = function (NumericIntKeyLinkField $field, Form $form): string
-		{
-			$questionId = $field->exportValue();
-			return $_SERVER["PHP_SELF"]."/questions/".rawurlencode($questionId);
-		};
-
-		$deleteQuestionLink = function (Form $form): string
-		{
-			$questionId = $form->fields['QUESTION_ID']->exportValue();
-			return $_SERVER["PHP_SELF"]."/questions/".rawurlencode($questionId)."?__operation=delete_question".AnchorRow::composeRowParameter($form);
-		};
-
-		$this->table = new DBTable(array(
-			"QUESTION_ID" => new NumericIntKeyLinkField("Id", $composeQuestionLink, true),
-			"Question" => new TextField("Question", true),
-			"Answer" => new TextField("Answer", true),
-			"Exact" => new CheckBoxField("Exact")
-		), array(
-			"Delete" => $deleteQuestionLink
-		));
-
-		$this->table->stmt = TestEntity::queryAllQuestions($this->dbh, $GLOBALS["query"]["testId"]);
 	}
 
 	private function updateTest(): void

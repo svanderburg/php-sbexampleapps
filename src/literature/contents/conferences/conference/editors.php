@@ -6,26 +6,17 @@ global $route, $crudInterface, $authorizationManager;
 ?>
 <div class="tabpage">
 	<?php
-	$conferencesURL = $_SERVER["SCRIPT_NAME"]."/conferences";
-
 	if($authorizationManager->authenticated)
 	{
-		?>
-		<p>
-			<a href="<?= $conferencesURL ?>?__operation=create_conference">Add conference</a>
-		</p>
-		<?php
-	}
-
-	/* Display conference properties */
-	if($authorizationManager->authenticated)
-	{
-		\SBData\View\HTML\displayEditableForm($crudInterface->form,
-			"Submit",
+		\SBData\View\HTML\displayEditableForm($crudInterface->addEditorForm,
+			"Add editor",
 			"One or more fields are incorrectly specified and marked with a red color!",
 			"This field is incorrectly specified!");
 	}
+
+	if($authorizationManager->authenticated)
+		\SBData\View\HTML\displaySemiEditableTable($crudInterface->table, "No editors", "editor-row");
 	else
-		\SBData\View\HTML\displayForm($crudInterface->form);
+		\SBData\View\HTML\displayTable($crudInterface->table, "No editors");
 	?>
 </div>

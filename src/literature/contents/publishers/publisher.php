@@ -1,20 +1,19 @@
 <?php
-global $crudInterface, $authorizationManager;
+global $route, $crudInterface, $authorizationManager;
+
+\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
 
 $publishersURL = $_SERVER["SCRIPT_NAME"]."/publishers";
-?>
-<p>
-	<a href="<?= $publishersURL ?>">&laquo; Publishers</a>
-	<?php
-	if($authorizationManager->authenticated)
-	{
-		?>
-		| <a href="<?= $publishersURL ?>?__operation=create_publisher">Add publisher</a>
-		<?php
-	}
+
+if($authorizationManager->authenticated)
+{
 	?>
-</p>
-<?php
+	<p>
+		<a href="<?= $publishersURL ?>?__operation=create_publisher">Add publisher</a>
+	</p>
+	<?php
+}
+
 if($authorizationManager->authenticated)
 {
 	\SBData\View\HTML\displayEditableForm($crudInterface->form,

@@ -1,20 +1,19 @@
 <?php
-global $crudInterface, $authorizationManager;
+global $route, $crudInterface, $authorizationManager;
+
+\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
 
 $newsURL = $_SERVER["SCRIPT_NAME"]."/news";
-?>
-<p>
-	<a href="<?php print($newsURL); ?>">&laquo; News</a>
-	<?php
-	if($authorizationManager->authenticated)
-	{
-		?>
-		| <a href="<?php print($newsURL); ?>?__operation=create_newsmessage">Add news message</a>
-		<?php
-	}
+
+if($authorizationManager->authenticated)
+{
 	?>
-</p>
-<?php
+	<p>
+		<a href="<?php print($newsURL); ?>?__operation=create_newsmessage">Add news message</a>
+	</p>
+	<?php
+}
+
 if($authorizationManager->authenticated)
 {
 	\SBData\View\HTML\displayEditableForm($crudInterface->form,

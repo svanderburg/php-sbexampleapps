@@ -2,7 +2,8 @@
 namespace SBExampleApps\Literature\Model\Page;
 use PDO;
 use SBLayout\Model\PageNotFoundException;
-use SBLayout\Model\Page\HiddenStaticContentPage;
+use SBLayout\Model\Page\PageAlias;
+use SBLayout\Model\Page\StaticContentPage;
 use SBLayout\Model\Page\Content\Contents;
 use SBCrud\Model\Page\CRUDDetailPage;
 use SBCrud\Model\Page\OperationPage;
@@ -22,7 +23,9 @@ class PaperCRUDPage extends CRUDDetailPage
 			"delete_paper_author" => new OperationPage("Update paper author", new PaperContents()),
 			"delete_paper_pdf" => new OperationPage("Delete paper PDF", new PaperContents())
 		), array(
-			"reference" => new HiddenStaticContentPage("Reference", new Contents("conferences/conference/papers/paper/reference.php", null, array("citation.css"), array("publications.js")))
+			"paper" => new PageAlias("Paper", "conferences/".$conferenceId."/papers/".$paperId),
+			"authors" => new PaperAuthorsCRUDPage(),
+			"reference" => new StaticContentPage("Reference", new Contents("conferences/conference/papers/paper/reference.php", null, array("citation.css"), array("publications.js")))
 		));
 
 		$stmt = PaperEntity::queryOne($dbh, $paperId, $conferenceId);

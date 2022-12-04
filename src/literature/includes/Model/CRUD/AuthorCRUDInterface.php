@@ -40,7 +40,6 @@ class AuthorCRUDInterface extends CRUDInterface
 	private function constructAuthorForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"__operation" => new HiddenField(true),
 			"AUTHOR_ID" => new ReadOnlyNumericIntTextField("Id", false),
 			"FirstName" => new TextField("First name", true, 20, 255),
 			"LastName" => new TextField("Last name", true, 20, 255),
