@@ -23,14 +23,14 @@ try
 	<channel>
 		<title>News messages</title>
 		<description>Example RSS feed for the news messages</description>
-		<link><?php print($baseURL); ?></link>
+		<link><?= $baseURL ?></link>
 		<?php
 		if(($latestDateRow = $stmt2->fetch()) !== false)
 		{
 			$formattedDate = date('r', strtotime($latestDateRow[0]));
 			?>
-			<lastBuildDate><?php print($formattedDate); ?></lastBuildDate>
-			<pubDate><?php print($formattedDate); ?></pubDate>
+			<lastBuildDate><?= $formattedDate ?></lastBuildDate>
+			<pubDate><?= $formattedDate ?></pubDate>
 			<?php
 		}
 		?>
@@ -39,10 +39,10 @@ try
 		{
 			?>
 			<item>
-				<title><?php print($row["Title"]); ?></title>
-				<description><![CDATA[<?php print($row["Message"]); ?>]]></description>
-				<link><?php print($baseURL); ?>/index.php/news/<?php print($row["MESSAGE_ID"]); ?></link>
-				<pubDate><?php print(date('r', strtotime($row["Date"]))); ?></pubDate>
+				<title><?= $row["Title"] ?></title>
+				<description><![CDATA[<?= $row["Message"] ?>]]></description>
+				<link><?= $baseURL ?>/index.php/news/<?= $row["MESSAGE_ID"] ?></link>
+				<pubDate><?= date('r', strtotime($row["Date"])) ?></pubDate>
 			</item>
 			<?php
 		}
@@ -56,7 +56,7 @@ catch(Exception $ex)
 	header("HTTP/1.1 404 Not Found");
 	header("Content-Type: text/plain");
 	?>
-	Error: <?php print($ex->getMessage()); ?>
+	Error: <?= $ex->getMessage() ?>
 	<?php
 }
 ?>
