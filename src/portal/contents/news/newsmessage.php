@@ -9,7 +9,7 @@ if($authorizationManager->authenticated)
 {
 	?>
 	<p>
-		<a href="<?php print($newsURL); ?>?__operation=create_newsmessage">Add news message</a>
+		<a href="<?= $newsURL ?>?__operation=create_newsmessage">Add news message</a>
 	</p>
 	<?php
 }

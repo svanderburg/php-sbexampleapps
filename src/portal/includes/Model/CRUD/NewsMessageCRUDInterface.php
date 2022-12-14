@@ -44,7 +44,6 @@ class NewsMessageCRUDInterface extends CRUDInterface
 		$baseURL = Page::computeBaseURL();
 
 		$this->form = new CRUDForm(array(
-			"__operation" => new HiddenField(true),
 			"MESSAGE_ID" => new ReadOnlyNumericIntTextField("Id", false),
 			"Date" => new DateField("Date", true, true),
 			"Title" => new TextField("Title", true, 20, 255),

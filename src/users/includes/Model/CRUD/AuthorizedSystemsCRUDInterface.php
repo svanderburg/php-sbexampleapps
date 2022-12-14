@@ -11,6 +11,7 @@ use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\ComboBoxField\DBComboBoxField;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -39,7 +40,6 @@ class AuthorizedSystemsCRUDInterface extends CRUDInterface
 	private function constructAddSystemForm(): void
 	{
 		$this->addSystemForm = new CRUDForm(array(
-			"__operation" => new HiddenField(true),
 			"SYSTEM_ID" => new DBComboBoxField("System", $this->dbh, "SBExampleApps\\Users\\Model\\Entity\\SystemEntity::queryAll", "SBExampleApps\\Users\\Model\\Entity\\SystemEntity::queryOne", true)
 		));
 
@@ -57,7 +57,7 @@ class AuthorizedSystemsCRUDInterface extends CRUDInterface
 		$deleteUserSystemLink = function (Form $form): string
 		{
 			$systemId = $form->fields["SYSTEM_ID"]->exportValue();
-			return $_SERVER['PHP_SELF']."?".http_build_query(array(
+			return RouteUtils::composeSelfURL()."?".http_build_query(array(
 				"__operation" => "delete_user_system",
 				"SYSTEM_ID" => $systemId
 			), "", "&amp;", PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
@@ -88,7 +88,7 @@ class AuthorizedSystemsCRUDInterface extends CRUDInterface
 		if($this->addSystemForm->checkValid())
 		{
 			UserEntity::insertAuthorizedSystem($this->dbh, $GLOBALS["query"]["Username"], $this->addSystemForm->fields["SYSTEM_ID"]->exportValue());
-			header("Location: ".$_SERVER["PHP_SELF"]);
+			header("Location: ".RouteUtils::composeSelfURL());
 			exit();
 		}
 		else
@@ -103,7 +103,7 @@ class AuthorizedSystemsCRUDInterface extends CRUDInterface
 		if($systemIdValue->checkValue("SYSTEM_ID"))
 		{
 			UserEntity::removeAuthorizedSystem($this->dbh, $GLOBALS["query"]["Username"], $systemIdValue->value);
-			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment());
+			header("Location: ".RouteUtils::composeSelfURL().AnchorRow::composePreviousRowFragment());
 			exit();
 		}
 		else

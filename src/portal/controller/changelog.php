@@ -5,14 +5,17 @@ use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBExampleApps\Portal\Model\Entity\ChangeLogEntriesEntity;
 
 global $dbh, $table, $submittedForm;
 
-$deleteChangeLogLink = function (Form $form): string
+$selfURL = RouteUtils::composeSelfURL();
+
+$deleteChangeLogLink = function (Form $form) use ($selfURL): string
 {
 	$logId = $form->fields["LOG_ID"]->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($logId)."?__operation=remove_changelogentry".AnchorRow::composeRowParameter($form);
+	return $selfURL."/".rawurlencode($logId)."?__operation=remove_changelogentry".AnchorRow::composeRowParameter($form);
 };
 
 $table = new DBTable(array(

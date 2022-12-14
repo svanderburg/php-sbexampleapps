@@ -8,6 +8,7 @@ use SBData\Model\Field\DateField;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -34,7 +35,6 @@ class ChangeLogEntryCRUDInterface extends CRUDInterface
 	private function constructForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"__operation" => new HiddenField(true),
 			"LOG_ID" => new TextField("Version", true, 10, 255),
 			"Date" => new DateField("Date", true, true),
 			"Summary" => new TextField("Summary", true, 30, 255)
@@ -64,7 +64,7 @@ class ChangeLogEntryCRUDInterface extends CRUDInterface
 		{
 			$entry = $this->form->exportValues();
 			ChangeLogEntriesEntity::insert($this->dbh, $entry);
-			header("Location: ".$_SERVER["PHP_SELF"]);
+			header("Location: ".RouteUtils::composeSelfURL());
 			exit();
 		}
 	}

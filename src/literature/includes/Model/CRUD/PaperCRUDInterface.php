@@ -12,6 +12,7 @@ use SBData\Model\Field\TextField;
 use SBData\Model\Field\TextAreaField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -87,7 +88,7 @@ class PaperCRUDInterface extends CRUDInterface
 			if(PaperFileSet::pdfProvided())
 				PaperFileSet::insertOrUpdatePDF(dirname($_SERVER["SCRIPT_FILENAME"])."/pdf", $paperId, $conferenceId);
 
-			header("Location: ".$_SERVER["PHP_SELF"]."/".rawurlencode($paperId));
+			header("Location: ".RouteUtils::composeSelfURL()."/".rawurlencode($paperId));
 			exit();
 		}
 	}

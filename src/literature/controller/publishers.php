@@ -4,14 +4,17 @@ use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBExampleApps\Literature\Model\Entity\PublisherEntity;
 
 global $dbh, $table;
 
-$composePublisherLink = function (NumericIntKeyLinkField $field, Form $form): string
+$selfURL = RouteUtils::composeSelfURL();
+
+$composePublisherLink = function (NumericIntKeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$publisherId = $field->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($publisherId);
+	return $selfURL."/".rawurlencode($publisherId);
 };
 
 $deletePublisherLink = function (Form $form): string

@@ -4,20 +4,23 @@ use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBExampleApps\Homework\Model\Entity\TestEntity;
 
 global $dbh, $table;
 
-$composeTestLink = function (NumericIntKeyLinkField $field, Form $form): string
+$selfURL = RouteUtils::composeSelfURL();
+
+$composeTestLink = function (NumericIntKeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$testId = $field->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($testId);
+	return $selfURL."/".rawurlencode($testId);
 };
 
-$deleteTestLink = function (Form $form): string
+$deleteTestLink = function (Form $form) use ($selfURL): string
 {
 	$testId = $form->fields["TEST_ID"]->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($testId)."?__operation=delete_test".AnchorRow::composeRowParameter($form);
+	return $selfURL."/".rawurlencode($testId)."?__operation=delete_test".AnchorRow::composeRowParameter($form);
 };
 
 $table = new DBTable(array(

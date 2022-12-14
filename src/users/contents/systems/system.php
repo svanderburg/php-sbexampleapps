@@ -1,9 +1,9 @@
 <?php
-$systemsURL = $_SERVER["SCRIPT_NAME"]."/systems";
+global $route;
+\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
 ?>
 <p>
-	<a href="<?php print($systemsURL); ?>">&laquo; Systems</a> |
-	<a href="<?php print($systemsURL); ?>?__operation=create_system">Add system</a>
+	<a href="?__operation=create_system">Add system</a>
 </p>
 <?php
 global $crudInterface;

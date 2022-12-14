@@ -8,6 +8,7 @@ use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\ReadOnlyNumericIntTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -34,7 +35,6 @@ class QuestionCRUDInterface extends CRUDInterface
 	private function constructQuestionForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"__operation" => new HiddenField(true),
 			"QUESTION_ID" => new ReadOnlyNumericIntTextField("Id", false),
 			"Question" => new TextField("Question", true, 20, 255),
 			"Answer" => new TextField("Answer", true, 20, 255),
@@ -72,7 +72,7 @@ class QuestionCRUDInterface extends CRUDInterface
 			$question = $this->form->exportValues();
 			$questionId = QuestionEntity::insert($this->dbh, $question);
 
-			header("Location: ".$_SERVER["PHP_SELF"]."/".rawurlencode($questionId));
+			header("Location: ".RouteUtils::composeSelfURL()."/".rawurlencode($questionId));
 			exit();
 		}
 	}

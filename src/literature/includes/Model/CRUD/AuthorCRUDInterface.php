@@ -10,6 +10,7 @@ use SBData\Model\Field\ReadOnlyNumericIntTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -63,7 +64,7 @@ class AuthorCRUDInterface extends CRUDInterface
 		{
 			$author = $this->form->exportValues();
 			$authorId = AuthorEntity::insert($this->dbh, $author);
-			header("Location: ".$_SERVER["PHP_SELF"]."/".rawurlencode($authorId));
+			header("Location: ".RouteUtils::composeSelfURL()."/".rawurlencode($authorId));
 			exit();
 		}
 	}

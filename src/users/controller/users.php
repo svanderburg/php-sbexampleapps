@@ -4,14 +4,17 @@ use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBExampleApps\Users\Model\Entity\UserEntity;
 
 global $dbh, $table;
 
-$composeUserLink = function (KeyLinkField $field, Form $form): string
+$selfURL = RouteUtils::composeSelfURL();
+
+$composeUserLink = function (KeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$username = $field->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($username);
+	return $selfURL."/".rawurlencode($username);
 };
 
 $deleteUserLink = function (Form $form): string

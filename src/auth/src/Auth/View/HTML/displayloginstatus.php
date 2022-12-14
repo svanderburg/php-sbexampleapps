@@ -10,15 +10,15 @@ function displayLoginStatus(AuthorizationManager $authorizationManager): void
 		if($authorizationManager->authenticated)
 		{
 			?>
-			Logged in as: <?php print($_SESSION["Username"]) ?><br>
-			<a href="<?php print($_SERVER["SCRIPT_NAME"]); ?>/auth?__operation=logout">Logout</a>
+			Logged in as: <?= $_SESSION["Username"] ?><br>
+			<a href="<?= $_SERVER["SCRIPT_NAME"] ?>/auth?__operation=logout">Logout</a>
 			<?php
 		}
 		else
 		{
 			?>
 			Not logged in<br>
-			<a href="<?php print($_SERVER["SCRIPT_NAME"]); ?>/auth">Login</a>
+			<a href="<?= $_SERVER["SCRIPT_NAME"] ?>/auth">Login</a>
 			<?php
 		}
 		?>

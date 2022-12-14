@@ -1,4 +1,5 @@
 <?php
+use SBCrud\Model\RouteUtils;
 use SBBiblio\Model\Author;
 use SBBiblio\Model\Book;
 use SBBiblio\Model\InProceedings;
@@ -91,7 +92,7 @@ function generateMonth($date)
 			$paper["PaperURL"] == "" ? null : $paper["PaperURL"],
 			$paper["PaperComment"] == "" ? null : $paper["PaperComment"]);
 
-		\SBBiblio\View\HTML\displayPublication($publication, dirname($_SERVER["PHP_SELF"])."/pdf");
+		\SBBiblio\View\HTML\displayPublication($publication, dirname(RouteUtils::composeSelfURL())."/pdf");
 	}
 	?>
 </div>

@@ -7,6 +7,8 @@ use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\PasswordField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Value\Value;
+use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -33,7 +35,6 @@ class UserCRUDInterface extends CRUDInterface
 	private function constructUserForm(bool $passwordMandatory): void
 	{
 		$this->form = new CRUDForm(array(
-			"__operation" => new HiddenField(true),
 			"Username" => new TextField("Username", true, 20, 255),
 			"Password" => new PasswordField("Password", $passwordMandatory, 20, 255),
 			"FullName" => new TextField("Full name", true, 20, 255)
@@ -56,7 +57,7 @@ class UserCRUDInterface extends CRUDInterface
 		{
 			$user = $this->form->exportValues();
 			UserEntity::insert($this->dbh, $user);
-			header("Location: ".$_SERVER["PHP_SELF"]."/".rawurlencode($user["Username"]));
+			header("Location: ".RouteUtils::composeSelfURL()."/".rawurlencode($user["Username"]));
 			exit();
 		}
 	}

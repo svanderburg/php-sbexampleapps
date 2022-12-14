@@ -4,14 +4,17 @@ use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBExampleApps\Users\Model\Entity\SystemEntity;
 
 global $dbh, $table;
 
-$composeSystemLink = function (KeyLinkField $field, Form $form): string
+$selfURL = RouteUtils::composeSelfURL();
+
+$composeSystemLink = function (KeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$systemId = $field->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($systemId);
+	return $selfURL."/".rawurlencode($systemId);
 };
 
 $deleteSystemLink = function (Form $form): string

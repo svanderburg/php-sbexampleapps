@@ -9,6 +9,7 @@ use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\ReadOnlyNumericIntTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -61,7 +62,7 @@ class ConferenceCRUDInterface extends CRUDInterface
 		{
 			$conference = $this->form->exportValues();
 			$conferenceId = ConferenceEntity::insert($this->dbh, $conference);
-			header("Location: ".$_SERVER["PHP_SELF"]."/".rawurlencode($conferenceId));
+			header("Location: ".RouteUtils::composeSelfURL()."/".rawurlencode($conferenceId));
 			exit();
 		}
 	}

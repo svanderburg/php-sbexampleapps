@@ -5,14 +5,17 @@ use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBExampleApps\Literature\Model\Entity\ConferenceEntity;
 
 global $dbh, $table;
 
-$composeConferenceLink = function (NumericIntKeyLinkField $field, Form $form): string
+$selfURL = RouteUtils::composeSelfURL();
+
+$composeConferenceLink = function (NumericIntKeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$conferenceId = $field->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($conferenceId);
+	return $selfURL."/".rawurlencode($conferenceId);
 };
 
 $deleteConferenceLink = function (Form $form): string

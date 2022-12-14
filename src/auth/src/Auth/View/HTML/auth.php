@@ -1,4 +1,6 @@
 <?php
+use SBCrud\Model\RouteUtils;
+
 global $form, $authorizationManager;
 
 if($form === null)
@@ -6,8 +8,8 @@ if($form === null)
 	if($authorizationManager->authenticated)
 	{
 		?>
-		<p>Logged in as: <?php print($_SESSION["Username"]) ?></p>
-		<p><a href="<?php print($_SERVER["PHP_SELF"]); ?>?__operation=logout">Logout</a></p>
+		<p>Logged in as: <?= $_SESSION["Username"] ?></p>
+		<p><a href="<?= RouteUtils::composeSelfURL() ?>?__operation=logout">Logout</a></p>
 		<?php
 	}
 	else

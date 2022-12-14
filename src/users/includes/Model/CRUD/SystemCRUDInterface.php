@@ -6,6 +6,7 @@ use SBLayout\Model\Route;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -30,7 +31,6 @@ class SystemCRUDInterface extends CRUDInterface
 	private function constructSystemForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"__operation" => new HiddenField(true),
 			"SYSTEM_ID" => new TextField("Id", true, 20, 255),
 			"Description" => new TextField("Description", true, 20, 255)
 		));
@@ -52,7 +52,7 @@ class SystemCRUDInterface extends CRUDInterface
 		{
 			$system = $this->form->exportValues();
 			SystemEntity::insert($this->dbh, $system);
-			header("Location: ".$_SERVER["PHP_SELF"]."/".rawurlencode($system["SYSTEM_ID"]));
+			header("Location: ".RouteUtils::composeSelfURL()."/".rawurlencode($system["SYSTEM_ID"]));
 			exit();
 		}
 	}

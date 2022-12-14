@@ -8,6 +8,7 @@ use SBData\Model\Form;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -57,7 +58,7 @@ class PublisherCRUDInterface extends CRUDInterface
 		{
 			$publisher = $this->form->exportValues();
 			PublisherEntity::insert($this->dbh, $publisher);
-			header("Location: ".$_SERVER["PHP_SELF"]."/".rawurlencode($publisher['PUBLISHER_ID']));
+			header("Location: ".RouteUtils::composeSelfURL()."/".rawurlencode($publisher['PUBLISHER_ID']));
 			exit();
 		}
 	}

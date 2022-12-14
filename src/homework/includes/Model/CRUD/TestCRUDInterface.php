@@ -7,6 +7,8 @@ use SBData\Model\Form;
 use SBData\Model\Field\CheckBoxField;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\TextField;
+use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -33,7 +35,6 @@ class TestCRUDInterface extends CRUDInterface
 	private function constructTestForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"__operation" => new HiddenField(true),
 			"TEST_ID" => new TextField("Id", true, 20, 255),
 			"Title" => new TextField("Title", true, 20, 255)
 		));
@@ -55,14 +56,13 @@ class TestCRUDInterface extends CRUDInterface
 		{
 			$test = $this->form->exportValues();
 			TestEntity::insert($this->dbh, $test);
-			header("Location: ".$_SERVER["PHP_SELF"]."/".rawurlencode($test["TEST_ID"]));
+			header("Location: ".RouteUtils::composeSelfURL()."/".rawurlencode($test["TEST_ID"]));
 			exit();
 		}
 	}
 
 	private function viewTest(): void
 	{
-		/* Query the properties of the requested test and construct a form and table from it */
 		$this->constructTestForm();
 		$this->form->importValues($this->crudPage->entity);
 		$this->form->setOperation("update_test");

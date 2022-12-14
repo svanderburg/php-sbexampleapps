@@ -1,4 +1,6 @@
 <?php
+use SBCrud\Model\RouteUtils;
+
 global $route, $crudInterface, $authorizationManager;
 
 \SBLayout\View\HTML\displayBreadcrumbs($route, 0);
@@ -39,7 +41,7 @@ global $route, $crudInterface, $authorizationManager;
 		if($authorizationManager->authenticated)
 		{
 			?>
-			<a href="<?= $_SERVER["PHP_SELF"] ?>?__operation=delete_paper_pdf">Delete PDF</a>
+			<a href="<?= RouteUtils::composeSelfURL() ?>?__operation=delete_paper_pdf">Delete PDF</a>
 			<?php
 		}
 		?>

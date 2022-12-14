@@ -6,20 +6,23 @@ use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBExampleApps\Literature\Model\Entity\PaperEntity;
 
 global $dbh, $table;
 
-$composePaperLink = function (NumericIntKeyLinkField $field, Form $form): string
+$selfURL = RouteUtils::composeSelfURL();
+
+$composePaperLink = function (NumericIntKeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$paperId = $field->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($paperId);
+	return $selfURL."/".rawurlencode($paperId);
 };
 
-$deletePaperLink = function (Form $form): string
+$deletePaperLink = function (Form $form) use ($selfURL): string
 {
 	$paperId = $form->fields["PAPER_ID"]->exportValue();
-	return $_SERVER['PHP_SELF']."/".rawurlencode($paperId)."?__operation=delete_paper".AnchorRow::composeRowParameter($form);
+	return $selfURL."/".rawurlencode($paperId)."?__operation=delete_paper".AnchorRow::composeRowParameter($form);
 };
 
 $table = new DBTable(array(

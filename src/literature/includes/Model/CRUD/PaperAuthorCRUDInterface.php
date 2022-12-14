@@ -11,6 +11,7 @@ use SBData\Model\Table\Anchor\AnchorRow;
 use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\ComboBoxField\DBComboBoxField;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -56,7 +57,7 @@ class PaperAuthorCRUDInterface extends CRUDInterface
 		$deletePaperAuthorLink = function (Form $form): string
 		{
 			$authorId = $form->fields["AUTHOR_ID"]->exportValue();
-			return $_SERVER['PHP_SELF']."?".http_build_query(array(
+			return RouteUtils::composeSelfURL()."?".http_build_query(array(
 				"__operation" => "delete_paper_author",
 				"AUTHOR_ID" => $authorId
 			), "", "&amp;", PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
@@ -89,7 +90,7 @@ class PaperAuthorCRUDInterface extends CRUDInterface
 		if($this->addAuthorForm->checkValid())
 		{
 			PaperEntity::insertAuthor($this->dbh, $GLOBALS["query"]["paperId"], $GLOBALS["query"]["conferenceId"], $this->addAuthorForm->fields["AUTHOR_ID"]->exportValue());
-			header("Location: ".$_SERVER["PHP_SELF"]);
+			header("Location: ".RouteUtils::composeSelfURL());
 			exit();
 		}
 		else
@@ -104,7 +105,7 @@ class PaperAuthorCRUDInterface extends CRUDInterface
 		if($authorIdValue->checkValue("AUTHOR_ID"))
 		{
 			PaperEntity::removeAuthor($this->dbh, $GLOBALS["query"]["paperId"], $GLOBALS["query"]["conferenceId"], $authorIdValue->value);
-			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment());
+			header("Location: ".RouteUtils::composeSelfURL().AnchorRow::composePreviousRowFragment());
 			exit();
 		}
 		else

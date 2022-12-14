@@ -5,20 +5,23 @@ use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBExampleApps\Literature\Model\Entity\AuthorEntity;
 
 global $dbh, $table;
 
-$composeAuthorLink = function (NumericIntKeyLinkField $field, Form $form): string
+$selfURL = RouteUtils::composeSelfURL();
+
+$composeAuthorLink = function (NumericIntKeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$authorId = $field->exportValue();
-	return $_SERVER["PHP_SELF"]."/".$authorId;
+	return $selfURL."/".rawurlencode($authorId);
 };
 
 $deleteAuthorLink = function (Form $form): string
 {
 	$authorId = $form->fields["AUTHOR_ID"]->exportValue();
-	return $_SERVER["SCRIPT_NAME"]."/authors/".$authorId."?__operation=delete_author".AnchorRow::composeRowParameter($form);
+	return $_SERVER["SCRIPT_NAME"]."/authors/".rawurlencode($authorId)."?__operation=delete_author".AnchorRow::composeRowParameter($form);
 };
 
 $table = new DBTable(array(

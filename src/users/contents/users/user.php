@@ -9,7 +9,7 @@ global $route;
 	$usersURL = $_SERVER["SCRIPT_NAME"]."/users";
 	?>
 	<p>
-		<a href="<?php print($usersURL); ?>?__operation=create_user">Add user</a>
+		<a href="<?= $usersURL ?>?__operation=create_user">Add user</a>
 	</p>
 	<?php
 	global $crudInterface;

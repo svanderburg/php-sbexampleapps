@@ -12,6 +12,7 @@ use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\ComboBoxField\DBComboBoxField;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -58,7 +59,7 @@ class ConferenceEditorCRUDInterface extends CRUDInterface
 		$deleteConferenceAuthorLink = function (Form $form): string
 		{
 			$authorId = $form->fields["AUTHOR_ID"]->exportValue();
-			return $_SERVER["PHP_SELF"]."?".http_build_query(array(
+			return RouteUtils::composeSelfURL()."?".http_build_query(array(
 				"AUTHOR_ID" => $authorId,
 				"__operation" => "delete_conference_author"
 			), "", "&amp;", PHP_QUERY_RFC3986).AnchorRow::composeRowParameter($form);
@@ -90,7 +91,7 @@ class ConferenceEditorCRUDInterface extends CRUDInterface
 		if($this->addEditorForm->checkValid())
 		{
 			ConferenceEntity::insertEditor($this->dbh, $GLOBALS["query"]["conferenceId"], $this->addEditorForm->fields["AUTHOR_ID"]->exportValue());
-			header("Location: ".$_SERVER["PHP_SELF"]);
+			header("Location: ".RouteUtils::composeSelfURL());
 			exit();
 		}
 		else
@@ -105,7 +106,7 @@ class ConferenceEditorCRUDInterface extends CRUDInterface
 		if($authorIdValue->checkValue("AUTHOR_ID"))
 		{
 			ConferenceEntity::removeEditor($this->dbh, $GLOBALS["query"]["conferenceId"], $authorIdValue->value);
-			header("Location: ".$_SERVER["PHP_SELF"].AnchorRow::composePreviousRowFragment());
+			header("Location: ".RouteUtils::composeSelfURL().AnchorRow::composePreviousRowFragment());
 			exit();
 		}
 		else

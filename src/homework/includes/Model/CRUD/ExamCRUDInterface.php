@@ -25,7 +25,6 @@ class ExamCRUDInterface extends CRUDInterface
 	private function constructTestForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"__operation" => new HiddenField(true),
 			"questionId" => new HiddenNumericIntField(false),
 			"answer" => new TextField("Answer", false, 20)
 		));

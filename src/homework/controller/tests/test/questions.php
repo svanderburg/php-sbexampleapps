@@ -5,20 +5,23 @@ use SBData\Model\Table\Anchor\AnchorRow;
 use SBData\Model\Field\NumericIntKeyLinkField;
 use SBData\Model\Field\CheckBoxField;
 use SBData\Model\Field\TextField;
+use SBCrud\Model\RouteUtils;
 use SBExampleApps\Homework\Model\Entity\TestEntity;
 
 global $dbh, $table;
 
-$composeQuestionLink = function (NumericIntKeyLinkField $field, Form $form): string
+$selfURL = RouteUtils::composeSelfURL();
+
+$composeQuestionLink = function (NumericIntKeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$questionId = $field->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($questionId);
+	return $selfURL."/".rawurlencode($questionId);
 };
 
-$deleteQuestionLink = function (Form $form): string
+$deleteQuestionLink = function (Form $form) use ($selfURL): string
 {
 	$questionId = $form->fields['QUESTION_ID']->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($questionId)."?__operation=delete_question".AnchorRow::composeRowParameter($form);
+	return $selfURL."/".rawurlencode($questionId)."?__operation=delete_question".AnchorRow::composeRowParameter($form);
 };
 
 $table = new DBTable(array(
