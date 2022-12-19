@@ -10,6 +10,7 @@ use SBLayout\Model\Page\Content\Contents;
 use SBLayout\Model\Section\ContentsSection;
 use SBLayout\Model\Section\StaticSection;
 use SBLayout\Model\Section\CompoundSection;
+use SBLayout\Model\Section\MenuSection;
 use SBPageManager\Model\Page\PageManager;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Auth\Model\Page\AuthorizationPage;
@@ -43,9 +44,9 @@ $application = new Application(
 	/* Sections */
 	array(
 		"header" => new StaticSection("header.php"),
-		"menu" => new StaticSection("menu.php"),
+		"menu" => new MenuSection(0),
 		"container" => new CompoundSection(array(
-			"submenu" => new StaticSection("submenu.php"),
+			"submenu" => new MenuSection(1),
 			"contents" => new ContentsSection(true)
 		))
 	),

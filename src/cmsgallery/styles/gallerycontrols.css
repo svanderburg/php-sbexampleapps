@@ -1,19 +1,19 @@
-#menu a.create-album
+#menu a.album-operation
 {
 	background-color: #8b5e26;
 }
 
-#menu a:hover.create-album
+#menu a:hover.album-operation
 {
 	background-color: #c8904b;
 }
 
-#submenu a.create-album
+#submenu a.album-operation
 {
 	background-color: #8b5e26;
 }
 
-#submenu a:hover.create-album
+#submenu a:hover.album-operation
 {
 	background-color: #c8904b;
 }

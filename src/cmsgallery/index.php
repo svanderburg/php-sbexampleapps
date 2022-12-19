@@ -45,7 +45,7 @@ $application = new Application(
 		"header" => new StaticSection("header.php"),
 		"menu" => new MenuSection(0),
 		"container" => new CompoundSection(array(
-			"submenu" => new StaticSection("submenu.php"),
+			"submenu" => new MenuSection(1),
 			"contents" => new ContentsSection(true)
 		))
 	),

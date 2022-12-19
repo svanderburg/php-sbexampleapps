@@ -1,19 +1,19 @@
-#menu a.create-page
+#menu a.pagemanager-operation
 {
 	background-color: #8b5e26;
 }
 
-#menu a:hover.create-page
+#menu a:hover.pagemanager-operation
 {
 	background-color: #c8904b;
 }
 
-#submenu a.create-page
+#submenu a.pagemanager-operation
 {
 	background-color: #8b5e26;
 }
 
-#submenu a:hover.create-page
+#submenu a:hover.pagemanager-operation
 {
 	background-color: #c8904b;
 }
