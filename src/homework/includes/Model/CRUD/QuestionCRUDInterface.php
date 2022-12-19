@@ -5,7 +5,7 @@ use PDO;
 use SBLayout\Model\Route;
 use SBData\Model\Field\CheckBoxField;
 use SBData\Model\Field\HiddenField;
-use SBData\Model\Field\ReadOnlyNumericIntTextField;
+use SBData\Model\Field\ReadOnlyNaturalNumberTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\RouteUtils;
@@ -35,7 +35,7 @@ class QuestionCRUDInterface extends CRUDInterface
 	private function constructQuestionForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"QUESTION_ID" => new ReadOnlyNumericIntTextField("Id", false),
+			"QUESTION_ID" => new ReadOnlyNaturalNumberTextField("Id", false),
 			"Question" => new TextField("Question", true, 20, 255),
 			"Answer" => new TextField("Answer", true, 20, 255),
 			"Exact" => new CheckBoxField("Exact"),

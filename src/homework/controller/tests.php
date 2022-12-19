@@ -1,6 +1,6 @@
 <?php
 use SBData\Model\Form;
-use SBData\Model\Field\NumericIntKeyLinkField;
+use SBData\Model\Field\NaturalNumberKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
@@ -11,7 +11,7 @@ global $dbh, $table;
 
 $selfURL = RouteUtils::composeSelfURL();
 
-$composeTestLink = function (NumericIntKeyLinkField $field, Form $form) use ($selfURL): string
+$composeTestLink = function (NaturalNumberKeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$testId = $field->exportValue();
 	return $selfURL."/".rawurlencode($testId);
@@ -24,7 +24,7 @@ $deleteTestLink = function (Form $form) use ($selfURL): string
 };
 
 $table = new DBTable(array(
-	"TEST_ID" => new NumericIntKeyLinkField("Id", $composeTestLink, true),
+	"TEST_ID" => new NaturalNumberKeyLinkField("Id", $composeTestLink, true),
 	"Title" => new TextField("Title", true, 20, 255),
 ), array(
 	"Delete" => $deleteTestLink

@@ -8,7 +8,7 @@ use SBData\Model\Form;
 use SBData\Model\Value\NaturalNumberValue;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
-use SBData\Model\Field\NumericIntKeyLinkField;
+use SBData\Model\Field\NaturalNumberKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\ComboBoxField\DBComboBoxField;
 use SBCrud\Model\RouteUtils;
@@ -48,7 +48,7 @@ class PaperAuthorCRUDInterface extends CRUDInterface
 
 	private function constructTable(): void
 	{
-		$composeAuthorLink = function (NumericIntKeyLinkField $field, Form $form): string
+		$composeAuthorLink = function (NaturalNumberKeyLinkField $field, Form $form): string
 		{
 			$authorId = $field->exportValue();
 			return $_SERVER["SCRIPT_NAME"]."/authors/".rawurlencode($authorId);
@@ -64,7 +64,7 @@ class PaperAuthorCRUDInterface extends CRUDInterface
 		};
 
 		$this->table = new DBTable(array(
-			"AUTHOR_ID" => new NumericIntKeyLinkField("Id", $composeAuthorLink, true),
+			"AUTHOR_ID" => new NaturalNumberKeyLinkField("Id", $composeAuthorLink, true),
 			"LastName" => new TextField("Last name", true),
 			"FirstName" => new TextField("First name", true)
 		), array(

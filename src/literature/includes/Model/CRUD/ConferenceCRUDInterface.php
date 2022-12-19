@@ -6,7 +6,7 @@ use SBLayout\Model\PageForbiddenException;
 use SBData\Model\Form;
 use SBData\Model\Field\ComboBoxField\DBComboBoxField;
 use SBData\Model\Field\HiddenField;
-use SBData\Model\Field\ReadOnlyNumericIntTextField;
+use SBData\Model\Field\ReadOnlyNaturalNumberTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBCrud\Model\RouteUtils;
@@ -38,7 +38,7 @@ class ConferenceCRUDInterface extends CRUDInterface
 	private function constructConferenceForm(): void
 	{
 		$this->form = new CRUDForm(array(
-    			"CONFERENCE_ID" => new ReadOnlyNumericIntTextField("Id", false),
+			"CONFERENCE_ID" => new ReadOnlyNaturalNumberTextField("Id", false),
 			"Name" => new TextField("Name", true, 20, 255),
 			"Homepage" => new URLField("Homepage", false),
 			"PUBLISHER_ID" => new DBComboBoxField("Publisher", $this->dbh, "SBExampleApps\\Literature\\Model\\Entity\\PublisherEntity::querySummary", "SBExampleApps\\Literature\\Model\\Entity\\PublisherEntity::queryOneSummary", true),

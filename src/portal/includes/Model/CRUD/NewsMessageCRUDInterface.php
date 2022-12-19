@@ -8,7 +8,7 @@ use SBLayout\Model\Page\Page;
 use SBData\Model\Form;
 use SBData\Model\Field\DateField;
 use SBData\Model\Field\HiddenField;
-use SBData\Model\Field\ReadOnlyNumericIntTextField;
+use SBData\Model\Field\ReadOnlyNaturalNumberTextField;
 use SBData\Model\Field\TextField;
 use SBEditor\Model\Field\HTMLEditorField;
 use SBCrud\Model\CRUDForm;
@@ -44,7 +44,7 @@ class NewsMessageCRUDInterface extends CRUDInterface
 		$baseURL = Page::computeBaseURL();
 
 		$this->form = new CRUDForm(array(
-			"MESSAGE_ID" => new ReadOnlyNumericIntTextField("Id", false),
+			"MESSAGE_ID" => new ReadOnlyNaturalNumberTextField("Id", false),
 			"Date" => new DateField("Date", true, true),
 			"Title" => new TextField("Title", true, 20, 255),
 			"Message" => new HTMLEditorField("editor1", "Message", $baseURL."/iframepage.html", $baseURL."/image/editor", false)

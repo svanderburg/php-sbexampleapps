@@ -6,7 +6,7 @@ use SBLayout\Model\Route;
 use SBLayout\Model\PageForbiddenException;
 use SBData\Model\Form;
 use SBData\Model\Field\HiddenField;
-use SBData\Model\Field\ReadOnlyNumericIntTextField;
+use SBData\Model\Field\ReadOnlyNaturalNumberTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\Anchor\AnchorRow;
@@ -41,7 +41,7 @@ class AuthorCRUDInterface extends CRUDInterface
 	private function constructAuthorForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"AUTHOR_ID" => new ReadOnlyNumericIntTextField("Id", false),
+			"AUTHOR_ID" => new ReadOnlyNaturalNumberTextField("Id", false),
 			"FirstName" => new TextField("First name", true, 20, 255),
 			"LastName" => new TextField("Last name", true, 20, 255),
 			"Homepage" => new URLField("Homepage", false),

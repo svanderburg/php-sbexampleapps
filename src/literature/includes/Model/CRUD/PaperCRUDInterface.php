@@ -7,7 +7,7 @@ use SBData\Model\Form;
 use SBData\Model\Field\DateField;
 use SBData\Model\Field\FileField;
 use SBData\Model\Field\HiddenField;
-use SBData\Model\Field\ReadOnlyNumericIntTextField;
+use SBData\Model\Field\ReadOnlyNaturalNumberTextField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\TextAreaField;
 use SBData\Model\Field\URLField;
@@ -46,7 +46,7 @@ class PaperCRUDInterface extends CRUDInterface
 	private function constructPaperForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"PAPER_ID" => new ReadOnlyNumericIntTextField("Id", false),
+			"PAPER_ID" => new ReadOnlyNaturalNumberTextField("Id", false),
 			"Title" => new TextField("Title", true, 20, 255),
 			"Date" => new DateField("Date", true, 20, 255),
 			"Abstract" => new TextAreaField("Abstract", false, 60, 20),

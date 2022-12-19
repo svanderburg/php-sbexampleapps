@@ -1,7 +1,7 @@
 <?php
 use SBData\Model\Form;
 use SBData\Model\Field\DateField;
-use SBData\Model\Field\NumericIntKeyLinkField;
+use SBData\Model\Field\NaturalNumberKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
@@ -13,7 +13,7 @@ global $dbh, $table;
 
 $selfURL = RouteUtils::composeSelfURL();
 
-$composePaperLink = function (NumericIntKeyLinkField $field, Form $form) use ($selfURL): string
+$composePaperLink = function (NaturalNumberKeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$paperId = $field->exportValue();
 	return $selfURL."/".rawurlencode($paperId);
@@ -26,7 +26,7 @@ $deletePaperLink = function (Form $form) use ($selfURL): string
 };
 
 $table = new DBTable(array(
-	"PAPER_ID" => new NumericIntKeyLinkField("Id", $composePaperLink, true),
+	"PAPER_ID" => new NaturalNumberKeyLinkField("Id", $composePaperLink, true),
 	"Title" => new TextField("Title", true, 20, 255),
 	"Date" => new DateField("Date", true),
 	"URL" => new URLField("URL", false),

@@ -1,6 +1,6 @@
 <?php
 use SBData\Model\Form;
-use SBData\Model\Field\NumericIntKeyLinkField;
+use SBData\Model\Field\NaturalNumberKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
@@ -12,7 +12,7 @@ global $dbh, $table;
 
 $selfURL = RouteUtils::composeSelfURL();
 
-$composeAuthorLink = function (NumericIntKeyLinkField $field, Form $form) use ($selfURL): string
+$composeAuthorLink = function (NaturalNumberKeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$authorId = $field->exportValue();
 	return $selfURL."/".rawurlencode($authorId);
@@ -25,7 +25,7 @@ $deleteAuthorLink = function (Form $form): string
 };
 
 $table = new DBTable(array(
-	"AUTHOR_ID" => new NumericIntKeyLinkField("Id", $composeAuthorLink, true),
+	"AUTHOR_ID" => new NaturalNumberKeyLinkField("Id", $composeAuthorLink, true),
 	"FirstName" => new TextField("First name", true, 20, 255),
 	"LastName" => new TextField("Last name", true, 20, 255),
 	"Homepage" => new URLField("Homepage", false),

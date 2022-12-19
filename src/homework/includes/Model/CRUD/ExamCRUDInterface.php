@@ -3,7 +3,7 @@ namespace SBExampleApps\Homework\Model\CRUD;
 use PDO;
 use SBData\Model\Form;
 use SBData\Model\Field\HiddenField;
-use SBData\Model\Field\HiddenNumericIntField;
+use SBData\Model\Field\HiddenNaturalNumberField;
 use SBData\Model\Field\TextField;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
@@ -25,7 +25,7 @@ class ExamCRUDInterface extends CRUDInterface
 	private function constructTestForm(): void
 	{
 		$this->form = new CRUDForm(array(
-			"questionId" => new HiddenNumericIntField(false),
+			"questionId" => new HiddenNaturalNumberField(false),
 			"answer" => new TextField("Answer", false, 20)
 		));
 	}
