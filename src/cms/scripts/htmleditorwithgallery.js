@@ -1,0 +1,1 @@
+../vendor/svanderburg/php-sbgallery/scripts/htmleditorwithgallery.js
