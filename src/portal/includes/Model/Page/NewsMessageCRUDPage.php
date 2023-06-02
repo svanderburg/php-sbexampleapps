@@ -4,6 +4,7 @@ use PDO;
 use SBLayout\Model\PageNotFoundException;
 use SBCrud\Model\Page\CRUDDetailPage;
 use SBCrud\Model\Page\OperationPage;
+use SBCrud\Model\Page\HiddenOperationPage;
 use SBExampleApps\Portal\Model\Entity\NewsMessageEntity;
 use SBExampleApps\Portal\Model\Page\Content\NewsMessageContents;
 
@@ -14,7 +15,7 @@ class NewsMessageCRUDPage extends CRUDDetailPage
 	public function __construct(PDO $dbh, string $messageId)
 	{
 		parent::__construct("News message", new NewsMessageContents(), array(
-			"update_newsmessage" => new OperationPage("Update news message", new NewsMessageContents()),
+			"update_newsmessage" => new HiddenOperationPage("Update news message", new NewsMessageContents()),
 			"remove_newsmessage" => new OperationPage("Remove news message", new NewsMessageContents())
 		));
 

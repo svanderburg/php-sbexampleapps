@@ -11,24 +11,24 @@ use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 use SBExampleApps\Homework\Model\Entity\TestEntity;
 
 class TestCRUDInterface extends CRUDInterface
 {
 	public Route $route;
 
-	public CRUDPage $crudPage;
+	public OperationParamPage $operationParamPage;
 
 	public PDO $dbh;
 
 	public CRUDForm $form;
 
-	public function __construct(Route $route, CRUDPage $crudPage, PDO $dbh)
+	public function __construct(Route $route, OperationParamPage $operationParamPage, PDO $dbh)
 	{
-		parent::__construct($crudPage);
+		parent::__construct($operationParamPage);
 		$this->route = $route;
-		$this->crudPage = $crudPage;
+		$this->operationParamPage = $operationParamPage;
 		$this->dbh = $dbh;
 	}
 
@@ -64,7 +64,7 @@ class TestCRUDInterface extends CRUDInterface
 	private function viewTest(): void
 	{
 		$this->constructTestForm();
-		$this->form->importValues($this->crudPage->entity);
+		$this->form->importValues($this->operationParamPage->entity);
 		$this->form->setOperation("update_test");
 	}
 

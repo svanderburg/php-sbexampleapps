@@ -6,20 +6,9 @@ global $route, $crudInterface, $authorizationManager;
 ?>
 <div class="tabpage">
 	<?php
-	$conferencesURL = $_SERVER["SCRIPT_NAME"]."/conferences";
-
 	if($authorizationManager->authenticated)
 	{
-		?>
-		<p>
-			<a href="<?= $conferencesURL ?>?__operation=create_conference">Add conference</a>
-		</p>
-		<?php
-	}
-
-	/* Display conference properties */
-	if($authorizationManager->authenticated)
-	{
+		\SBCrud\View\HTML\displayOperationToolbar($route);
 		\SBData\View\HTML\displayEditableForm($crudInterface->form,
 			"Submit",
 			"One or more fields are incorrectly specified and marked with a red color!",

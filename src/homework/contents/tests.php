@@ -1,11 +1,7 @@
 <?php
-\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
-?>
-<p>
-	<a href="?__operation=create_test">Add test</a>
-</p>
-<?php
-global $table;
+global $route, $table;
 
+\SBLayout\View\HTML\displayBreadcrumbs($route, 0);
+\SBCrud\View\HTML\displayOperationToolbar($route);
 \SBData\View\HTML\displaySemiEditableTable($table);
 ?>

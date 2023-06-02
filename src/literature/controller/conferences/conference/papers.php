@@ -1,9 +1,10 @@
 <?php
-use SBData\Model\Form;
+use SBData\Model\ReadOnlyForm;
 use SBData\Model\Field\DateField;
 use SBData\Model\Field\NaturalNumberKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
+use SBData\Model\Table\Action;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\RouteUtils;
@@ -13,13 +14,13 @@ global $dbh, $table;
 
 $selfURL = RouteUtils::composeSelfURL();
 
-$composePaperLink = function (NaturalNumberKeyLinkField $field, Form $form) use ($selfURL): string
+$composePaperLink = function (NaturalNumberKeyLinkField $field, ReadOnlyForm $form) use ($selfURL): string
 {
 	$paperId = $field->exportValue();
 	return $selfURL."/".rawurlencode($paperId);
 };
 
-$deletePaperLink = function (Form $form) use ($selfURL): string
+$deletePaperLink = function (ReadOnlyForm $form) use ($selfURL): string
 {
 	$paperId = $form->fields["PAPER_ID"]->exportValue();
 	return $selfURL."/".rawurlencode($paperId)."?__operation=delete_paper".AnchorRow::composeRowParameter($form);
@@ -32,8 +33,8 @@ $table = new DBTable(array(
 	"URL" => new URLField("URL", false),
 	"Comment" => new TextField("Comment", false, 20, 255)
 ), array(
-	"Delete" => $deletePaperLink
+	"Delete" => new Action($deletePaperLink)
 ));
 
-$table->stmt = PaperEntity::queryAll($dbh, $GLOBALS["query"]["conferenceId"]);
+$table->setStatement(PaperEntity::queryAll($dbh, $GLOBALS["query"]["conferenceId"]));
 ?>

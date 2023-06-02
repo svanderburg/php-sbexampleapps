@@ -7,6 +7,7 @@ use SBLayout\Model\Page\ContentPage;
 use SBLayout\Model\Page\Content\Contents;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBCrud\Model\Page\OperationPage;
+use SBCrud\Model\Page\HiddenOperationPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Literature\Model\Page\Content\AuthorContents;
 
@@ -20,7 +21,7 @@ class AuthorsCRUDPage extends CRUDMasterPage
 	{
 		parent::__construct("Authors", "authorId", new Contents("authors.php", "authors.php"), array(
 			"create_author" => new OperationPage("Create author", new AuthorContents()),
-			"insert_author" => new OperationPage("Insert author", new AuthorContents())
+			"insert_author" => new HiddenOperationPage("Insert author", new AuthorContents())
 		));
 
 		$this->dbh = $dbh;

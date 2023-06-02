@@ -7,15 +7,8 @@ $newsURL = $_SERVER["SCRIPT_NAME"]."/news";
 
 if($authorizationManager->authenticated)
 {
-	?>
-	<p>
-		<a href="<?= $newsURL ?>?__operation=create_newsmessage">Add news message</a>
-	</p>
-	<?php
-}
+	\SBCrud\View\HTML\displayOperationToolbar($route);
 
-if($authorizationManager->authenticated)
-{
 	\SBData\View\HTML\displayEditableForm($crudInterface->form,
 		"Submit",
 		"One or more fields are incorrectly specified and marked with a red color!",

@@ -6,14 +6,9 @@ global $route;
 ?>
 <div class="tabpage">
 	<?php
-	$usersURL = $_SERVER["SCRIPT_NAME"]."/users";
-	?>
-	<p>
-		<a href="<?= $usersURL ?>?__operation=create_user">Add user</a>
-	</p>
-	<?php
 	global $crudInterface;
 
+	\SBCrud\View\HTML\displayOperationToolbar($route);
 	\SBData\View\HTML\displayEditableForm($crudInterface->form,
 		"Submit",
 		"One or more fields are incorrectly specified and marked with a red color!",

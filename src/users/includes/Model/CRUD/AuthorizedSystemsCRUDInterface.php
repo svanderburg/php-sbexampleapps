@@ -4,6 +4,8 @@ use PDO;
 use SBLayout\Model\Route;
 use SBLayout\Model\BadRequestException;
 use SBData\Model\Form;
+use SBData\Model\ReadOnlyForm;
+use SBData\Model\Table\Action;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
 use SBData\Model\Value\Value;
@@ -14,12 +16,12 @@ use SBData\Model\Field\ComboBoxField\DBComboBoxField;
 use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 use SBExampleApps\Users\Model\Entity\UserEntity;
 
 class AuthorizedSystemsCRUDInterface extends CRUDInterface
 {
-	public CRUDPage $crudPage;
+	public OperationParamPage $operationParamPage;
 
 	public Route $route;
 
@@ -29,11 +31,11 @@ class AuthorizedSystemsCRUDInterface extends CRUDInterface
 
 	public DBTable $table;
 
-	public function __construct(Route $route, CRUDPage $crudPage, PDO $dbh)
+	public function __construct(Route $route, OperationParamPage $operationParamPage, PDO $dbh)
 	{
-		parent::__construct($crudPage);
+		parent::__construct($operationParamPage);
 		$this->route = $route;
-		$this->crudPage = $crudPage;
+		$this->operationParamPage = $operationParamPage;
 		$this->dbh = $dbh;
 	}
 
@@ -48,13 +50,13 @@ class AuthorizedSystemsCRUDInterface extends CRUDInterface
 
 	private function constructTable(): void
 	{
-		$composeSystemLink = function (KeyLinkField $field, Form $form): string
+		$composeSystemLink = function (KeyLinkField $field, ReadOnlyForm $form): string
 		{
 			$systemId = $field->exportValue();
 			return $_SERVER["SCRIPT_NAME"]."/systems/".rawurlencode($systemId);
 		};
 
-		$deleteUserSystemLink = function (Form $form): string
+		$deleteUserSystemLink = function (ReadOnlyForm $form): string
 		{
 			$systemId = $form->fields["SYSTEM_ID"]->exportValue();
 			return RouteUtils::composeSelfURL()."?".http_build_query(array(
@@ -67,10 +69,10 @@ class AuthorizedSystemsCRUDInterface extends CRUDInterface
 			"SYSTEM_ID" => new KeyLinkField("Id", $composeSystemLink, true),
 			"Description" => new TextField("Description", true)
 		), array(
-			"Delete" => $deleteUserSystemLink
+			"Delete" => new Action($deleteUserSystemLink)
 		));
 
-		$this->table->stmt = UserEntity::queryAllAuthorizedSystems($this->dbh, $GLOBALS["query"]["Username"]);
+		$this->table->setStatement(UserEntity::queryAllAuthorizedSystems($this->dbh, $GLOBALS["query"]["Username"]));
 	}
 
 	private function viewAuthorizedSystems(): void

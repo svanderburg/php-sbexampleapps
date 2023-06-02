@@ -1,8 +1,10 @@
 <?php
 use SBData\Model\Form;
+use SBData\Model\ReadOnlyForm;
 use SBData\Model\Field\NaturalNumberKeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
+use SBData\Model\Table\Action;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\RouteUtils;
@@ -12,13 +14,13 @@ global $dbh, $table;
 
 $selfURL = RouteUtils::composeSelfURL();
 
-$composeAuthorLink = function (NaturalNumberKeyLinkField $field, Form $form) use ($selfURL): string
+$composeAuthorLink = function (NaturalNumberKeyLinkField $field, ReadOnlyForm $form) use ($selfURL): string
 {
 	$authorId = $field->exportValue();
 	return $selfURL."/".rawurlencode($authorId);
 };
 
-$deleteAuthorLink = function (Form $form): string
+$deleteAuthorLink = function (ReadOnlyForm $form): string
 {
 	$authorId = $form->fields["AUTHOR_ID"]->exportValue();
 	return $_SERVER["SCRIPT_NAME"]."/authors/".rawurlencode($authorId)."?__operation=delete_author".AnchorRow::composeRowParameter($form);
@@ -30,9 +32,9 @@ $table = new DBTable(array(
 	"LastName" => new TextField("Last name", true, 20, 255),
 	"Homepage" => new URLField("Homepage", false),
 ), array(
-	"Delete" => $deleteAuthorLink
+	"Delete" => new Action($deleteAuthorLink)
 ));
 
 /* Compose a statement that queries the authors */
-$table->stmt = AuthorEntity::queryAll($dbh);
+$table->setStatement(AuthorEntity::queryAll($dbh));
 ?>

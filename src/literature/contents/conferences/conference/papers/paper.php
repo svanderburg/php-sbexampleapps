@@ -8,21 +8,10 @@ global $route, $crudInterface, $authorizationManager;
 ?>
 <div class="tabpage">
 	<?php
-	if(array_key_exists("paperId", $GLOBALS["query"]))
-	{
-		if($authorizationManager->authenticated)
-		{
-			?>
-			<p>
-				<a href="<?= $route->composeParentPageURL($_SERVER["SCRIPT_NAME"]) ?>?__operation=create_paper">Add paper</a>
-			</p>
-			<?php
-		}
-	}
-
 	/* Display paper form */
 	if($authorizationManager->authenticated)
 	{
+		\SBCrud\View\HTML\displayOperationToolbar($route, 2);
 		\SBData\View\HTML\displayEditableForm($crudInterface->form,
 			"Submit",
 			"One or more fields are incorrectly specified and marked with a red color!",

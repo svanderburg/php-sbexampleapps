@@ -5,15 +5,9 @@ global $route, $table, $authorizationManager;
 
 if($authorizationManager->authenticated)
 {
-	?>
-	<p>
-		<a href="?__operation=create_author">Add author</a>
-	</p>
-	<?php
-}
-
-if($authorizationManager->authenticated)
+	\SBCrud\View\HTML\displayOperationToolbar($route);
 	\SBData\View\HTML\displaySemiEditableTable($table);
+}
 else
 	\SBData\View\HTML\displayTable($table);
 ?>

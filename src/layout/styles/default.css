@@ -319,6 +319,40 @@ div.menusection:empty
 	font-size: 85%;
 }
 
+.operation-toolbar
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 0.5em;
+
+	background-color: #dddddd;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #aaaaaa;
+	padding: 0.5em;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.operation-toolbar a
+{
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #aaaaaa;
+	background-color: #34637f;
+	color: #ffffff;
+	padding: 0.5em;
+}
+
+.operation-toolbar a:hover
+{
+	background-color: #7c223e;
+}
+
 @media only screen and (min-width: 1024px)
 {
 	#menu a

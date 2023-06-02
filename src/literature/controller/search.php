@@ -1,4 +1,5 @@
 <?php
+use SBData\Model\ReadOnlyForm;
 use SBData\Model\Form;
 use SBData\Model\Field\DateField;
 use SBData\Model\Field\NaturalNumberKeyLinkField;
@@ -21,20 +22,20 @@ if(array_key_exists("keyword", $_REQUEST))
 	if(!$form->checkValid())
 		return;
 
-	$composePaperLink = function (NaturalNumberKeyLinkField $field, Form $form): string
+	$composePaperLink = function (NaturalNumberKeyLinkField $field, ReadOnlyForm $form): string
 	{
 		$paperId = $field->exportValue();
 		$conferenceId = $form->fields["CONFERENCE_ID"]->exportValue();
 		return $_SERVER["SCRIPT_NAME"]."/conferences/".rawurlencode($conferenceId)."/papers/".rawurlencode($paperId);
 	};
 
-	$composeConferenceLink = function (NaturalNumberKeyLinkField $field, Form $form): string
+	$composeConferenceLink = function (NaturalNumberKeyLinkField $field, ReadOnlyForm $form): string
 	{
 		$conferenceId = $form->fields["CONFERENCE_ID"]->exportValue();
 		return $_SERVER["SCRIPT_NAME"]."/conferences/".rawurlencode($conferenceId);
 	};
 
-	$composePublisherLink = function (NaturalNumberKeyLinkField $field, Form $form): string
+	$composePublisherLink = function (NaturalNumberKeyLinkField $field, ReadOnlyForm $form): string
 	{
 		$publisherId = $form->fields["PUBLISHER_ID"]->exportValue();
 		return $_SERVER["SCRIPT_NAME"]."/publishers/".rawurlencode($publisherId);
@@ -52,6 +53,6 @@ if(array_key_exists("keyword", $_REQUEST))
 		"ConferenceName" => new NaturalNumberKeyLinkField("Conference", $composeConferenceLink, true)
 	));
 
-	$table->stmt = PaperEntity::searchByKeyword($dbh, $form->fields["keyword"]->exportValue());
+	$table->setStatement(PaperEntity::searchByKeyword($dbh, $form->fields["keyword"]->exportValue()));
 }
 ?>

@@ -6,16 +6,8 @@
 	<?php
 	$testsURL = $_SERVER["SCRIPT_NAME"]."/tests";
 
-	if(array_key_exists("query", $GLOBALS) && array_key_exists("testId", $GLOBALS["query"]))
-	{
-		?>
-		<p>
-			<a href="?__operation=create_test">Add test</a>
-		</p>
-		<?php
-	}
-
-	global $crudInterface;
+	global $route, $crudInterface;
+	\SBCrud\View\HTML\displayOperationToolbar($route);
 
 	\SBData\View\HTML\displayEditableForm($crudInterface->form,
 		"Submit",

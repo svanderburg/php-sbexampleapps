@@ -7,6 +7,7 @@ use SBData\Model\Value\Value;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBExampleApps\Users\Model\Page\Content\UserContents;
 use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
+use SBExampleApps\Auth\Model\Page\RestrictedHiddenOperationPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 
 class UsersCRUDPage extends CRUDMasterPage
@@ -19,7 +20,7 @@ class UsersCRUDPage extends CRUDMasterPage
 	{
 		parent::__construct("Users", "Username", new Contents("users.php", "users.php"), array(
 			"create_user" => new RestrictedOperationPage("Create user", new UserContents(), $authorizationManager),
-			"insert_user" => new RestrictedOperationPage("Insert user", new UserContents(), $authorizationManager)
+			"insert_user" => new RestrictedHiddenOperationPage("Insert user", new UserContents(), $authorizationManager)
 		));
 
 		$this->dbh = $dbh;

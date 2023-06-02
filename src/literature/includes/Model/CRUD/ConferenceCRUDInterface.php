@@ -12,13 +12,13 @@ use SBData\Model\Field\URLField;
 use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Literature\Model\Entity\ConferenceEntity;
 
 class ConferenceCRUDInterface extends CRUDInterface
 {
-	public CRUDPage $crudPage;
+	public OperationParamPage $operationParamPage;
 
 	public PDO $dbh;
 
@@ -26,11 +26,11 @@ class ConferenceCRUDInterface extends CRUDInterface
 
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(Route $route, CRUDPage $crudPage, PDO $dbh, AuthorizationManager $authorizationManager)
+	public function __construct(Route $route, OperationParamPage $operationParamPage, PDO $dbh, AuthorizationManager $authorizationManager)
 	{
-		parent::__construct($crudPage);
+		parent::__construct($operationParamPage);
 		$this->route = $route;
-		$this->crudPage = $crudPage;
+		$this->operationParamPage = $operationParamPage;
 		$this->dbh = $dbh;
 		$this->authorizationManager = $authorizationManager;
 	}
@@ -71,7 +71,7 @@ class ConferenceCRUDInterface extends CRUDInterface
 	{
 		/* Query the properties of the requested conference and construct a form from it */
 		$this->constructConferenceForm();
-		$this->form->importValues($this->crudPage->entity);
+		$this->form->importValues($this->operationParamPage->entity);
 		$this->form->setOperation("update_conference");
 	}
 

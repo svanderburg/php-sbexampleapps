@@ -8,15 +8,9 @@ global $route, $table, $authorizationManager;
 	<?php
 	if($authorizationManager->authenticated)
 	{
-		?>
-		<p>
-			<a href="?__operation=create_paper">Add paper</a>
-		</p>
-		<?php
-	}
-
-	if($authorizationManager->authenticated)
+		\SBCrud\View\HTML\displayOperationToolbar($route, 2);
 		\SBData\View\HTML\displaySemiEditableTable($table, "No papers");
+	}
 	else
 		\SBData\View\HTML\displayTable($table, "No papers");
 	?>

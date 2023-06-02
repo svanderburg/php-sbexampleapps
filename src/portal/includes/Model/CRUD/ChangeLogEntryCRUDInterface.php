@@ -11,7 +11,7 @@ use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Portal\Model\Entity\ChangeLogEntriesEntity;
 
@@ -19,15 +19,17 @@ class ChangeLogEntryCRUDInterface extends CRUDInterface
 {
 	public PDO $dbh;
 
+	public OperationParamPage $operationParamPage;
+
 	public CRUDForm $form;
 
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(Route $route, CRUDPage $crudPage, PDO $dbh, AuthorizationManager $authorizationManager)
+	public function __construct(Route $route, OperationParamPage $operationParamPage, PDO $dbh, AuthorizationManager $authorizationManager)
 	{
-		parent::__construct($crudPage);
+		parent::__construct($operationParamPage);
 		$this->route = $route;
-		$this->crudPage = $crudPage;
+		$this->operationParamPage = $operationParamPage;
 		$this->dbh = $dbh;
 		$this->authorizationManager = $authorizationManager;
 	}

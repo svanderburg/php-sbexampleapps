@@ -6,6 +6,7 @@ use SBLayout\Model\Page\Content\Contents;
 use SBCrud\Model\Page\CRUDDetailPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
+use SBExampleApps\Auth\Model\Page\RestrictedHiddenOperationPage;
 use SBExampleApps\Users\Model\Entity\SystemEntity;
 use SBExampleApps\Users\Model\Page\Content\SystemContents;
 
@@ -18,7 +19,7 @@ class SystemCRUDPage extends CRUDDetailPage
 	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, string $systemId)
 	{
 		parent::__construct("System", new SystemContents(), array(
-			"update_system" => new RestrictedOperationPage("Update system", new SystemContents(), $authorizationManager),
+			"update_system" => new RestrictedHiddenOperationPage("Update system", new SystemContents(), $authorizationManager),
 			"delete_system" => new RestrictedOperationPage("Delete system", new SystemContents(), $authorizationManager)
 		));
 		$this->authorizationManager = $authorizationManager;

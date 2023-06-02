@@ -7,6 +7,7 @@ use SBCrud\Model\Page\CRUDDetailPage;
 use SBExampleApps\Users\Model\Page\Content\UserContents;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
+use SBExampleApps\Auth\Model\Page\RestrictedHiddenOperationPage;
 use SBExampleApps\Users\Model\Entity\UserEntity;
 
 class UserCRUDPage extends CRUDDetailPage
@@ -18,7 +19,7 @@ class UserCRUDPage extends CRUDDetailPage
 	public function __construct(PDO $dbh, AuthorizationManager $authorizationManager, string $username)
 	{
 		parent::__construct("User", new UserContents(), array(
-			"update_user" => new RestrictedOperationPage("Update user", new UserContents(), $authorizationManager),
+			"update_user" => new RestrictedHiddenOperationPage("Update user", new UserContents(), $authorizationManager),
 			"delete_user" => new RestrictedOperationPage("Delete user", new UserContents(), $authorizationManager),
 		), array(
 			"user" => new PageAlias("User", "users/".$username),

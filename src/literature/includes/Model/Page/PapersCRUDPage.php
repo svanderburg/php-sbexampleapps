@@ -7,6 +7,7 @@ use SBData\Model\Value\Value;
 use SBData\Model\Value\NaturalNumberValue;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBCrud\Model\Page\OperationPage;
+use SBCrud\Model\Page\HiddenOperationPage;
 use SBExampleApps\Literature\Model\Entity\PaperEntity;
 use SBExampleApps\Literature\Model\Page\Content\PaperContents;
 
@@ -16,7 +17,7 @@ class PapersCRUDPage extends CRUDMasterPage
 	{
 		parent::__construct("Papers", "paperId", new Contents("conferences/conference/papers.php", "conferences/conference/papers.php"), array(
 			"create_paper" => new OperationPage("Create paper", new PaperContents()),
-			"insert_paper" => new OperationPage("Insert paper", new PaperContents())
+			"insert_paper" => new HiddenOperationPage("Insert paper", new PaperContents())
 		));
 
 		$this->dbh = $dbh;

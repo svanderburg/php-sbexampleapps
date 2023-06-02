@@ -7,7 +7,7 @@ use SBData\Model\Field\HiddenNaturalNumberField;
 use SBData\Model\Field\TextField;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 use SBExampleApps\Homework\Model\Objects\Exam;
 
 class ExamCRUDInterface extends CRUDInterface
@@ -16,9 +16,9 @@ class ExamCRUDInterface extends CRUDInterface
 
 	public CRUDForm $form;
 
-	public function __construct(CRUDPage $crudPage, PDO $dbh)
+	public function __construct(OperationParamPage $operationParamPage, PDO $dbh)
 	{
-		parent::__construct($crudPage);
+		parent::__construct($operationParamPage);
 		$this->dbh = $dbh;
 	}
 

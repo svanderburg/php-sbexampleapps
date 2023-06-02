@@ -6,6 +6,7 @@ use SBLayout\Model\Page\Content\Contents;
 use SBData\Model\Value\Value;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
+use SBExampleApps\Auth\Model\Page\RestrictedHiddenOperationPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Homework\Model\Page\Content\TestContents;
 
@@ -19,7 +20,7 @@ class TestsCRUDPage extends CRUDMasterPage
 	{
 		parent::__construct("Tests", "testId", new Contents("tests.php", "tests.php"), array(
 			"create_test" => new RestrictedOperationPage("Create test", new TestContents(), $authorizationManager),
-			"insert_test" => new RestrictedOperationPage("Insert test", new TestContents(), $authorizationManager)
+			"insert_test" => new RestrictedHiddenOperationPage("Insert test", new TestContents(), $authorizationManager)
 		));
 
 		$this->dbh = $dbh;

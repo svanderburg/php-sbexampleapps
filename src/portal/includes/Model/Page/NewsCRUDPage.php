@@ -9,6 +9,7 @@ use SBData\Model\Value\NaturalNumberValue;
 use SBData\Model\Value\PageValue;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBCrud\Model\Page\OperationPage;
+use SBCrud\Model\Page\HiddenOperationPage;
 use SBExampleApps\Portal\Model\Page\Content\NewsMessageContents;
 
 class NewsCRUDPage extends CRUDMasterPage
@@ -17,7 +18,7 @@ class NewsCRUDPage extends CRUDMasterPage
 	{
 		parent::__construct("News", "messageId", new Contents("news.php", "news.php"), array(
 			"create_newsmessage" => new OperationPage("Create news message", new NewsMessageContents()),
-			"insert_newsmessage" => new OperationPage("Insert news message", new NewsMessageContents())
+			"insert_newsmessage" => new HiddenOperationPage("Insert news message", new NewsMessageContents())
 		));
 
 		$this->dbh = $dbh;

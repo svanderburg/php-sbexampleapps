@@ -2,10 +2,6 @@
 global $route, $table;
 
 \SBLayout\View\HTML\displayBreadcrumbs($route, 0);
-?>
-<p>
-	<a href="?__operation=create_user">Add user</a>
-</p>
-<?php
+\SBCrud\View\HTML\displayOperationToolbar($route);
 \SBData\View\HTML\displaySemiEditableTable($table);
 ?>

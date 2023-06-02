@@ -7,13 +7,7 @@ global $route, $dbh, $stmt, $authorizationManager, $baseURL;
 \SBLayout\View\HTML\displayBreadcrumbs($route, 0);
 
 if($authorizationManager->authenticated)
-{
-	?>
-	<p>
-		<a href="?__operation=create_newsmessage">Add news message</a>
-	</p>
-	<?php
-}
+	\SBCrud\View\HTML\displayOperationToolbar($route);
 
 $selfURL = RouteUtils::composeSelfURL();
 

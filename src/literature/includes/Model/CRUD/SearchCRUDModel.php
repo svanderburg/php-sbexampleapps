@@ -2,6 +2,7 @@
 namespace SBExampleApps\Literature\Model\CRUD;
 use PDO;
 use SBData\Model\Form;
+use SBData\Model\ReadOnlyForm;
 use SBData\Model\Field\DateField;
 use SBData\Model\Field\ReadOnlyNaturalNumberkField;
 use SBData\Model\Field\MetaDataField;
@@ -9,7 +10,7 @@ use SBData\Model\Field\TextField;
 use SBData\Model\Field\URLField;
 use SBData\Model\Table\DBTable;
 use SBCrud\Model\CRUDModel;
-use SBCrud\Model\CRUDPage;
+use SBCrud\Model\OperationParamPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Literature\Model\Entity\PaperEntity;
 
@@ -21,9 +22,9 @@ class SearchCRUDModel extends CRUDModel
 
 	public ?DBTable $table = null;
 
-	public function __construct(CRUDPage $crudPage, PDO $dbh)
+	public function __construct(OperationParamPage $operationParamPage, PDO $dbh)
 	{
-		parent::__construct($crudPage);
+		parent::__construct($operationParamPage);
 		$this->dbh = $dbh;
 	}
 
@@ -47,20 +48,20 @@ class SearchCRUDModel extends CRUDModel
 
 		if($this->form->checkValid())
 		{
-			$composePaperLink = function (NaturalNumberKeyLinkField $field, Form $form): string
+			$composePaperLink = function (NaturalNumberKeyLinkField $field, ReadOnlyForm $form): string
 			{
 				$paperId = $field->exportValue();
 				$conferenceId = $form->fields["CONFERENCE_ID"]->exportValue();
 				return $_SERVER["SCRIPT_NAME"]."/conferences/".rawurlencode($conferenceId)."/papers/".rawurlencode($paperId);
 			};
 
-			$composeConferenceLink = function (NaturalNumberKeyLinkField $field, Form $form): string
+			$composeConferenceLink = function (NaturalNumberKeyLinkField $field, ReadOnlyForm $form): string
 			{
 				$conferenceId = $form->fields["CONFERENCE_ID"]->exportValue();
 				return $_SERVER["SCRIPT_NAME"]."/conferences/".rawurlencode($conferenceId);
 			};
 
-			$composePublisherLink = function (NaturalNumberKeyLinkField $field, Form $form): string
+			$composePublisherLink = function (NaturalNumberKeyLinkField $field, ReadOnlyForm $form): string
 			{
 				$publisherId = $form->fields["PUBLISHER_ID"]->exportValue();
 				return $_SERVER["SCRIPT_NAME"]."/publishers/".rawurlencode($publisherId);
@@ -78,7 +79,7 @@ class SearchCRUDModel extends CRUDModel
 				"ConferenceName" => new NaturalNumberKeyLinkField("Conference", $composeConferenceLink, true)
 			));
 
-			$this->table->stmt = PaperEntity::searchByKeyword($this->dbh, $this->form->fields["keyword"]->exportValue());
+			$this->table->setStatement(PaperEntity::searchByKeyword($this->dbh, $this->form->fields["keyword"]->exportValue()));
 		}
 	}
 

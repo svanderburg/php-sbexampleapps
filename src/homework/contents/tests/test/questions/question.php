@@ -1,17 +1,9 @@
 <?php
+global $route;
+
 \SBLayout\View\HTML\displayBreadcrumbs($route, 0);
+\SBCrud\View\HTML\displayOperationToolbar($route, 2);
 ?>
-<p>
-	<?php
-	if(array_key_exists("testId", $GLOBALS["query"]))
-	{
-		$testURL = $_SERVER["SCRIPT_NAME"]."/tests/".$GLOBALS["query"]["testId"];
-		?>
-		<a href="<?= $testURL."/questions" ?>?__operation=create_question">Add question</a>
-		<?php
-	}
-	?>
-</p>
 <?php
 global $crudInterface;
 

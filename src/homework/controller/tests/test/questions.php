@@ -1,5 +1,6 @@
 <?php
-use SBData\Model\Form;
+use SBData\Model\ReadOnlyForm;
+use SBData\Model\Table\Action;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
 use SBData\Model\Field\NaturalNumberKeyLinkField;
@@ -12,13 +13,13 @@ global $dbh, $table;
 
 $selfURL = RouteUtils::composeSelfURL();
 
-$composeQuestionLink = function (NaturalNumberKeyLinkField $field, Form $form) use ($selfURL): string
+$composeQuestionLink = function (NaturalNumberKeyLinkField $field, ReadOnlyForm $form) use ($selfURL): string
 {
 	$questionId = $field->exportValue();
 	return $selfURL."/".rawurlencode($questionId);
 };
 
-$deleteQuestionLink = function (Form $form) use ($selfURL): string
+$deleteQuestionLink = function (ReadOnlyForm $form) use ($selfURL): string
 {
 	$questionId = $form->fields['QUESTION_ID']->exportValue();
 	return $selfURL."/".rawurlencode($questionId)."?__operation=delete_question".AnchorRow::composeRowParameter($form);
@@ -30,8 +31,8 @@ $table = new DBTable(array(
 	"Answer" => new TextField("Answer", true),
 	"Exact" => new CheckBoxField("Exact")
 ), array(
-	"Delete" => $deleteQuestionLink
+	"Delete" => new Action($deleteQuestionLink)
 ));
 
-$table->stmt = TestEntity::queryAllQuestions($dbh, $GLOBALS["query"]["testId"]);
+$table->setStatement(TestEntity::queryAllQuestions($dbh, $GLOBALS["query"]["testId"]));
 ?>

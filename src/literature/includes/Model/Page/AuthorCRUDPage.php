@@ -4,6 +4,7 @@ use PDO;
 use SBLayout\Model\PageNotFoundException;
 use SBCrud\Model\Page\CRUDDetailPage;
 use SBCrud\Model\Page\OperationPage;
+use SBCrud\Model\Page\HiddenOperationPage;
 use SBExampleApps\Literature\Model\Page\Content\AuthorContents;
 use SBExampleApps\Literature\Model\Entity\AuthorEntity;
 
@@ -14,7 +15,7 @@ class AuthorCRUDPage extends CRUDDetailPage
 	public function __construct(PDO $dbh, int $authorId)
 	{
 		parent::__construct("Author", new AuthorContents(), array(
-			"update_author" => new OperationPage("Update author", new AuthorContents()),
+			"update_author" => new HiddenOperationPage("Update author", new AuthorContents()),
 			"delete_author" => new OperationPage("Delete author", new AuthorContents())
 		));
 

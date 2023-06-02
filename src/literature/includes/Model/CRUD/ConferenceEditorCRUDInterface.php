@@ -6,6 +6,8 @@ use SBLayout\Model\BadRequestException;
 use SBLayout\Model\PageForbiddenException;
 use SBData\Model\Value\NaturalNumberValue;
 use SBData\Model\Form;
+use SBData\Model\ReadOnlyForm;
+use SBData\Model\Table\Action;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Table\Anchor\AnchorRow;
 use SBData\Model\Field\NaturalNumberKeyLinkField;
@@ -15,13 +17,13 @@ use SBData\Model\Field\ComboBoxField\DBComboBoxField;
 use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Literature\Model\Entity\ConferenceEntity;
 
 class ConferenceEditorCRUDInterface extends CRUDInterface
 {
-	public CRUDPage $crudPage;
+	public OperationParamPage $operationParamPage;
 
 	public PDO $dbh;
 
@@ -31,11 +33,11 @@ class ConferenceEditorCRUDInterface extends CRUDInterface
 
 	public DBTable $editorsTable;
 
-	public function __construct(Route $route, CRUDPage $crudPage, PDO $dbh, AuthorizationManager $authorizationManager)
+	public function __construct(Route $route, OperationParamPage $operationParamPage, PDO $dbh, AuthorizationManager $authorizationManager)
 	{
-		parent::__construct($crudPage);
+		parent::__construct($operationParamPage);
 		$this->route = $route;
-		$this->crudPage = $crudPage;
+		$this->operationParamPage = $operationParamPage;
 		$this->dbh = $dbh;
 		$this->authorizationManager = $authorizationManager;
 	}
@@ -50,13 +52,13 @@ class ConferenceEditorCRUDInterface extends CRUDInterface
 
 	private function constructTable(): void
 	{
-		$composeAuthorLink = function (NaturalNumberKeyLinkField $field, Form $form): string
+		$composeAuthorLink = function (NaturalNumberKeyLinkField $field, ReadOnlyForm $form): string
 		{
 			$authorId = $field->exportValue();
 			return $_SERVER["SCRIPT_NAME"]."/authors/".rawurlencode($authorId);
 		};
 
-		$deleteConferenceAuthorLink = function (Form $form): string
+		$deleteConferenceAuthorLink = function (ReadOnlyForm $form): string
 		{
 			$authorId = $form->fields["AUTHOR_ID"]->exportValue();
 			return RouteUtils::composeSelfURL()."?".http_build_query(array(
@@ -70,10 +72,10 @@ class ConferenceEditorCRUDInterface extends CRUDInterface
 			"LastName" => new TextField("Last name", true, 20, 255),
 			"FirstName" => new TextField("First name", true, 20, 255)
 		), array(
-			"Delete" => $deleteConferenceAuthorLink
+			"Delete" => new Action($deleteConferenceAuthorLink)
 		));
 
-		$this->table->stmt = ConferenceEntity::queryEditors($this->dbh, $GLOBALS["query"]["conferenceId"]);
+		$this->table->setStatement(ConferenceEntity::queryEditors($this->dbh, $GLOBALS["query"]["conferenceId"]));
 	}
 
 	private function viewEditors(): void

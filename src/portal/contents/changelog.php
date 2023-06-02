@@ -1,13 +1,11 @@
 <?php
 use SBCrud\Model\RouteUtils;
 
-global $table, $submittedForm, $authorizationManager;
+global $route, $table, $submittedForm, $authorizationManager;
 
 if($authorizationManager->authenticated)
 {
-	?>
-	<p><a href="<?= RouteUtils::composeSelfURL() ?>?__operation=create_changelogentry">Add entry</a></p>
-	<?php
+	\SBCrud\View\HTML\displayOperationToolbar($route);
 	\SBData\View\HTML\displayEditableTable($table, $submittedForm);
 }
 else

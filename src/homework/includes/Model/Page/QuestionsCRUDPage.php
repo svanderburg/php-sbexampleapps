@@ -8,6 +8,7 @@ use SBData\Model\Value\NaturalNumberValue;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
+use SBExampleApps\Auth\Model\Page\RestrictedHiddenOperationPage;
 use SBExampleApps\Homework\Model\Page\Content\QuestionContents;
 
 class QuestionsCRUDPage extends CRUDMasterPage
@@ -18,7 +19,7 @@ class QuestionsCRUDPage extends CRUDMasterPage
 	{
 		parent::__construct("Questions", "questionId", new Contents("tests/test/questions.php", "tests/test/questions.php"), array(
 			"create_question" => new RestrictedOperationPage("Create question", new QuestionContents(), $authorizationManager),
-			"insert_question" => new RestrictedOperationPage("Insert question", new QuestionContents(), $authorizationManager)
+			"insert_question" => new RestrictedHiddenOperationPage("Insert question", new QuestionContents(), $authorizationManager)
 		));
 
 		$this->dbh = $dbh;

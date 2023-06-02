@@ -7,6 +7,7 @@ use SBData\Model\Value\Value;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Auth\Model\Page\RestrictedOperationPage;
+use SBExampleApps\Auth\Model\Page\RestrictedHiddenOperationPage;
 use SBExampleApps\Users\Model\Page\Content\SystemContents;
 
 class SystemsCRUDPage extends CRUDMasterPage
@@ -17,7 +18,7 @@ class SystemsCRUDPage extends CRUDMasterPage
 	{
 		parent::__construct("Systems", "systemId", new Contents("systems.php", "systems.php"), array(
 			"create_system" => new RestrictedOperationPage("Create system", new SystemContents(), $authorizationManager),
-			"insert_system" => new RestrictedOperationPage("Insert system", new SystemContents(), $authorizationManager)
+			"insert_system" => new RestrictedHiddenOperationPage("Insert system", new SystemContents(), $authorizationManager)
 		));
 
 		$this->dbh = $dbh;

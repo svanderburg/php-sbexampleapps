@@ -11,12 +11,12 @@ use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 use SBExampleApps\Users\Model\Entity\UserEntity;
 
 class UserCRUDInterface extends CRUDInterface
 {
-	public CRUDPage $crudPage;
+	public OperationParamPage $operationParamPage;
 
 	public Route $route;
 
@@ -24,11 +24,11 @@ class UserCRUDInterface extends CRUDInterface
 
 	public CRUDForm $form;
 
-	public function __construct(Route $route, CRUDPage $crudPage, PDO $dbh)
+	public function __construct(Route $route, OperationParamPage $operationParamPage, PDO $dbh)
 	{
-		parent::__construct($crudPage);
+		parent::__construct($operationParamPage);
 		$this->route = $route;
-		$this->crudPage = $crudPage;
+		$this->operationParamPage = $operationParamPage;
 		$this->dbh = $dbh;
 	}
 
@@ -67,7 +67,7 @@ class UserCRUDInterface extends CRUDInterface
 		/* Query the properties of the requested user and construct a form from it */
 		$this->constructUserForm(false);
 		$this->form->setOperation("update_user");
-		$this->form->importValues($this->crudPage->entity);
+		$this->form->importValues($this->operationParamPage->entity);
 	}
 
 	private function viewUser(): void

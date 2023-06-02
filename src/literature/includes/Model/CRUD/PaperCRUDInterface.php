@@ -15,7 +15,7 @@ use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 use SBExampleApps\Auth\Model\AuthorizationManager;
 use SBExampleApps\Literature\Model\Entity\PaperEntity;
 use SBExampleApps\Literature\Model\FileSet\PaperFileSet;
@@ -24,7 +24,7 @@ class PaperCRUDInterface extends CRUDInterface
 {
 	public Route $route;
 
-	public CRUDPage $crudPage;
+	public OperationParamPage $operationParamPage;
 
 	public PDO $dbh;
 
@@ -34,11 +34,11 @@ class PaperCRUDInterface extends CRUDInterface
 
 	public AuthorizationManager $authorizationManager;
 
-	public function __construct(Route $route, CRUDPage $crudPage, PDO $dbh, AuthorizationManager $authorizationManager)
+	public function __construct(Route $route, OperationParamPage $operationParamPage, PDO $dbh, AuthorizationManager $authorizationManager)
 	{
-		parent::__construct($crudPage);
+		parent::__construct($operationParamPage);
 		$this->route = $route;
-		$this->crudPage = $crudPage;
+		$this->operationParamPage = $operationParamPage;
 		$this->dbh = $dbh;
 		$this->authorizationManager = $authorizationManager;
 	}
@@ -65,9 +65,9 @@ class PaperCRUDInterface extends CRUDInterface
 	private function viewPaper(): void
 	{
 		$this->constructPaperForm();
-		$this->form->importValues($this->crudPage->entity);
+		$this->form->importValues($this->operationParamPage->entity);
 		$this->form->setOperation("update_paper");
-		$this->hasPDF = $this->crudPage->entity['hasPDF'] == 1;
+		$this->hasPDF = $this->operationParamPage->entity['hasPDF'] == 1;
 	}
 
 	private function insertPaper(): void
