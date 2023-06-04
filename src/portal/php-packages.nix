@@ -40,10 +40,10 @@ let
     "svanderburg/php-sbgallery" = {
       targetDir = "";
       src = fetchgit {
-        name = "svanderburg-php-sbgallery-91b1f228d0a0b9fcaec1fe9d9b72619a3cc92c92";
+        name = "svanderburg-php-sbgallery-9319d49505e7014de71e953240ead73476829a0c";
         url = "https://github.com/svanderburg/php-sbgallery.git";
-        rev = "91b1f228d0a0b9fcaec1fe9d9b72619a3cc92c92";
-        sha256 = "1kb2cpn81jw40rbmpqhbvcx9r3b18dsbi8mmdmsiyjbdad4d3jwq";
+        rev = "9319d49505e7014de71e953240ead73476829a0c";
+        sha256 = "01kn1kd4mhk0481zi8ph9fxh8042n82vprimnp7za8wdj982cd9i";
       };
     };
     "svanderburg/php-sblayout" = {

@@ -231,7 +231,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbgallery.git",
-                "reference": "91b1f228d0a0b9fcaec1fe9d9b72619a3cc92c92"
+                "reference": "9319d49505e7014de71e953240ead73476829a0c"
             },
             "require": {
                 "ext-gd": "*",
@@ -274,7 +274,7 @@
                 }
             ],
             "description": "Simple embeddable picture gallery",
-            "time": "2023-06-02T16:05:13+00:00"
+            "time": "2023-06-04T22:18:23+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -338,7 +338,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbpagemanager.git",
-                "reference": "297049f181a2ec00b405c882a5b0662849d4d72b"
+                "reference": "2d65eac14a0586240e54e6b7500f602ba5b7a574"
             },
             "require": {
                 "svanderburg/php-sbcrud": "dev-master",
