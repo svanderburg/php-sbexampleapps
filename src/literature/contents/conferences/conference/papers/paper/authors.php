@@ -7,14 +7,11 @@ global $addAuthorForm, $table, $authorizationManager;
 <div class="tabpage">
 	<?php
 	if($authorizationManager->authenticated)
-		\SBData\View\HTML\displayEditableForm($addAuthorForm);
-
-	if($table !== null)
 	{
-		if($authorizationManager->authenticated)
-			\SBData\View\HTML\displaySemiEditableTable($table);
-		else
-			\SBData\View\HTML\displayTable($table);
+		\SBData\View\HTML\displayEditableForm($addAuthorForm);
+		\SBData\View\HTML\displaySemiEditableTable($table);
 	}
+	else
+		\SBData\View\HTML\displayTable($table);
 	?>
 </div>
