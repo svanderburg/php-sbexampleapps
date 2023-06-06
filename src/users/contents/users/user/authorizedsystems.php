@@ -7,6 +7,6 @@ global $route, $addSystemForm, $table;
 <div class="tabpage">
 	<?php
 	\SBData\View\HTML\displayEditableForm($addSystemForm);
-	\SBData\View\HTML\displaySemiEditableTable($table, "No items");
+	\SBData\View\HTML\displaySemiEditableTable($table);
 	?>
 </div>

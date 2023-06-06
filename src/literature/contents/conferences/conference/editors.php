@@ -8,14 +8,10 @@ global $route, $addEditorForm, $table, $authorizationManager;
 	<?php
 	if($authorizationManager->authenticated)
 	{
-		\SBData\View\HTML\displayEditableForm($addEditorForm,
-			"Add editor",
-			"One or more fields are incorrectly specified and marked with a red color!",
-			"This field is incorrectly specified!");
-
-		\SBData\View\HTML\displaySemiEditableTable($table, "No editors");
+		\SBData\View\HTML\displayEditableForm($addEditorForm);
+		\SBData\View\HTML\displaySemiEditableTable($table);
 	}
 	else
-		\SBData\View\HTML\displayTable($table, "No editors");
+		\SBData\View\HTML\displayTable($table);
 	?>
 </div>

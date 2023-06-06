@@ -34,7 +34,7 @@ $table = new DBTable(array(
 	"Comment" => new TextField("Comment", false, 20, 255)
 ), array(
 	"Delete" => new Action($deletePaperLink)
-));
+), "No papers");
 
 $table->setStatement(PaperEntity::queryAll($dbh, $GLOBALS["query"]["conferenceId"]));
 ?>

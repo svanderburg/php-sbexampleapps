@@ -9,9 +9,9 @@ global $route, $table, $authorizationManager;
 	if($authorizationManager->authenticated)
 	{
 		\SBCrud\View\HTML\displayOperationToolbar($route, 2);
-		\SBData\View\HTML\displaySemiEditableTable($table, "No papers");
+		\SBData\View\HTML\displaySemiEditableTable($table);
 	}
 	else
-		\SBData\View\HTML\displayTable($table, "No papers");
+		\SBData\View\HTML\displayTable($table);
 	?>
 </div>
