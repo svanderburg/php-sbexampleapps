@@ -6,7 +6,7 @@ class AuthorizedSystemContents extends Contents
 {
 	public function __construct()
 	{
-		parent::__construct("users/user/authorizedsystems.php", "users/user/authorizedsystems.php");
+		parent::__construct("users/user/authorizedsystems/authorizedsystem.php", "users/user/authorizedsystems/authorizedsystem.php");
 	}
 }
 ?>

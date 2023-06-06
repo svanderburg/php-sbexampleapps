@@ -6,7 +6,7 @@ class ConferenceEditorContents extends Contents
 {
 	public function __construct()
 	{
-		parent::__construct("conferences/conference/editors.php", "conferences/conference/editors.php");
+		parent::__construct("conferences/conference/editor/editor.php", "conferences/conference/editors/editor.php");
 	}
 }
 ?>
