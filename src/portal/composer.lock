@@ -72,7 +72,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbcrud.git",
-                "reference": "2a03d319e074854fed4030b98672d35e746770d3"
+                "reference": "ad7c08b431811ec5cf4321e576993faeeaa089ec"
             },
             "require": {
                 "svanderburg/php-sbdata": "dev-master",
@@ -231,7 +231,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbgallery.git",
-                "reference": "ea73317fc612e57734c5ae6d3757fd61f00f5125"
+                "reference": "7eaa695a37ea2b905e8d0a0884b5272f4c131042"
             },
             "require": {
                 "ext-gd": "*",
@@ -285,7 +285,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sblayout.git",
-                "reference": "c7b6f86ab9e95a9508833581f0e0e5dd107ae931"
+                "reference": "1fb91bccd9d60ba072be1bc1a8d41b9699e01245"
             },
             "require-dev": {
                 "phpunit/phpunit": "9.x"
@@ -299,9 +299,11 @@
                 "files": [
                     "src/SBLayout/View/HTML/errorpage.php",
                     "src/SBLayout/View/HTML/menuitem.php",
+                    "src/SBLayout/View/HTML/standardmenuitem.php",
                     "src/SBLayout/View/HTML/custommenuitem.php",
                     "src/SBLayout/View/HTML/inlinemenusection.php",
                     "src/SBLayout/View/HTML/menusection.php",
+                    "src/SBLayout/View/HTML/sitemapsection.php",
                     "src/SBLayout/View/HTML/embeddedmenusection.php",
                     "src/SBLayout/View/HTML/Util/composecontentpath.php",
                     "src/SBLayout/View/HTML/styles.php",
@@ -333,7 +335,7 @@
                 }
             ],
             "description": "My custom website layout organiser framework for PHP",
-            "time": "2023-06-13T19:31:02+00:00"
+            "time": "2023-07-04T19:04:55+00:00"
         }
     ],
     "packages-dev": [],
